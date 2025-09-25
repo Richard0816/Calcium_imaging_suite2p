@@ -1,0 +1,456 @@
+Running on D:\data\2p_shifted\2024-11-18_00002
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00002']}
+tif
+** Found 1 tifs - converting to binary **
+8104 frames of binary, time 81.74 sec.
+time 153.63 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.15 sec.
+Registered 2026/15000 in 42.85s
+Registered 4052/15000 in 80.84s
+Registered 6078/15000 in 118.57s
+Registered 8104/15000 in 154.74s
+Registered 10130/15000 in 190.57s
+Registered 12156/15000 in 226.69s
+Registered 14182/15000 in 262.61s
+Registered 15000/15000 in 277.18s
+----------- Total 296.09 sec
+Registration metrics, 23.68 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,498,508] created in 8.98 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=31.34
+1000 ROIs, score=20.54
+2000 ROIs, score=19.79
+3000 ROIs, score=19.24
+4000 ROIs, score=18.82
+Detected 5000 ROIs, 63.75 sec
+After removing overlaps, 4978 ROIs remain
+----------- Total 73.59 sec.
+----------- EXTRACTION
+Masks created, 2.93 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\extraction\extract.py:125: NumbaTypeSafetyWarning: [1m[1m[1munsafe cast from uint64 to int64. Precision may be lost.[0m[0m[0m
+  Fi[n] = np.dot(data[:, cell_ipix[n]], cell_lam[n])
+Extracted fluorescence from 4978 ROIs in 15000 frames, 48.75 sec.
+----------- Total 53.53 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 2.21 sec.
+Plane 0 processed in 458.11 sec (can open in GUI).
+total = 682.21 sec.
+TOTAL RUNTIME 682.21 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-18_00003
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00003']}
+tif
+** Found 1 tifs - converting to binary **
+8168 frames of binary, time 83.73 sec.
+time 155.43 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.46 sec.
+Registered 2042/15000 in 39.14s
+Registered 4084/15000 in 76.20s
+Registered 6126/15000 in 112.29s
+Registered 8168/15000 in 148.35s
+Registered 10210/15000 in 184.21s
+Registered 12252/15000 in 220.28s
+Registered 14294/15000 in 256.42s
+Registered 15000/15000 in 269.04s
+----------- Total 288.25 sec
+Registration metrics, 24.05 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,506,510] created in 9.09 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=81.67
+1000 ROIs, score=17.28
+Detected 1784 ROIs, 47.90 sec
+After removing overlaps, 1771 ROIs remain
+----------- Total 57.46 sec.
+----------- EXTRACTION
+Masks created, 1.08 sec.
+Extracted fluorescence from 1771 ROIs in 15000 frames, 21.46 sec.
+----------- Total 23.82 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.74 sec.
+Plane 0 processed in 397.83 sec (can open in GUI).
+total = 554.48 sec.
+TOTAL RUNTIME 554.48 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-18_00005
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00005']}
+tif
+** Found 1 tifs - converting to binary **
+7624 frames of binary, time 77.32 sec.
+time 228.28 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.75 sec.
+Registered 1906/15000 in 35.53s
+Registered 3812/15000 in 69.35s
+Registered 5718/15000 in 103.32s
+Registered 7624/15000 in 137.14s
+Registered 9530/15000 in 170.86s
+Registered 11436/15000 in 204.29s
+Registered 13342/15000 in 237.86s
+Registered 15000/15000 in 267.43s
+----------- Total 287.05 sec
+Registration metrics, 24.36 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,510,510] created in 8.87 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=88.04
+Detected 937 ROIs, 47.64 sec
+After removing overlaps, 933 ROIs remain
+----------- Total 56.86 sec.
+----------- EXTRACTION
+Masks created, 0.58 sec.
+Extracted fluorescence from 933 ROIs in 15000 frames, 13.98 sec.
+----------- Total 15.72 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.39 sec.
+Plane 0 processed in 386.72 sec (can open in GUI).
+total = 688.85 sec.
+TOTAL RUNTIME 688.85 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-18_00006
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00006']}
+tif
+** Found 1 tifs - converting to binary **
+8216 frames of binary, time 82.27 sec.
+time 150.35 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.77 sec.
+Registered 2054/15000 in 39.62s
+Registered 4108/15000 in 76.61s
+Registered 6162/15000 in 112.75s
+Registered 8216/15000 in 148.78s
+Registered 10270/15000 in 184.75s
+Registered 12324/15000 in 220.84s
+Registered 14378/15000 in 256.81s
+Registered 15000/15000 in 267.72s
+----------- Total 287.42 sec
+Registration metrics, 24.15 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,510,510] created in 8.95 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=47.29
+1000 ROIs, score=16.75
+Detected 1065 ROIs, 48.08 sec
+After removing overlaps, 1061 ROIs remain
+----------- Total 57.36 sec.
+----------- EXTRACTION
+Masks created, 0.65 sec.
+Extracted fluorescence from 1061 ROIs in 15000 frames, 14.90 sec.
+----------- Total 16.72 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.45 sec.
+Plane 0 processed in 388.57 sec (can open in GUI).
+total = 540.12 sec.
+TOTAL RUNTIME 540.12 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-18_00007
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00007']}
+tif
+** Found 1 tifs - converting to binary **
+7632 frames of binary, time 77.44 sec.
+time 177.12 sec. Wrote 10000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.81 sec.
+Registered 1908/10000 in 34.37s
+Registered 3816/10000 in 68.21s
+Registered 5724/10000 in 102.24s
+Registered 7632/10000 in 136.11s
+Registered 9540/10000 in 169.89s
+Registered 10000/10000 in 178.10s
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\registration\register.py:50: RuntimeWarning: invalid value encountered in divide
+  dxy = dxy / dxy.mean()
+----------- Total 197.90 sec
+Registration metrics, 27.65 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 02
+Binned movie of size [5000,512,512] created in 7.05 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=46.18
+1000 ROIs, score=19.30
+2000 ROIs, score=18.24
+3000 ROIs, score=17.52
+4000 ROIs, score=16.96
+Detected 4665 ROIs, 87.37 sec
+After removing overlaps, 4614 ROIs remain
+----------- Total 95.24 sec.
+----------- EXTRACTION
+Masks created, 2.76 sec.
+Extracted fluorescence from 4614 ROIs in 10000 frames, 26.64 sec.
+----------- Total 30.93 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 1.32 sec.
+Plane 0 processed in 358.32 sec (can open in GUI).
+total = 536.49 sec.
+TOTAL RUNTIME 536.49 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-18_00008
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-18_00008']}
+tif
+** Found 1 tifs - converting to binary **
+7848 frames of binary, time 129.42 sec.
+time 206.33 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 11.50 sec.
+Registered 1962/15000 in 46.00s
+Registered 3924/15000 in 90.48s
+Registered 5886/15000 in 133.78s
+Registered 7848/15000 in 177.11s
+Registered 9810/15000 in 220.49s
+Registered 11772/15000 in 261.88s
+Registered 13734/15000 in 304.96s
+Registered 15000/15000 in 333.12s
+----------- Total 354.45 sec
+Registration metrics, 24.86 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,504,508] created in 8.72 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=69.26
+Detected 729 ROIs, 40.28 sec
+After removing overlaps, 727 ROIs remain
+----------- Total 49.30 sec.
+----------- EXTRACTION
+Masks created, 0.46 sec.
+Extracted fluorescence from 727 ROIs in 15000 frames, 13.32 sec.
+----------- Total 14.92 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.30 sec.
+Plane 0 processed in 445.87 sec (can open in GUI).
+total = 653.34 sec.
+TOTAL RUNTIME 653.34 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-20_00002
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-20_00002']}
+tif
+** Found 1 tifs - converting to binary **
+7656 frames of binary, time 157.22 sec.
+time 235.85 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.57 sec.
+Registered 1914/15000 in 36.54s
+Registered 3828/15000 in 71.00s
+Registered 5742/15000 in 105.06s
+Registered 7656/15000 in 139.02s
+Registered 9570/15000 in 173.01s
+Registered 11484/15000 in 207.04s
+Registered 13398/15000 in 240.84s
+Registered 15000/15000 in 269.17s
+----------- Total 288.21 sec
+Registration metrics, 23.55 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,498,504] created in 8.70 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=40.90
+1000 ROIs, score=17.02
+Detected 1370 ROIs, 43.04 sec
+After removing overlaps, 1365 ROIs remain
+----------- Total 52.12 sec.
+----------- EXTRACTION
+Masks created, 0.84 sec.
+Extracted fluorescence from 1365 ROIs in 15000 frames, 18.03 sec.
+----------- Total 20.10 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.55 sec.
+Plane 0 processed in 387.48 sec (can open in GUI).
+total = 699.70 sec.
+TOTAL RUNTIME 699.70 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-20_00003
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-20_00003']}
+tif
+** Found 1 tifs - converting to binary **
+8264 frames of binary, time 86.49 sec.
+time 157.58 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.65 sec.
+Registered 2066/15000 in 40.61s
+Registered 4132/15000 in 78.27s
+Registered 6198/15000 in 115.20s
+Registered 8264/15000 in 152.92s
+Registered 10330/15000 in 189.85s
+Registered 12396/15000 in 227.35s
+Registered 14462/15000 in 265.03s
+Registered 15000/15000 in 274.66s
+----------- Total 294.19 sec
+Registration metrics, 24.63 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,504,506] created in 9.31 sec.
+C:\Users\Cembrowski Lab\.conda\envs\suite2p\lib\site-packages\suite2p\detection\sparsedetect.py:286: UserWarning: Spatial scale estimation failed.  Setting spatial scale to 1 in order to continue.
+  warn(
+NOTE: FORCED spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=68.75
+1000 ROIs, score=19.28
+2000 ROIs, score=18.41
+3000 ROIs, score=17.88
+4000 ROIs, score=17.48
+Detected 5000 ROIs, 68.27 sec
+After removing overlaps, 4978 ROIs remain
+----------- Total 78.49 sec.
+----------- EXTRACTION
+Masks created, 3.02 sec.
+Extracted fluorescence from 4978 ROIs in 15000 frames, 44.95 sec.
+----------- Total 49.83 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 2.09 sec.
+Plane 0 processed in 459.15 sec (can open in GUI).
+total = 618.10 sec.
+TOTAL RUNTIME 618.10 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-20_00004
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-20_00004']}
+tif
+** Found 1 tifs - converting to binary **
+7688 frames of binary, time 158.74 sec.
+time 237.42 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.80 sec.
+Registered 1922/15000 in 37.70s
+Registered 3844/15000 in 73.35s
+Registered 5766/15000 in 107.82s
+Registered 7688/15000 in 141.89s
+Registered 9610/15000 in 176.37s
+Registered 11532/15000 in 210.66s
+Registered 13454/15000 in 245.34s
+Registered 15000/15000 in 273.43s
+----------- Total 293.03 sec
+Registration metrics, 24.19 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,508,500] created in 8.90 sec.
+NOTE: estimated spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=61.05
+1000 ROIs, score=18.09
+2000 ROIs, score=17.28
+3000 ROIs, score=16.75
+Detected 3204 ROIs, 56.89 sec
+After removing overlaps, 3182 ROIs remain
+----------- Total 66.50 sec.
+----------- EXTRACTION
+Masks created, 1.94 sec.
+Extracted fluorescence from 3182 ROIs in 15000 frames, 31.93 sec.
+----------- Total 35.42 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 1.40 sec.
+Plane 0 processed in 426.40 sec (can open in GUI).
+total = 742.92 sec.
+TOTAL RUNTIME 742.92 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
+Running on D:\data\2p_shifted\2024-11-20_00001
+{'data_path': ['D:\\data\\2p_shifted\\2024-11-20_00001']}
+tif
+** Found 1 tifs - converting to binary **
+8272 frames of binary, time 86.91 sec.
+time 158.53 sec. Wrote 15000 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+NOTE: applying default C:\Users\Cembrowski Lab\.suite2p\classifiers\classifier_user.npy
+----------- REGISTRATION
+Reference frame, 9.67 sec.
+Registered 2068/15000 in 40.21s
+Registered 4136/15000 in 78.06s
+Registered 6204/15000 in 114.93s
+Registered 8272/15000 in 152.00s
+Registered 10340/15000 in 189.80s
+Registered 12408/15000 in 227.15s
+Registered 14476/15000 in 264.11s
+Registered 15000/15000 in 273.43s
+----------- Total 292.37 sec
+Registration metrics, 24.03 sec.
+----------- ROI DETECTION
+Binning movie in chunks of length 03
+Binned movie of size [5000,498,508] created in 9.14 sec.
+NOTE: estimated spatial scale ~6 pixels, time epochs 4.17, threshold 16.67 
+0 ROIs, score=83.51
+Detected 371 ROIs, 39.71 sec
+After removing overlaps, 367 ROIs remain
+----------- Total 49.14 sec.
+----------- EXTRACTION
+Masks created, 0.26 sec.
+Extracted fluorescence from 367 ROIs in 15000 frames, 10.05 sec.
+----------- Total 11.38 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- SPIKE DECONVOLUTION
+----------- Total 0.15 sec.
+Plane 0 processed in 378.72 sec (can open in GUI).
+total = 616.44 sec.
+TOTAL RUNTIME 616.44 sec
+{'data_path', 'Ly', 'corrXY1', 'rmax', 'ihop', 'Lxc', 'spatscale_pix', 'meanImgE', 'xoff', 'timing', 'corrXY', 'Lyc', 'yrange', 'tPC', 'regDX', 'xrange', 'regPC', 'max_proj', 'reg_file', 'badframes', 'Vsplit', 'refImg', 'save_path', 'meanImg', 'yoff1', 'filelist', 'Lx', 'nframes', 'ops_path', 'Vcorr', 'frames_per_file', 'first_tiffs', 'rmin', 'Vmax', 'xoff1', 'Vmap', 'date_proc', 'yoff', 'frames_per_folder'}
