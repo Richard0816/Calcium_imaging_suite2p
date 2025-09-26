@@ -1,7 +1,20 @@
-import os
 import numpy as np
 from scipy.ndimage import percentile_filter
 from scipy.signal import butter, sosfilt, savgol_filter
+import os
+import sys
+import contextlib
+import io
+import time
+
+class Tee(io.TextIOBase):
+    def __init__(self, *streams):
+        self.streams = streams
+    def write(self, data):
+        for s in self.streams:
+            s.write(data)
+            s.flush()
+        return len(data)
 
 # ---------- per-trace helpers (1D) ----------
 def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
@@ -115,6 +128,7 @@ def process_suite2p_traces(
 
     # Process in batches of cells
     for j0 in range(0, N, batch_size):
+        start_time = time.time()
         j1 = min(N, j0 + batch_size)
         # neuropil subtraction (vectorized)
         Fc_batch = (F_cell[:, j0:j1] - r * F_neuropil[:, j0:j1]).astype(np.float32)
@@ -137,36 +151,62 @@ def process_suite2p_traces(
 
         # flush batch to disk
         dff_mm.flush(); low_mm.flush(); dt_mm.flush()
-        print(f"Processed cells {j0}–{j1-1} / {N-1}")
+        print(f"Processed cells {j0}–{j1-1} / {N-1} in {time.time() - start_time} seconds.")
+
 
     # Return paths to results; close memmaps (let GC handle) or del explicitly
     del dff_mm, low_mm, dt_mm
     return dff_path, low_path, dt_path
 
+def run_on_folders(parent_folder: str) -> None:
+    """
+    Run a custom function on every subfolder inside a parent folder (non-recursive).
+
+    :param parent_folder: Path to the parent folder.
+    """
+    for entry in os.scandir(parent_folder):
+        if entry.is_dir():
+            start_time = time.time()
+            root = os.path.join(entry.path, "suite2p\\plane0\\")
+
+            # Load Suite2p outputs
+            F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
+            F_neu = np.load(os.path.join(root, 'Fneu.npy'), allow_pickle=True)
+
+            # Where to write outputs
+            out_dir = root  # save alongside Suite2p
+            # Optional: a prefix for filenames so you can run variants without clobbering
+            prefix = 'r0p7_'  # e.g., indicates r=0.7
+
+            print(f'Processing {entry.name}')
+
+            dff_path, low_path, dt_path = process_suite2p_traces(
+                F_cell, F_neu, fps,
+                r=0.7,
+                batch_size=2500,
+                win_sec=45, perc=10,
+                cutoff_hz=5.0, sg_win_ms=400, sg_poly=1,
+                out_dir=out_dir, prefix=prefix
+            )
+
+            print("Wrote:")
+            print(" dF/F       ->", dff_path)
+            print(" low-pass   ->", low_path)
+            print(" d/dt       ->", dt_path)
+            print(f'Total time {time.time() - start_time} seconds.')
+
+
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    fps = 30.0
-    root = 'D:\\data\\2p_shifted\\2024-06-05_00001\\suite2p\\plane0\\'
+    logfile = open("fluorescence_analysis.log", "a")
+    tee = Tee(sys.__stdout__, logfile)
 
-    # Load Suite2p outputs
-    F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
-    F_neu  = np.load(os.path.join(root, 'Fneu.npy'), allow_pickle=True)
+    # running in here just to store the output in the logfile
+    with contextlib.redirect_stdout(tee), contextlib.redirect_stderr(tee):
+        fps = 30.0
+        run_on_folders("D:\\data\\2p_shifted\\")
 
-    # Where to write outputs
-    out_dir = root  # save alongside Suite2p
-    # Optional: a prefix for filenames so you can run variants without clobbering
-    prefix = 'r0p7_'  # e.g., indicates r=0.7
+    logfile.close()
 
-    dff_path, low_path, dt_path = process_suite2p_traces(
-        F_cell, F_neu, fps,
-        r=0.7,
-        batch_size=256,
-        win_sec=45, perc=10,
-        cutoff_hz=5.0, sg_win_ms=400, sg_poly=1,
-        out_dir=out_dir, prefix=prefix
-    )
 
-    print("Wrote:")
-    print(" dF/F       ->", dff_path)
-    print(" low-pass   ->", low_path)
-    print(" d/dt       ->", dt_path)
+

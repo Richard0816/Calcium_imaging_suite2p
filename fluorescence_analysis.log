@@ -1,0 +1,14 @@
+Processing 2024-06-03_00001Processed cells 0–632 / 632 in 80.983473777771 seconds.
+Wrote:
+ dF/F       -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff.memmap.float32
+ low-pass   -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff_lowpass.memmap.float32
+ d/dt       -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff_dt.memmap.float32
+Total time 81.8811547756195 seconds.
+Processing 2024-06-03_00002
+Processed cells 0–345 / 345 in 43.874184131622314 seconds.
+Wrote:
+ dF/F       -> D:\data\2p_shifted\2024-06-03_00002\suite2p\plane0\r0p7_dff.memmap.float32
+ low-pass   -> D:\data\2p_shifted\2024-06-03_00002\suite2p\plane0\r0p7_dff_lowpass.memmap.float32
+ d/dt       -> D:\data\2p_shifted\2024-06-03_00002\suite2p\plane0\r0p7_dff_dt.memmap.float32
+Total time 44.4732608795166 seconds.
+Processing 2024-06-03_00003
