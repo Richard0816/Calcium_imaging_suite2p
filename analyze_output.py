@@ -146,7 +146,7 @@ def process_suite2p_traces(
 # ================== RUN IT ==================
 if __name__ == "__main__":
     fps = 30.0
-    root = 'D:\\data\\2p_shifted\\2024-11-05_00007\\suite2p\\plane0\\'
+    root = 'D:\\data\\2p_shifted\\2024-06-05_00001\\suite2p\\plane0\\'
 
     # Load Suite2p outputs
     F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
@@ -162,7 +162,7 @@ if __name__ == "__main__":
         r=0.7,
         batch_size=256,
         win_sec=45, perc=10,
-        cutoff_hz=5.0, sg_win_ms=333, sg_poly=3,
+        cutoff_hz=5.0, sg_win_ms=400, sg_poly=1,
         out_dir=out_dir, prefix=prefix
     )
 

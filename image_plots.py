@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # --- Config ---
-root = 'D:\\data\\2p_shifted\\2024-06-03_00002\\suite2p\\plane0\\'
+root = 'D:\\data\\2p_shifted\\2024-06-05_00001\\suite2p\\plane0\\'
 fps = 30.0
 roi = 1
 t_max = None        # seconds to plot (None for full trace)
