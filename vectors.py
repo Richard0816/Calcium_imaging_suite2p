@@ -5,24 +5,27 @@ from scipy.spatial import cKDTree
 import os, imageio.v2 as imageio
 
 # ---------------- CONFIG ----------------
-root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'
-prefix = 'r0p7_'      # matches your processed files
+root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'  # Suite2p plane dir
+prefix = 'r0p7_'      # Matches your processed filenames
 fps    = 30.0
 
-# Choose signal to drive the vectors: 'low' (ΔF/F low-pass) or 'dt' (derivative)
+# Choose signal to drive the vectors:
+#   'low' (ΔF/F low-pass) → smoother but slower dynamics
+#   'dt'  (derivative)    → better for propagation directionality
 signal_type = 'dt'     # 'dt' is usually best for propagation
 
-# Time binning for smoother vectors (in seconds)
-bin_sec = 0.5          # set to 0 for frame-by-frame
-# Neighborhood for vector computation
-k_neighbors = 12       # number of nearest neighbors per ROI (try 8–20)
-radius_px   = None     # or set a radius in pixels; if set, overrides k_neighbors
+# Time binning for smoother vectors (in seconds). 0 → frame-by-frame.
+bin_sec = 0.5          # e.g., 0.5s = average changes over half a second
 
-# Vector scaling for quiver
-quiver_scale = 0.1     # larger → shorter arrows on plot (matplotlib quiver convention)
+# Neighborhood for vector computation (graph on ROI centroids)
+k_neighbors = 12       # k-NN per ROI (try 8–20)
+radius_px   = None     # If set, use radius graph instead of k-NN
+
+# Vector scaling for quiver (matplotlib quiver convention: larger→shorter arrows)
+quiver_scale = 0.1
 arrow_alpha  = 0.8
 
-# Optionally subset time (in seconds) to keep figures manageable
+# Optionally subset time (in seconds) to limit figure/movie generation
 t_start_s, t_end_s = 0, None
 # ---------------------------------------
 
@@ -32,7 +35,7 @@ stat = np.load(os.path.join(root, 'stat.npy'), allow_pickle=True)
 Ly, Lx = ops['Ly'], ops['Lx']
 pix_to_um = ops.get('pix_to_um', None)
 
-# ROI centroids (float arrays)
+# ROI centroids (float) used for k-NN / radius neighbors and for quiver positions
 xy = np.column_stack([
     np.array([np.mean(s['xpix']) for s in stat], dtype=np.float32),
     np.array([np.mean(s['ypix']) for s in stat], dtype=np.float32)
@@ -44,13 +47,14 @@ low = np.memmap(os.path.join(root, f'{prefix}dff_lowpass.memmap.float32'),
 dt  = np.memmap(os.path.join(root, f'{prefix}dff_dt.memmap.float32'),
                 dtype='float32', mode='r')
 
+# Infer T and N; reshape to (T, N)
 N = len(stat)
 T = low.size // N
 low = low.reshape(T, N)
 dt  = dt.reshape(T, N)
 
-# Pick which signal to use
-X = dt if signal_type == 'dt' else low   # shape (T, N)
+# Pick signal matrix X (T, N)
+X = dt if signal_type == 'dt' else low
 
 # Optional time cropping
 t0 = int(fps * (t_start_s or 0))
@@ -59,52 +63,62 @@ X = X[t0:t1]
 Tsel = X.shape[0]
 time = np.arange(t0, t0+Tsel) / fps
 
-# Temporal binning
+# Temporal binning (convert seconds to frames; 1 = no binning)
 if bin_sec and bin_sec > 0:
     B = int(max(1, round(bin_sec * fps)))
 else:
     B = 1
-
 nbins = int(np.ceil(Tsel / B))
 
-# Build neighbor graph
+# Build neighbor graph once on centroids
 tree = cKDTree(xy)
 if radius_px is not None:
-    # variable number of neighbors per ROI within radius
+    # Variable degree: neighbors within a fixed radius
     neighbor_lists = tree.query_ball_point(xy, r=radius_px)
 else:
-    # fixed k nearest neighbors (excluding self)
-    dists, idxs = tree.query(xy, k=k_neighbors+1)  # includes self at col 0
-    neighbor_lists = [list(ids[1:]) for ids in idxs]  # drop self
+    # Fixed degree: k nearest neighbors (drop self at col 0)
+    dists, idxs = tree.query(xy, k=k_neighbors+1)
+    neighbor_lists = [list(ids[1:]) for ids in idxs]
 
-# Helper: robust scale within each bin to avoid global amplitude bias
+# Helper: robust scale within each bin to reduce hot-ROI dominance
 def robust_norm(v):
+    """
+    Scale a vector to ~0..1 via 5–95th percentile range; returns zeros if degenerate.
+    """
     lo, hi = np.percentile(v, (5, 95))
     if hi <= lo:
         return np.zeros_like(v)
     return (v - lo) / (hi - lo)
 
-# Compute vectors per bin
+# NOTE:
+# The full vector computation & frame export loop below is currently commented out
+# (as in your original). It computes a per-ROI vector for each time bin that
+# points toward neighbors with larger recent increases in activity.
+# To regenerate vector PNGs, remove the triple quotes around the block.
+
 out_dir = os.path.join(root, f'{prefix}vectors_{signal_type}')
 os.makedirs(out_dir, exist_ok=True)
 
-"""for b in range(nbins):
+for b in range(nbins):
     a = b * B
     z = min(Tsel, (b+1) * B)
-    Xb = X[a:z]                                  # (B, N) or (frames in last bin, N)
+    Xb = X[a:z]  # (frames_in_bin, N)
 
-    # Activity change in this bin: compare mean of last half vs first half
+    # Activity change in this bin:
+    #   - if a single frame, use its value
+    #   - else, mean(last half) - mean(first half) to emphasize recent rise
     if Xb.shape[0] == 1:
         delta = Xb[0]
     else:
         h = Xb.shape[0] // 2
         delta = Xb[h:].mean(axis=0) - Xb[:h].mean(axis=0)  # (N,)
 
-    # Optional: normalize deltas robustly to reduce hot-ROI bias
+    # Normalize deltas robustly (5–95%) to reduce bias from globally bright ROIs
     dnorm = robust_norm(delta.astype(np.float32))
 
-    # Build vectors at each ROI:
-    # For ROI i, compare to neighbors j; accumulate vectors pointing toward neighbors with larger increase.
+    # Build vectors:
+    # For ROI i, look at neighbors j; accumulate unit vectors pointing toward
+    # neighbors with larger increase (dnorm[j] > dnorm[i]), weighted by difference.
     U = np.zeros(N, dtype=np.float32)  # x-component
     V = np.zeros(N, dtype=np.float32)  # y-component
     for i in range(N):
@@ -114,11 +128,10 @@ os.makedirs(out_dir, exist_ok=True)
         vi = dnorm[i]
         xi, yi = xy[i]
 
-        # differences to neighbors (only positive “pulls”)
         pulls = []
         for j in nbrs:
             w = dnorm[j] - vi
-            if w > 0:  # neighbor is rising more
+            if w > 0:  # neighbor is rising more → “pull” in that direction
                 dx = xy[j,0] - xi
                 dy = xy[j,1] - yi
                 norm = np.hypot(dx, dy) + 1e-6
@@ -130,7 +143,7 @@ os.makedirs(out_dir, exist_ok=True)
             U[i] = ux
             V[i] = vy
 
-    # Optional smoothing of vectors by averaging with neighbors (one pass)
+    # One-pass neighbor smoothing to reduce noise
     U_s = np.copy(U)
     V_s = np.copy(V)
     for i in range(N):
@@ -140,9 +153,8 @@ os.makedirs(out_dir, exist_ok=True)
         U_s[i] = (U[i] + U[nbrs].mean()) / 2.0
         V_s[i] = (V[i] + V[nbrs].mean()) / 2.0
 
-    # Plot quiver on top of an intensity background (mean low-pass in this bin)
+    # Background for visualization: mean low-pass ΔF/F in this bin, painted via masks
     bg = low[t0+a:t0+z].mean(axis=0)  # (N,)
-    # paint background to image (quick centroid scatter approximation)
     bg_img = np.zeros((Ly, Lx), dtype=np.float32)
     counts = np.zeros((Ly, Lx), dtype=np.float32)
     for j, s in enumerate(stat):
@@ -153,11 +165,11 @@ os.makedirs(out_dir, exist_ok=True)
         counts[ypix, xpix] += lam
     m = counts > 0
     bg_img[m] /= counts[m]
-    # robust background scaling
+    # Robust background scaling for display
     lo, hi = np.percentile(bg_img[m], (2, 98))
     bg_img = np.clip((bg_img - lo) / (hi - lo + 1e-9), 0, 1)
 
-    # figure
+    # Figure: quiver over background
     plt.figure(figsize=(8, 7))
     extent = None
     xlabel, ylabel = 'X (px)', 'Y (px)'
@@ -167,12 +179,11 @@ os.makedirs(out_dir, exist_ok=True)
 
     plt.imshow(bg_img, origin='lower', cmap='gray', extent=extent, aspect='equal', alpha=0.9)
 
-    # Quiver input positions
+    # Quiver positions/components
     Xpos = xy[:,0].copy()
     Ypos = xy[:,1].copy()
     Uplot = U_s
     Vplot = V_s
-
     if pix_to_um is not None:
         Xpos *= pix_to_um; Ypos *= pix_to_um
 
@@ -187,15 +198,18 @@ os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, f'vectors_{signal_type}_bin{b+1:04d}.png')
     plt.savefig(out, dpi=200)
     plt.close()
-    print('Saved', out)"""
+    print('Saved', out)
 
-frame_dir = os.path.join(root, f'{prefix}vectors_dt')  # folder where you saved PNGs
+# ---------- Movie assembly (from saved PNGs) ----------
+# If you’ve generated the PNG frames above into {prefix}vectors_{signal_type}/,
+# this section stitches them into an MP4 using imageio-ffmpeg.
+frame_dir = os.path.join(root, f'{prefix}vectors_dt')  # Folder containing PNGs to stitch
 out_path  = os.path.join(root, f'{prefix}vector_spread.mp4')
 
 frames = sorted([f for f in os.listdir(frame_dir) if f.endswith('.png')])
-fps_out = 10   # output video frame rate
+fps_out = 10   # Output video frame rate (visualization; unrelated to imaging fps)
 
-# ---- for imageio v2 ----
+# imageio v2 writer; 'mode=I' for appended frames
 writer = imageio.get_writer(out_path, format='FFMPEG', mode='I', fps=fps_out)
 for fn in frames:
     img = imageio.imread(os.path.join(frame_dir, fn))

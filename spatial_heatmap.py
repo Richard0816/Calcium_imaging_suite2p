@@ -3,19 +3,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ------------- CONFIG -------------
-root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'
-prefix = 'r0p7_'   # must match your processed files
-fps    = 30.0
+root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'  # Single Suite2p plane directory
+prefix = 'r0p7_'   # Must match your preprocessed memmap filename prefix
+fps    = 30.0      # Frame rate (Hz)
 
-# Metric to display on the spatial heatmap:
+# Metric to display on the spatial heatmap (one scalar per ROI):
 metric = 'event_rate'   # options: 'event_rate', 'mean_dff', 'peak_dz'
 
-# Event detection thresholds (used if metric involves events)
+# Event detection thresholds (used when metric uses events/derivative)
 z_enter = 3.5
 z_exit  = 1.5
-min_sep_s = 0.3  # merge onsets within 300 ms
+min_sep_s = 0.3  # Merge onsets that are < 300 ms apart (reduces double-counting)
 
-# Optional: make per-time-bin maps (in seconds). Set None to skip.
+# Optional: make per-time-bin maps (in seconds). Set None to skip binning.
 bin_seconds = None  # e.g., 60 for per-minute maps; or None for whole recording
 # ----------------------------------
 
@@ -23,17 +23,17 @@ bin_seconds = None  # e.g., 60 for per-minute maps; or None for whole recording
 ops  = np.load(os.path.join(root, 'ops.npy'), allow_pickle=True).item()
 stat = np.load(os.path.join(root, 'stat.npy'), allow_pickle=True)
 
-Ly, Lx = ops['Ly'], ops['Lx']
-pix_to_um = ops.get('pix_to_um', None)  # might be None
+Ly, Lx = ops['Ly'], ops['Lx']                    # Image dimensions
+pix_to_um = ops.get('pix_to_um', None)           # Pixel→µm scale if available
 
 # ---- Load processed signals (time-major T x N) ----
-# We only need low-pass ΔF/F and d/dt for metrics
+# We only need low-pass ΔF/F and derivative for the supported metrics
 low = np.memmap(os.path.join(root, f'{prefix}dff_lowpass.memmap.float32'),
                 dtype='float32', mode='r')
 dt  = np.memmap(os.path.join(root, f'{prefix}dff_dt.memmap.float32'),
                 dtype='float32', mode='r')
 
-# infer T and N robustly from stat length
+# Infer T (frames) and N (ROIs) from file sizes; reshape memmaps to (T, N)
 N = len(stat)
 T = low.size // N
 low = low.reshape(T, N)
@@ -41,11 +41,20 @@ dt  = dt.reshape(T, N)
 
 # ---- Helpers ----
 def mad_z(x):
+    """
+    Robust z-score using MAD with 1.4826 scaling (approx σ for normal RV).
+    """
     med = np.median(x)
     mad = np.median(np.abs(x - med)) + 1e-12
     return (x - med) / (1.4826 * mad), med, mad
 
 def hysteresis_onsets(z, z_hi, z_lo, fps, min_sep_s=0.0):
+    """
+    Hysteresis onset detection on robust z:
+      - enter when z >= z_hi; exit when z <= z_lo
+      - merge onsets closer than min_sep_s (sec)
+    Returns onset frame indices (np.int32).
+    """
     above_hi = z >= z_hi
     onsets = []
     active = False
@@ -69,9 +78,13 @@ def hysteresis_onsets(z, z_hi, z_lo, fps, min_sep_s=0.0):
 
 def roi_metric(values, which='event_rate', t_slice=slice(None)):
     """
-    Compute one scalar per ROI for a chosen metric.
-    values: dict with arrays per ROI/time (expects 'low' and 'dt').
-    which: 'event_rate', 'mean_dff', 'peak_dz'
+    Compute one scalar per ROI for a chosen metric over a time window.
+      values: dict containing 'low' and 'dt' arrays of shape (T, N)
+      which:  'event_rate' (events/min via hysteresis on robust dz),
+              'mean_dff'   (mean of low-pass ΔF/F),
+              'peak_dz'    (max robust z of derivative)
+      t_slice: slice to select a time window (default: all)
+    Returns float32 array of length N.
     """
     lp = values['low'][t_slice]  # (Tsel, N)
     dd = values['dt'][t_slice]   # (Tsel, N)
@@ -82,7 +95,7 @@ def roi_metric(values, which='event_rate', t_slice=slice(None)):
         out = np.nanmean(lp, axis=0).astype(np.float32)
 
     elif which == 'peak_dz':
-        # peak robust z of derivative per ROI
+        # Peak robust z per ROI (loop over columns for per-ROI MAD)
         z = np.empty_like(dd, dtype=np.float32)
         for j in range(dd.shape[1]):
             zj, _, _ = mad_z(dd[:, j])
@@ -90,13 +103,14 @@ def roi_metric(values, which='event_rate', t_slice=slice(None)):
         out = np.nanmax(z, axis=0).astype(np.float32)
 
     elif which == 'event_rate':
+        # Count onsets per ROI and divide by duration (min) → events/min
         counts = np.zeros(dd.shape[1], dtype=np.int32)
         for j in range(dd.shape[1]):
             zj, _, _ = mad_z(dd[:, j])
             on = hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
             counts[j] = on.size
         duration_min = Tsel / fps / 60.0
-        out = (counts / max(duration_min, 1e-9)).astype(np.float32)  # events per minute
+        out = (counts / max(duration_min, 1e-9)).astype(np.float32)
     else:
         raise ValueError("metric must be one of: 'event_rate', 'mean_dff', 'peak_dz'")
 
@@ -105,7 +119,8 @@ def roi_metric(values, which='event_rate', t_slice=slice(None)):
 def paint_spatial(values_per_roi, stat_list, Ly, Lx):
     """
     Paint per-ROI scalar values onto the imaging plane using ROI masks.
-    Weighted by 'lam' (pixel membership). Returns (Ly, Lx) float32 image.
+    Uses 'lam' weights for soft assignment; normalizes by accumulated weight.
+    Returns (Ly, Lx) float32 image.
     """
     img = np.zeros((Ly, Lx), dtype=np.float32)
     w   = np.zeros((Ly, Lx), dtype=np.float32)
@@ -114,15 +129,16 @@ def paint_spatial(values_per_roi, stat_list, Ly, Lx):
         ypix = s['ypix']
         xpix = s['xpix']
         lam  = s['lam'].astype(np.float32)
-        # accumulate
         img[ypix, xpix] += v * lam
         w[ypix, xpix]   += lam
-    # normalize where we have weight
     m = w > 0
     img[m] /= w[m]
     return img
 
 def show_spatial(img, title, pix_to_um=None, cmap='magma', outpath=None):
+    """
+    Display/save a spatial scalar map with optional µm axes and ROI centroid overlay.
+    """
     extent = None
     xlabel, ylabel = 'X (pixels)', 'Y (pixels)'
     if pix_to_um is not None:
@@ -131,6 +147,7 @@ def show_spatial(img, title, pix_to_um=None, cmap='magma', outpath=None):
 
     plt.figure(figsize=(8, 7))
     im = plt.imshow(img, origin='lower', cmap=cmap, extent=extent, aspect='equal')
+    # Light overlay of ROI centroids (helps sanity-check registration)
     xs = [np.median(s['xpix']) for s in stat]
     ys = [np.median(s['ypix']) for s in stat]
     if pix_to_um is not None:
@@ -167,7 +184,8 @@ if bin_seconds is not None and bin_seconds > 0:
     for b in range(n_bins):
         t0 = b * Tbin
         t1 = min(T, (b+1) * Tbin)
-        if t1 - t0 < max(5, int(0.2 * Tbin)):  # skip tiny tail
+        # Skip tiny tail windows to avoid noisy/empty maps
+        if t1 - t0 < max(5, int(0.2 * Tbin)):
             continue
         vals_b = roi_metric({'low': low[t0:t1], 'dt': dt[t0:t1]},
                             which=metric, t_slice=slice(None))
