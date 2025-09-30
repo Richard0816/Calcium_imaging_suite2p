@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # --- Config (user parameters) ---
-root = 'D:\\data\\2p_shifted\\2024-11-20_00004\\suite2p\\plane0\\'  # Path to Suite2p outputs
+root = r'D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0'  # Path to Suite2p outputs
 fps = 30.0          # Imaging frame rate (frames per second)
 roi = 2             # ROI index to visualize
 t_max = None        # Seconds to plot (None = full trace)
