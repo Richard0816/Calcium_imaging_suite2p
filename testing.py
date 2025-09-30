@@ -149,3 +149,5 @@ dff_f = safe_lowpass(dff, fps=fps, cutoff_hz=5.0, order=3)
 d_dt  = sg_first_derivative(dff_f, fps=fps, win_ms=333, poly=3)
 
 print(d_dt)'''
+root = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'
+print()
