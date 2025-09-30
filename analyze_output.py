@@ -6,6 +6,8 @@ import sys
 import contextlib
 import io
 import time
+import pandas as pd
+import re
 
 class Tee(io.TextIOBase):
     def __init__(self, *streams):
@@ -74,6 +76,83 @@ def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
         g[1:] = (x[1:] - x[:-1]) * fps
         return g
     return savgol_filter(x, window_length=win, polyorder=poly, deriv=1, delta=1.0 / fps).astype(np.float32)
+
+
+def get_row_number_csv_module(csv_filename: str, header_name: str, target_element: str) -> int:
+    """
+    Find the row number of a given target element under a specific header column in a CSV file.
+    The comparison is done by splitting strings into lists of integers (delimiters: '-' and '_')
+    and checking if the lists are identical.
+
+    :param csv_filename: Path to the CSV file.
+    :param header_name: The name of the column header to search under.
+    :param target_element: The element to look for in the specified column.
+    :return: The row number (1-based, not counting the header) if found, otherwise None.
+    """
+    try:
+        # Read only the target column from the CSV file for efficiency
+        col = pd.read_csv(csv_filename, usecols=[header_name])
+    except ValueError:
+        # If the header doesn't exist, return None
+        print(f"Error: Header '{header_name}' not found in the CSV file.")
+
+        return None
+
+    # Helper to convert string into list of integers split by "-" or "_"
+    def to_int_list(s: str):
+        return [int(x) for x in re.split(r"[-_]", str(s)) if x.isdigit()]
+
+    # Convert target element into integer list
+    target_list = to_int_list(target_element)
+
+    # Go through column and find first matching row
+    for idx, val in col[header_name].items():
+        if to_int_list(val) == target_list:
+            return idx + 1  # 1-based row number
+
+    return None
+
+def aav_cleanup_and_hz_lookup(aav: str, cutoffs: dict) -> float:
+    """
+    :param cutoffs: A translation of the GCaMP used and the appropriate tau value to apply
+    :param aav: The aav used in the experiment (string pulled from metadata)
+    :return: float of the recommended tau value to use based on aav information
+    """
+    # drop any usage of "rg"
+    aav = aav.replace("rg", "")
+
+    # split by -, _, or + (list output)
+    components = re.split(r"[-_+]", aav)
+
+    # make both the keys and list case-insensitive, and then match list and keys to find 6f, 6m, 8m etc
+    dict_lower = {k.lower(): v for k, v in cutoffs.items()}
+    list_lower = {item.lower() for item in components}
+
+    # Find intersection (common keys)
+    common = dict_lower.keys() & list_lower
+
+    # Return value for the first common key
+    return dict_lower[next(iter(common))]
+
+def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
+    """
+    :param cutoffs: dictionary containing cutoff values
+    :param aav_info_csv: name of the file we are looking to analyse
+    :param file_name: This is information taken from the human_SLE_2p_meta.xlsx file, saved as a csv for easy use
+        will always look for the columns of "AAV" and "video" to determine the file name and appropriate video used
+    :return: float value for our Hz value
+    """
+    # look up the file name in aav_info under "video"
+    # get the row number of file name
+    row_num = get_row_number_csv_module(aav_info_csv, 'video', file_name)
+
+    # get aav information
+    col = pd.read_csv(aav_info_csv, usecols=["AAV"])  # Read only the needed column
+    element = col["AAV"].iloc[row_num - 1]  # row_num is 1-based
+    element = str(element)
+
+    return aav_cleanup_and_hz_lookup(element, cutoffs)
+
 
 # ---------- batch processing over Suite2p matrices ----------
 def process_suite2p_traces(
@@ -180,12 +259,22 @@ def run_on_folders(parent_folder: str) -> None:
 
             print(f'Processing {entry.name}')
 
+            cutoffs = {
+                "6f": 5.0,
+                "6m": 5.0,
+                "6s": 5.0,
+                "8m": 3.0
+            }
+
+            cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta", entry.name)
+            print(f'cutoff_hz: {cutoff_hz}')
+
             dff_path, low_path, dt_path = process_suite2p_traces(
                 F_cell, F_neu, fps,
                 r=0.7,
                 batch_size=2500,
                 win_sec=45, perc=10,
-                cutoff_hz=5.0, sg_win_ms=400, sg_poly=1,
+                cutoff_hz=cutoff_hz, sg_win_ms=400, sg_poly=1,
                 out_dir=out_dir, prefix=prefix
             )
 
