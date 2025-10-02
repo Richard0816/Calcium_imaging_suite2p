@@ -1,11 +1,12 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import utils
 
 # --- Config (user parameters) ---
-root = r'D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0'  # Path to Suite2p outputs
+root = r'D:\data\2p_shifted\2024-07-01_00018\suite2p\plane0'  # Path to Suite2p outputs
 fps = 30.0          # Imaging frame rate (frames per second)
-roi = 2             # ROI index to visualize
+roi = 10             # ROI index to visualize
 t_max = None        # Seconds to plot (None = full trace)
 z_enter = 3.5       # z-score threshold to detect event onset
 z_exit  = 2         # z-score threshold to detect event offset (hysteresis control)
@@ -36,22 +37,10 @@ low_trace = np.asarray(low[:, roi])
 dt_trace  = np.asarray(dt[:, roi])
 
 # --- Robust z-score (MAD) of derivative ---
-med = np.median(dt_trace)                                  # Median of derivative
-mad = np.median(np.abs(dt_trace - med)) + 1e-12            # Median absolute deviation (avoid div by zero)
-z = (dt_trace - med) / (1.4826 * mad)                      # Robust z-score (normalizing factor = 1.4826)
+z, med, mad = utils.mad_z(dt_trace)
 
 # --- Hysteresis event detection based on z-scores ---
-above_enter = z >= z_enter
-events_onsets = []
-active = False
-for i in range(len(z)):
-    if not active and above_enter[i]:
-        # Event starts when crossing enter threshold
-        active = True
-        events_onsets.append(i)
-    if active and z[i] <= z_exit:
-        # Event ends when dropping below exit threshold
-        active = False
+events_onsets = utils.hysteresis_onsets(z, z_enter, z_exit, fps)
 
 # Convert onset indices to event times in seconds
 event_times = np.array(events_onsets) / fps
