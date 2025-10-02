@@ -168,7 +168,6 @@ def run_full_imaging_on_folder(folder_name:str):
 
     print(f"Completed in {time.time() - start_time} seconds.")
 
-
 def run():
     utils.run_on_folders('D:\\data\\2p_shifted\\', run_full_imaging_on_folder)
 

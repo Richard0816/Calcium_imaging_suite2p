@@ -87,5 +87,6 @@ def run():
 
     utils.run_on_folders('D:\\data\\2p_shifted\\', run_suite2p_on_folder, [ops, tau_vals], True)
 
+
 if __name__ == '__main__':
     utils.log("suite2p_raw_output.log", run())

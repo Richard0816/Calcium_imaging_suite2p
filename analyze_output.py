@@ -5,6 +5,19 @@ import os
 import time
 import utils
 
+def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
+    """
+    :param cutoffs: dictionary containing cutoff values
+    :param aav_info_csv: name of the file we are looking to analyse
+    :param file_name: This is information taken from the human_SLE_2p_meta.xlsx file, saved as a csv for easy use
+        will always look for the columns of "AAV" and "video" to determine the file name and appropriate video used
+    :return: float value for our Hz value
+    """
+    # look into utils.py to get full information
+    cutoff_hz = utils.file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, cutoffs)
+
+    return cutoff_hz
+
 # ---------- per-trace helpers (1D) ----------
 def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
     """Rolling percentile baseline on a 1D array, low-RAM."""
@@ -63,20 +76,6 @@ def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
         g[1:] = (x[1:] - x[:-1]) * fps
         return g
     return savgol_filter(x, window_length=win, polyorder=poly, deriv=1, delta=1.0 / fps).astype(np.float32)
-
-
-def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
-    """
-    :param cutoffs: dictionary containing cutoff values
-    :param aav_info_csv: name of the file we are looking to analyse
-    :param file_name: This is information taken from the human_SLE_2p_meta.xlsx file, saved as a csv for easy use
-        will always look for the columns of "AAV" and "video" to determine the file name and appropriate video used
-    :return: float value for our Hz value
-    """
-    # look into utils.py to get full information
-    cutoff_hz = utils.file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, cutoffs)
-
-    return cutoff_hz
 
 
 # ---------- batch processing over Suite2p matrices ----------
@@ -203,7 +202,6 @@ def run_analysis_on_folder(folder_name: str):
     print(" low-pass   ->", low_path)
     print(" d/dt       ->", dt_path)
     print(f'Total time {time.time() - start_time} seconds.')
-
 
 def run():
     utils.run_on_folders('D:\\data\\2p_shifted\\', run_analysis_on_folder)
