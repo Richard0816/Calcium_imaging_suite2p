@@ -633,3 +633,6 @@ Summaries built: heatmap matrix = (57, 1250) event raster = (57, 1250)
 Saved D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0\r0p7_small_multiples_p1.png
 Saved: D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0\r0p7_overview_heatmap.png D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0\r0p7_event_raster.png and small-multiples pages.
 Completed in 12.995671272277832 seconds.
+Processing 2024-06-03_00001
+Processing 2024-06-03_00001
+Summaries built: heatmap matrix = (630, 1250) event raster = (630, 1250)

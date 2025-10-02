@@ -2,21 +2,8 @@ import numpy as np
 from scipy.ndimage import percentile_filter
 from scipy.signal import butter, sosfilt, savgol_filter
 import os
-import sys
-import contextlib
-import io
 import time
-import pandas as pd
-import re
-
-class Tee(io.TextIOBase):
-    def __init__(self, *streams):
-        self.streams = streams
-    def write(self, data):
-        for s in self.streams:
-            s.write(data)
-            s.flush()
-        return len(data)
+import utils
 
 # ---------- per-trace helpers (1D) ----------
 def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
@@ -78,62 +65,6 @@ def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
     return savgol_filter(x, window_length=win, polyorder=poly, deriv=1, delta=1.0 / fps).astype(np.float32)
 
 
-def get_row_number_csv_module(csv_filename: str, header_name: str, target_element: str) -> int:
-    """
-    Find the row number of a given target element under a specific header column in a CSV file.
-    The comparison is done by splitting strings into lists of integers (delimiters: '-' and '_')
-    and checking if the lists are identical.
-
-    :param csv_filename: Path to the CSV file.
-    :param header_name: The name of the column header to search under.
-    :param target_element: The element to look for in the specified column.
-    :return: The row number (1-based, not counting the header) if found, otherwise None.
-    """
-    try:
-        # Read only the target column from the CSV file for efficiency
-        col = pd.read_csv(csv_filename, usecols=[header_name])
-    except ValueError:
-        # If the header doesn't exist, return None
-        print(f"Error: Header '{header_name}' not found in the CSV file.")
-
-        return None
-
-    # Helper to convert string into list of integers split by "-" or "_"
-    def to_int_list(s: str):
-        return [int(x) for x in re.split(r"[-_]", str(s)) if x.isdigit()]
-
-    # Convert target element into integer list
-    target_list = to_int_list(target_element)
-
-    # Go through column and find first matching row
-    for idx, val in col[header_name].items():
-        if to_int_list(val) == target_list:
-            return idx + 1  # 1-based row number
-
-    return None
-
-def aav_cleanup_and_hz_lookup(aav: str, cutoffs: dict) -> float:
-    """
-    :param cutoffs: A translation of the GCaMP used and the appropriate tau value to apply
-    :param aav: The aav used in the experiment (string pulled from metadata)
-    :return: float of the recommended tau value to use based on aav information
-    """
-    # drop any usage of "rg"
-    aav = aav.replace("rg", "")
-
-    # split by -, _, or + (list output)
-    components = re.split(r"[-_+]", aav)
-
-    # make both the keys and list case-insensitive, and then match list and keys to find 6f, 6m, 8m etc
-    dict_lower = {k.lower(): v for k, v in cutoffs.items()}
-    list_lower = {item.lower() for item in components}
-
-    # Find intersection (common keys)
-    common = dict_lower.keys() & list_lower
-
-    # Return value for the first common key
-    return dict_lower[next(iter(common))]
-
 def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
     """
     :param cutoffs: dictionary containing cutoff values
@@ -142,16 +73,10 @@ def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
         will always look for the columns of "AAV" and "video" to determine the file name and appropriate video used
     :return: float value for our Hz value
     """
-    # look up the file name in aav_info under "video"
-    # get the row number of file name
-    row_num = get_row_number_csv_module(aav_info_csv, 'video', file_name)
+    # look into utils.py to get full information
+    cutoff_hz = utils.file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, cutoffs)
 
-    # get aav information
-    col = pd.read_csv(aav_info_csv, usecols=["AAV"])  # Read only the needed column
-    element = col["AAV"].iloc[row_num - 1]  # row_num is 1-based
-    element = str(element)
-
-    return aav_cleanup_and_hz_lookup(element, cutoffs)
+    return cutoff_hz
 
 
 # ---------- batch processing over Suite2p matrices ----------
@@ -237,65 +162,55 @@ def process_suite2p_traces(
     del dff_mm, low_mm, dt_mm
     return dff_path, low_path, dt_path
 
-def run_on_folders(parent_folder: str) -> None:
-    """
-    Run a custom function on every subfolder inside a parent folder (non-recursive).
+def run_analysis_on_folder(folder_name: str):
+    start_time = time.time()
+    fps = 30.0
+    root = os.path.join(folder_name, "suite2p\\plane0\\")
+    sample_name = root.split("\\")[-4]  # Human-readable sample name from path
 
-    :param parent_folder: Path to the parent folder.
-    """
-    for entry in os.scandir(parent_folder):
-        if entry.is_dir():
-            start_time = time.time()
-            root = os.path.join(entry.path, "suite2p\\plane0\\")
+    # Load Suite2p outputs
+    F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
+    F_neu = np.load(os.path.join(root, 'Fneu.npy'), allow_pickle=True)
 
-            # Load Suite2p outputs
-            F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
-            F_neu = np.load(os.path.join(root, 'Fneu.npy'), allow_pickle=True)
+    # Where to write outputs
+    out_dir = root  # save alongside Suite2p
+    # Optional: a prefix for filenames so you can run variants without clobbering
+    prefix = 'r0p7_'  # e.g., indicates r=0.7
 
-            # Where to write outputs
-            out_dir = root  # save alongside Suite2p
-            # Optional: a prefix for filenames so you can run variants without clobbering
-            prefix = 'r0p7_'  # e.g., indicates r=0.7
+    print(f'Processing {sample_name}')
 
-            print(f'Processing {entry.name}')
+    cutoffs = {
+        "6f": 5.0,
+        "6m": 5.0,
+        "6s": 5.0,
+        "8m": 3.0
+    }
 
-            cutoffs = {
-                "6f": 5.0,
-                "6m": 5.0,
-                "6s": 5.0,
-                "8m": 3.0
-            }
+    cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta", sample_name)
+    print(f'cutoff_hz: {cutoff_hz}')
 
-            cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta", entry.name)
-            print(f'cutoff_hz: {cutoff_hz}')
+    dff_path, low_path, dt_path = process_suite2p_traces(
+        F_cell, F_neu, fps,
+        r=0.7,
+        batch_size=2500,
+        win_sec=45, perc=10,
+        cutoff_hz=cutoff_hz, sg_win_ms=400, sg_poly=1,
+        out_dir=out_dir, prefix=prefix
+    )
 
-            dff_path, low_path, dt_path = process_suite2p_traces(
-                F_cell, F_neu, fps,
-                r=0.7,
-                batch_size=2500,
-                win_sec=45, perc=10,
-                cutoff_hz=cutoff_hz, sg_win_ms=400, sg_poly=1,
-                out_dir=out_dir, prefix=prefix
-            )
+    print("Wrote:")
+    print(" dF/F       ->", dff_path)
+    print(" low-pass   ->", low_path)
+    print(" d/dt       ->", dt_path)
+    print(f'Total time {time.time() - start_time} seconds.')
 
-            print("Wrote:")
-            print(" dF/F       ->", dff_path)
-            print(" low-pass   ->", low_path)
-            print(" d/dt       ->", dt_path)
-            print(f'Total time {time.time() - start_time} seconds.')
+
+def run():
+    utils.run_on_folders('D:\\data\\2p_shifted\\', run_analysis_on_folder)
 
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    logfile = open("fluorescence_analysis.log", "a")
-    tee = Tee(sys.__stdout__, logfile)
-
-    # running in here just to store the output in the logfile
-    with contextlib.redirect_stdout(tee), contextlib.redirect_stderr(tee):
-        fps = 30.0
-        run_on_folders("D:\\data\\2p_shifted\\")
-
-    logfile.close()
-
+    utils.log("fluorescence_analysis.log", run)
 
 

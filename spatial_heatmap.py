@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import utils
 
 # ------------- CONFIG -------------
 root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'  # Single Suite2p plane directory
@@ -40,42 +41,6 @@ low = low.reshape(T, N)
 dt  = dt.reshape(T, N)
 
 # ---- Helpers ----
-def mad_z(x):
-    """
-    Robust z-score using MAD with 1.4826 scaling (approx σ for normal RV).
-    """
-    med = np.median(x)
-    mad = np.median(np.abs(x - med)) + 1e-12
-    return (x - med) / (1.4826 * mad), med, mad
-
-def hysteresis_onsets(z, z_hi, z_lo, fps, min_sep_s=0.0):
-    """
-    Hysteresis onset detection on robust z:
-      - enter when z >= z_hi; exit when z <= z_lo
-      - merge onsets closer than min_sep_s (sec)
-    Returns onset frame indices (np.int32).
-    """
-    above_hi = z >= z_hi
-    onsets = []
-    active = False
-    for i in range(z.size):
-        if not active and above_hi[i]:
-            active = True
-            onsets.append(i)
-        elif active and z[i] <= z_lo:
-            active = False
-    if not onsets:
-        return np.array([], dtype=int)
-    onsets = np.array(onsets, dtype=int)
-    if min_sep_s > 0:
-        min_sep = int(min_sep_s * fps)
-        merged = [onsets[0]]
-        for k in onsets[1:]:
-            if k - merged[-1] >= min_sep:
-                merged.append(k)
-        onsets = np.asarray(merged, dtype=int)
-    return onsets
-
 def roi_metric(values, which='event_rate', t_slice=slice(None)):
     """
     Compute one scalar per ROI for a chosen metric over a time window.
@@ -98,7 +63,7 @@ def roi_metric(values, which='event_rate', t_slice=slice(None)):
         # Peak robust z per ROI (loop over columns for per-ROI MAD)
         z = np.empty_like(dd, dtype=np.float32)
         for j in range(dd.shape[1]):
-            zj, _, _ = mad_z(dd[:, j])
+            zj, _, _ = utils.mad_z(dd[:, j])
             z[:, j] = zj
         out = np.nanmax(z, axis=0).astype(np.float32)
 
@@ -106,8 +71,8 @@ def roi_metric(values, which='event_rate', t_slice=slice(None)):
         # Count onsets per ROI and divide by duration (min) → events/min
         counts = np.zeros(dd.shape[1], dtype=np.int32)
         for j in range(dd.shape[1]):
-            zj, _, _ = mad_z(dd[:, j])
-            on = hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
+            zj, _, _ = utils.mad_z(dd[:, j])
+            on = utils.hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
             counts[j] = on.size
         duration_min = Tsel / fps / 60.0
         out = (counts / max(duration_min, 1e-9)).astype(np.float32)
