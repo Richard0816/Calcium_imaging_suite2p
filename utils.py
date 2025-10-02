@@ -55,6 +55,18 @@ def run_on_folders(parent_folder: str, func, addon_vals: list = None, leaf_folde
                 func(entry.path)
 
 def log(log_filename: str, run_function) -> None:
+    """
+    Logs the output of a given function to a specified log file as well as the standard
+    output. It intercepts the output of both standard output and standard error streams
+    and writes them to the specified log file whilst still displaying them in the console.
+
+    The function uses a helper class `Tee` and `contextlib.redirect_stdout` and
+    `contextlib.redirect_stderr` to handle output redirection.
+
+    :param log_filename: The path to the log file where the output should be stored.
+    :param run_function: The function to be executed, whose output is to be logged.
+    :return: None
+    """
     logfile = open(log_filename, "a")
     tee = Tee(sys.__stdout__, logfile)
 
@@ -161,10 +173,18 @@ def get_row_number_csv_module(csv_filename: str, header_name: str, target_elemen
 
 def file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, dic):
     """
-    :param file_name:
-    :param aav_info_csv:
-    :param dic:
-    :return:
+    Look up a given file name in the CSV file and perform operations to retrieve
+    a dictionary value using corresponding AAV information.
+
+    :param file_name: The name of the file to look up in the CSV file
+    :type file_name: str
+    :param aav_info_csv: The path to the CSV file containing AAV information
+        and video details
+    :type aav_info_csv: str
+    :param dic: The dictionary to perform a lookup using the cleaned AAV value
+    :type dic: dict
+    :return: The retrieved value from the dictionary after performing the lookup
+    :rtype: Any
     """
     # look up the file name in aav_info under "video"
     # get the row number of file name

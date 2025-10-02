@@ -6,38 +6,78 @@ import utils
 # ---- Helpers ----
 def roi_metric(values, which='event_rate', t_slice=slice(None), fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3):
     """
-    Compute one scalar per ROI for a chosen metric over a time window.
-      values: dict containing 'low' and 'dt' arrays of shape (T, N)
-      which:  'event_rate' (events/min via hysteresis on robust dz),
-              'mean_dff'   (mean of low-pass ΔF/F),
-              'peak_dz'    (max robust z of derivative)
-      t_slice: slice to select a time window (default: all)
-    Returns float32 array of length N.
-    """
+    Computes a region of interest (ROI) metric based on the specified type.
+
+    This function processes time-series data to compute metrics such as 
+    event rates, mean delta F/F (dff), or peak robust z-scores for the provided
+    regions of interest. The chosen metric depends on the `which`"""
+    
+    # Extract the low-pass filtered data (delta F/F) for the selected time slice
+    # Shape: (Tsel, N) where Tsel = number of time frames, N = number of ROIs
     lp = values['low'][t_slice]  # (Tsel, N)
+    
+    # Extract the detrended data for the selected time slice
+    # This is used for z-score calculations and event detection
     dd = values['dt'][t_slice]  # (Tsel, N)
+    
+    # Get the number of time frames in the selected slice
     Tsel = lp.shape[0]
+    
+    # Initialize output array with zeros, one value per ROI
+    # dtype=float32 for memory efficiency
     out = np.zeros(lp.shape[1], dtype=np.float32)
-
+    
+    # Branch 1: Calculate mean delta F/F across time for each ROI
     if which == 'mean_dff':
+        # Compute mean across time axis (axis=0), ignoring NaN values
+        # Convert to float32 for consistency
         out = np.nanmean(lp, axis=0).astype(np.float32)
-
+    
+    # Branch 2: Calculate peak robust z-score for each ROI
     elif which == 'peak_dz':
         # Peak robust z per ROI (loop over columns for per-ROI MAD)
+        
+        # Create empty array to store z-scores with same shape as detrended data
         z = np.empty_like(dd, dtype=np.float32)
+        
+        # Loop through each ROI (column)
         for j in range(dd.shape[1]):
+            # Calculate robust z-score using MAD for this ROI's time series
+            # mad_z returns (z-score, median, mad); we only need the z-score
             zj, _, _ = utils.mad_z(dd[:, j])
+            
+            # Store z-scores for this ROI in the z array
             z[:, j] = zj
+        
+        # Find maximum z-score across time for each ROI
+        # This represents the peak activity level
         out = np.nanmax(z, axis=0).astype(np.float32)
-
+    
+    # Branch 3: Calculate event rate (events per minute) for each ROI
     elif which == 'event_rate':
         # Count onsets per ROI and divide by duration (min) → events/min
+        
+        # Initialize array to count number of events detected in each ROI
         counts = np.zeros(dd.shape[1], dtype=np.int32)
+        
+        # Loop through each ROI to detect and count events
         for j in range(dd.shape[1]):
+            # Calculate robust z-score for this ROI's time series
             zj, _, _ = utils.mad_z(dd[:, j])
+            
+            # Detect event onsets using hysteresis thresholding
+            # Events start when z >= z_enter and end when z <= z_exit
+            # Returns array of frame indices where events begin
             on = utils.hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
+            
+            # Count the number of detected events (size of onset array)
             counts[j] = on.size
+        
+        # Convert total time frames to minutes: frames / (frames/sec) / (sec/min)
         duration_min = Tsel / fps / 60.0
+        
+        # Calculate event rate: events / minutes
+        # Use max() to avoid division by zero (minimum denominator = 1e-9)
         out = (counts / max(duration_min, 1e-9)).astype(np.float32)
     else:
         raise ValueError("metric must be one of: 'event_rate', 'mean_dff', 'peak_dz'")
