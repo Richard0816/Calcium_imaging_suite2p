@@ -1,6 +1,5 @@
 import suite2p
 import numpy as np
-import psutil
 import utils
 
 
@@ -22,30 +21,6 @@ def change_tau_according_to_GCaMP(ops: dict, tau_vals: dict, aav_info_csv: str, 
 
     return ops
 
-
-def change_batch_according_to_free_ram(ops: dict) -> dict:
-    """
-    Not totally necessary but changes batch size according to how much memory we have
-    :param ops: OPS file, this is a dictionary
-    :return: The updated ops data after appropriate adjustment has been made
-    """
-    # define the memory
-    virtual_memory = psutil.virtual_memory()
-
-    # calculate the current available memory
-    available_mem = round(virtual_memory.available / (1024 ** 3), 1)
-
-    # ensures that the minimum batch size is 100, even if we are running super low on memory
-    if available_mem <= 13.5:
-        ops["batch_size"] = 100
-        return ops
-
-    # calculates the batch size based on a linear relationship between memory and run
-    else:
-        ops["batch_size"] = int(20 * available_mem - 170) # calculated using the two point form of the linear eqn (16, 150), (200, 4000)
-        return ops
-
-
 def run_suite2p_on_folder(folder_name: str, addon_vals: list) -> None:
     """
     :param folder_name:
@@ -59,7 +34,7 @@ def run_suite2p_on_folder(folder_name: str, addon_vals: list) -> None:
 
     # Changing the ops file
     change_tau_according_to_GCaMP(ops, tau_vals, "human_SLE_2p_meta.csv", folder_name.split("\\")[-1])
-    change_batch_according_to_free_ram(ops) # can delete if you are happy with the batch_size defined in the ops.npy
+    ops["batch_size"] = utils.change_batch_according_to_free_ram() # can delete if you are happy with the batch_size defined in the ops.npy
 
     # defining the folder
     db = {
@@ -70,7 +45,6 @@ def run_suite2p_on_folder(folder_name: str, addon_vals: list) -> None:
     output_ops = suite2p.run_s2p(ops, db)
 
     print(set(output_ops.keys()).difference(ops.keys()))
-
 
 def run():
     # taken from suite2p documentation https://suite2p.readthedocs.io/en/latest/settings.html
@@ -89,4 +63,4 @@ def run():
 
 
 if __name__ == '__main__':
-    utils.log("suite2p_raw_output.log", run())
+    utils.log("suite2p_raw_output.log", run)

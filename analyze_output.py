@@ -185,15 +185,17 @@ def run_analysis_on_folder(folder_name: str):
         "8m": 3.0
     }
 
-    cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta", sample_name)
+    cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta.csv", sample_name)
     print(f'cutoff_hz: {cutoff_hz}')
+
+    batch_size = utils.change_batch_according_to_free_ram()*20
 
     dff_path, low_path, dt_path = process_suite2p_traces(
         F_cell, F_neu, fps,
         r=0.7,
-        batch_size=2500,
+        batch_size=batch_size,
         win_sec=45, perc=10,
-        cutoff_hz=cutoff_hz, sg_win_ms=400, sg_poly=1,
+        cutoff_hz=cutoff_hz, sg_win_ms=333, sg_poly=2,
         out_dir=out_dir, prefix=prefix
     )
 

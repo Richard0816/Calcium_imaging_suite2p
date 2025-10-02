@@ -5,6 +5,8 @@ import sys
 import numpy as np
 import re
 import pandas as pd
+import psutil
+
 
 # ----------- Mass function deployment + logging functionality -----------
 class Tee(io.TextIOBase):
@@ -15,6 +17,22 @@ class Tee(io.TextIOBase):
             s.write(data)
             s.flush()
         return len(data)
+
+def change_batch_according_to_free_ram() -> int:
+    """
+    Not totally necessary but changes batch size according to how much memory we have
+    :return: The updated ops data after appropriate adjustment has been made
+    """
+    # calculate the current available memory
+    available_mem = round(psutil.virtual_memory().available/ (1024 ** 3), 1)
+
+    # ensures that the minimum batch size is 100, even if we are running super low on memory
+    if available_mem <= 13.5:
+        return 100
+
+    # calculates the batch size based on a linear relationship between memory and run
+    else:
+        return int(20 * available_mem - 170) # calculated using the two point form of the linear eqn (16, 150), (200, 4000)
 
 def run_on_folders(parent_folder: str, func, addon_vals: list = None, leaf_folders_only=False) -> None:
     """
