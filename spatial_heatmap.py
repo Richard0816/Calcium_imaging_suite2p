@@ -90,17 +90,36 @@ def paint_spatial(values_per_roi, stat_list, Ly, Lx):
     Uses 'lam' weights for soft assignment; normalizes by accumulated weight.
     Returns (Ly, Lx) float32 image.
     """
+    # Initialize the output image array with zeros, shape matches imaging plane dimensions
     img = np.zeros((Ly, Lx), dtype=np.float32)
+
+    # Initialize weight accumulator array to track total lambda weights per pixel
     w = np.zeros((Ly, Lx), dtype=np.float32)
+
+    # Iterate through each ROI and its corresponding statistics dictionary
     for j, s in enumerate(stat_list):
+        # Get the scalar value (metric) for the current ROI
         v = values_per_roi[j]
+
+        # Extract y and x-coordinates of all pixels belonging to this ROI
         ypix = s['ypix']
         xpix = s['xpix']
+
+        # Extract lambda weights (pixel-wise contribution strengths) and convert to float32
         lam = s['lam'].astype(np.float32)
+
+        # Add weighted ROI value to image: each pixel gets v * its lambda weight
         img[ypix, xpix] += v * lam
+
+        # Accumulate the lambda weights at each pixel (for normalization)
         w[ypix, xpix] += lam
+
+    # Create boolean mask identifying pixels with non-zero accumulated weights
     m = w > 0
+
+    # Normalize weighted values by dividing by accumulated weights (only where w > 0)
     img[m] /= w[m]
+
     return img
 
 def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath=None, ):
