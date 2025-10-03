@@ -6,6 +6,10 @@ import numpy as np
 import re
 import pandas as pd
 import psutil
+from scipy.ndimage import percentile_filter
+from scipy.signal import butter, sosfilt, savgol_filter
+from pathlib import Path
+from typing import Tuple, Optional, Sequence, Union
 
 
 # ----------- Mass function deployment + logging functionality -----------
@@ -76,7 +80,112 @@ def log(log_filename: str, run_function) -> None:
 
     logfile.close()
 
-# ----------- Stats -----------
+# ---- Suite2p I/O + orientation ----
+def s2p_infer_orientation(F: np.ndarray) -> tuple[int, int, bool]:
+    """
+    Infer whether Suite2p arrays are shaped (N_ROIs, T) or (T, N_ROIs).
+    Returns (T, N, time_major) where time_major=True means (T, N).
+    """
+    if F.ndim != 2:
+        raise ValueError(f"Expected 2D array, got {F.shape}")
+    n0, n1 = F.shape
+    if n0 < n1:
+        # (N, T)
+        num_frames, num_rois, time_major = n1, n0, False
+    else:
+        # (T, N)
+        num_frames, num_rois, time_major = n0, n1, True
+    return num_frames, num_rois, time_major
+
+def s2p_load_raw(root: Union[str, Path]) -> tuple[np.ndarray, np.ndarray, int, int, bool]:
+    """
+    Load F.npy and Fneu.npy, and return (F, Fneu, num_frames, num_rois, time_major).
+    """
+    root = Path(root)
+    F = np.load(root / "F.npy", allow_pickle=False)
+    Fneu = np.load(root / "Fneu.npy", allow_pickle=False)
+    if F.shape != Fneu.shape:
+        raise ValueError(f"F and Fneu shapes differ: {F.shape} vs {Fneu.shape}")
+    num_frames, num_rois, time_major = s2p_infer_orientation(F)
+    return F, Fneu, num_frames, num_rois, time_major
+
+def s2p_open_memmaps(root: Union[str, Path], prefix: str = "r0p7_") -> tuple[np.memmap, np.memmap, np.memmap, int, int]:
+    """
+    Open ΔF/F, low-pass ΔF/F, and derivative Suite2p memmaps with a given prefix.
+    Returns (dff, low, dt, T, N) with shape (T, N).
+    """
+    root = Path(root)
+    # We infer num_frames, num_rois from one of the files by opening in read-only "r" mode with a guess.
+    # To avoid loading whole arrays, we require caller to give num_frames, num_rois; but many scripts
+    # already know num_frames, num_rois from raw F. When they don't, we can do a small dance:
+    # Here, we first read F to get num_frames, num_rois which is robust.
+    F, _, num_frames, num_rois, _ = s2p_load_raw(root)
+
+    dff = np.memmap(root / f"{prefix}dff.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
+    low = np.memmap(root / f"{prefix}dff_lowpass.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
+    dt  = np.memmap(root / f"{prefix}dff_dt.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
+    return dff, low, dt, num_frames, num_rois
+
+
+# ----------- Signal Processing -----------
+def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
+    """Rolling percentile baseline on a 1D array, low-RAM."""
+    F = np.asarray(F, dtype=np.float32)
+    n = F.size
+
+    # interp over non-finite values if any
+    finite = np.isfinite(F)
+    if not finite.all():
+        F = np.interp(np.arange(n), np.flatnonzero(finite), F[finite]).astype(np.float32)
+
+    win = max(3, int(win_sec * fps) | 1)  # odd
+    win = min(win, n if n % 2 == 1 else n - 1)  # cannot exceed length & must be odd
+    if win < 3:  # too short to filter meaningfully
+        F0 = np.full_like(F, np.nanpercentile(F, perc))
+    else:
+        F0 = percentile_filter(F, size=win, percentile=perc, mode='nearest').astype(np.float32)
+
+    eps = np.nanpercentile(F0, 1) if np.isfinite(F0).any() else 1.0
+    eps = max(eps, 1e-9)
+    dff = (F - F0) / eps
+    return dff
+
+def lowpass_causal_1d(x, fps, cutoff_hz=5.0, order=2, zi=None, sos=None):
+    """Causal SOS low-pass (no filtfilt copies). Returns y, zf, sos."""
+    x = np.asarray(x, dtype=np.float32)
+    n = x.size
+    if n < 3:
+        return x.copy(), zi, sos
+
+    nyq = fps / 2.0
+    cutoff = min(max(1e-4, cutoff_hz), 0.95 * nyq)
+    if sos is None:
+        sos = butter(order, cutoff / nyq, btype='low', output='sos')
+
+    if zi is None:
+        # zi shape: (sections, 2). Init with first sample to avoid transient.
+        zi = np.zeros((sos.shape[0], 2), dtype=np.float32)
+        zi[:, 0] = x[0]
+        zi[:, 1] = x[0]
+
+    y, zf = sosfilt(sos, x, zi=zi)
+    return y.astype(np.float32), zf.astype(np.float32), sos
+
+def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
+    """Savitzky–Golay smoothed first derivative on 1D."""
+    x = np.asarray(x, dtype=np.float32)
+    n = x.size
+    win = max(3, int((win_ms / 1000.0) * fps) | 1)  # odd
+    if win >= n:
+        win = max(3, (n - (1 - n % 2)))  # largest valid odd <= n
+    if win < 3 or n < 3:
+        # fallback simple gradient
+        g = np.empty_like(x)
+        g[0] = 0.0
+        g[1:] = (x[1:] - x[:-1]) * fps
+        return g
+    return savgol_filter(x, window_length=win, polyorder=poly, deriv=1, delta=1.0 / fps).astype(np.float32)
+
 def mad_z(x):
     """
     Robust z-score using MAD (per ROI), with 1.4826 factor to approximate σ for normal data. (stolen from Stern et al. 2024)
@@ -113,6 +222,135 @@ def hysteresis_onsets(z, z_hi, z_lo, fps, min_sep_s=0.0):
                 merged.append(k)
         onsets = np.asarray(merged, dtype=int)
     return onsets
+
+
+# ----------- Analysis -----------
+def roi_metric(values, which='event_rate', t_slice=slice(None), fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3):
+    """
+    Computes a region of interest (ROI) metric based on the specified type.
+
+    This function processes time-series data to compute metrics such as 
+    event rates, mean delta F/F (dff), or peak robust z-scores for the provided
+    regions of interest. The chosen metric depends on the `which`"""
+    
+    # Extract the low-pass filtered data (delta F/F) for the selected time slice
+    # Shape: (Tsel, N) where Tsel = number of time frames, N = number of ROIs
+    lp = values['low'][t_slice]  # (Tsel, N)
+    
+    # Extract the detrended data for the selected time slice
+    # This is used for z-score calculations and event detection
+    dd = values['dt'][t_slice]  # (Tsel, N)
+    
+    # Get the number of time frames in the selected slice
+    Tsel = lp.shape[0]
+    
+    # Initialize output array with zeros, one value per ROI
+    # dtype=float32 for memory efficiency
+    out = np.zeros(lp.shape[1], dtype=np.float32)
+    
+    # Branch 1: Calculate mean delta F/F across time for each ROI
+    if which == 'mean_dff':
+        # Compute mean across time axis (axis=0), ignoring NaN values
+        # Convert to float32 for consistency
+        out = np.nanmean(lp, axis=0).astype(np.float32)
+    
+    # Branch 2: Calculate peak robust z-score for each ROI
+    elif which == 'peak_dz':
+        # Peak robust z per ROI (loop over columns for per-ROI MAD)
+        
+        # Create empty array to store z-scores with same shape as detrended data
+        z = np.empty_like(dd, dtype=np.float32)
+        
+        # Loop through each ROI (column)
+        for j in range(dd.shape[1]):
+            # Calculate robust z-score using MAD for this ROI's time series
+            # mad_z returns (z-score, median, mad); we only need the z-score
+            zj, _, _ = mad_z(dd[:, j])
+            
+            # Store z-scores for this ROI in the z array
+            z[:, j] = zj
+        
+        # Find maximum z-score across time for each ROI
+        # This represents the peak activity level
+        out = np.nanmax(z, axis=0).astype(np.float32)
+    
+    # Branch 3: Calculate event rate (events per minute) for each ROI
+    elif which == 'event_rate':
+        # Count onsets per ROI and divide by duration (min) → events/min
+        
+        # Initialize array to count number of events detected in each ROI
+        counts = np.zeros(dd.shape[1], dtype=np.int32)
+        
+        # Loop through each ROI to detect and count events
+        for j in range(dd.shape[1]):
+            # Calculate robust z-score for this ROI's time series
+            zj, _, _ = mad_z(dd[:, j])
+            
+            # Detect event onsets using hysteresis thresholding
+            # Events start when z >= z_enter and end when z <= z_exit
+            # Returns array of frame indices where events begin
+            on = hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
+            
+            # Count the number of detected events (size of onset array)
+            counts[j] = on.size
+        
+        # Convert total time frames to minutes: frames / (frames/sec) / (sec/min)
+        duration_min = Tsel / fps / 60.0
+        
+        # Calculate event rate: events / minutes
+        # Use max() to avoid division by zero (minimum denominator = 1e-9)
+        out = (counts / max(duration_min, 1e-9)).astype(np.float32)
+    else:
+        raise ValueError("metric must be one of: 'event_rate', 'mean_dff', 'peak_dz'")
+
+    return out
+
+def paint_spatial(values_per_roi, stat_list, Ly, Lx):
+    """
+    Paint per-ROI scalar values onto the imaging plane using ROI masks.
+    Uses 'lam' weights for soft assignment; normalizes by accumulated weight.
+    Returns (Ly, Lx) float32 image.
+    """
+    # Initialize the output image array with zeros, shape matches imaging plane dimensions
+    img = np.zeros((Ly, Lx), dtype=np.float32)
+
+    # Initialize weight accumulator array to track total lambda weights per pixel
+    w = np.zeros((Ly, Lx), dtype=np.float32)
+
+    # Iterate through each ROI and its corresponding statistics dictionary
+    for j, s in enumerate(stat_list):
+        # Get the scalar value (metric) for the current ROI
+        v = values_per_roi[j]
+
+        # Extract y and x-coordinates of all pixels belonging to this ROI
+        ypix = s['ypix']
+        xpix = s['xpix']
+
+        # Extract lambda weights (pixel-wise contribution strengths) and convert to float32
+        lam = s['lam'].astype(np.float32)
+
+        # Add weighted ROI value to image: each pixel gets v * its lambda weight
+        img[ypix, xpix] += v * lam
+
+        # Accumulate the lambda weights at each pixel (for normalization)
+        w[ypix, xpix] += lam
+
+    # Create boolean mask identifying pixels with non-zero accumulated weights
+    m = w > 0
+
+    # Normalize weighted values by dividing by accumulated weights (only where w > 0)
+    img[m] /= w[m]
+
+    return img
+
+def build_time_mask(time: np.ndarray, t_max: Union[float, None]) -> Union[np.ndarray, slice]:
+    """
+    Return a boolean mask for time < t_max, or slice(None) if t_max is None.
+    """
+    if t_max is None:
+        return slice(None)
+    return np.asarray(time) < float(t_max)
+
 
 # ----------- Data processing -----------
 def aav_cleanup_and_dictionary_lookup(aav: str, dic: dict) -> float:

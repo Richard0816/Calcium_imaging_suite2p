@@ -4,124 +4,6 @@ import matplotlib.pyplot as plt
 import utils
 
 # ---- Helpers ----
-def roi_metric(values, which='event_rate', t_slice=slice(None), fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3):
-    """
-    Computes a region of interest (ROI) metric based on the specified type.
-
-    This function processes time-series data to compute metrics such as 
-    event rates, mean delta F/F (dff), or peak robust z-scores for the provided
-    regions of interest. The chosen metric depends on the `which`"""
-    
-    # Extract the low-pass filtered data (delta F/F) for the selected time slice
-    # Shape: (Tsel, N) where Tsel = number of time frames, N = number of ROIs
-    lp = values['low'][t_slice]  # (Tsel, N)
-    
-    # Extract the detrended data for the selected time slice
-    # This is used for z-score calculations and event detection
-    dd = values['dt'][t_slice]  # (Tsel, N)
-    
-    # Get the number of time frames in the selected slice
-    Tsel = lp.shape[0]
-    
-    # Initialize output array with zeros, one value per ROI
-    # dtype=float32 for memory efficiency
-    out = np.zeros(lp.shape[1], dtype=np.float32)
-    
-    # Branch 1: Calculate mean delta F/F across time for each ROI
-    if which == 'mean_dff':
-        # Compute mean across time axis (axis=0), ignoring NaN values
-        # Convert to float32 for consistency
-        out = np.nanmean(lp, axis=0).astype(np.float32)
-    
-    # Branch 2: Calculate peak robust z-score for each ROI
-    elif which == 'peak_dz':
-        # Peak robust z per ROI (loop over columns for per-ROI MAD)
-        
-        # Create empty array to store z-scores with same shape as detrended data
-        z = np.empty_like(dd, dtype=np.float32)
-        
-        # Loop through each ROI (column)
-        for j in range(dd.shape[1]):
-            # Calculate robust z-score using MAD for this ROI's time series
-            # mad_z returns (z-score, median, mad); we only need the z-score
-            zj, _, _ = utils.mad_z(dd[:, j])
-            
-            # Store z-scores for this ROI in the z array
-            z[:, j] = zj
-        
-        # Find maximum z-score across time for each ROI
-        # This represents the peak activity level
-        out = np.nanmax(z, axis=0).astype(np.float32)
-    
-    # Branch 3: Calculate event rate (events per minute) for each ROI
-    elif which == 'event_rate':
-        # Count onsets per ROI and divide by duration (min) → events/min
-        
-        # Initialize array to count number of events detected in each ROI
-        counts = np.zeros(dd.shape[1], dtype=np.int32)
-        
-        # Loop through each ROI to detect and count events
-        for j in range(dd.shape[1]):
-            # Calculate robust z-score for this ROI's time series
-            zj, _, _ = utils.mad_z(dd[:, j])
-            
-            # Detect event onsets using hysteresis thresholding
-            # Events start when z >= z_enter and end when z <= z_exit
-            # Returns array of frame indices where events begin
-            on = utils.hysteresis_onsets(zj, z_enter, z_exit, fps, min_sep_s=min_sep_s)
-            
-            # Count the number of detected events (size of onset array)
-            counts[j] = on.size
-        
-        # Convert total time frames to minutes: frames / (frames/sec) / (sec/min)
-        duration_min = Tsel / fps / 60.0
-        
-        # Calculate event rate: events / minutes
-        # Use max() to avoid division by zero (minimum denominator = 1e-9)
-        out = (counts / max(duration_min, 1e-9)).astype(np.float32)
-    else:
-        raise ValueError("metric must be one of: 'event_rate', 'mean_dff', 'peak_dz'")
-
-    return out
-
-def paint_spatial(values_per_roi, stat_list, Ly, Lx):
-    """
-    Paint per-ROI scalar values onto the imaging plane using ROI masks.
-    Uses 'lam' weights for soft assignment; normalizes by accumulated weight.
-    Returns (Ly, Lx) float32 image.
-    """
-    # Initialize the output image array with zeros, shape matches imaging plane dimensions
-    img = np.zeros((Ly, Lx), dtype=np.float32)
-
-    # Initialize weight accumulator array to track total lambda weights per pixel
-    w = np.zeros((Ly, Lx), dtype=np.float32)
-
-    # Iterate through each ROI and its corresponding statistics dictionary
-    for j, s in enumerate(stat_list):
-        # Get the scalar value (metric) for the current ROI
-        v = values_per_roi[j]
-
-        # Extract y and x-coordinates of all pixels belonging to this ROI
-        ypix = s['ypix']
-        xpix = s['xpix']
-
-        # Extract lambda weights (pixel-wise contribution strengths) and convert to float32
-        lam = s['lam'].astype(np.float32)
-
-        # Add weighted ROI value to image: each pixel gets v * its lambda weight
-        img[ypix, xpix] += v * lam
-
-        # Accumulate the lambda weights at each pixel (for normalization)
-        w[ypix, xpix] += lam
-
-    # Create boolean mask identifying pixels with non-zero accumulated weights
-    m = w > 0
-
-    # Normalize weighted values by dividing by accumulated weights (only where w > 0)
-    img[m] /= w[m]
-
-    return img
-
 def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath=None, ):
     """
     Display/save a spatial scalar map with optional µm axes and ROI centroid overlay.
@@ -218,11 +100,11 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None):
     signals = {'low': data['low'], 'dt': data['dt']}
     time_slice = t_slice if t_slice is not None else slice(None)
 
-    vals = roi_metric(signals, which=config.metric, t_slice=time_slice,
+    vals = utils.roi_metric(signals, which=config.metric, t_slice=time_slice,
                       fps=config.fps, z_enter=config.z_enter,
                       z_exit=config.z_exit, min_sep_s=config.min_sep_s)
 
-    spatial = paint_spatial(vals, data['stat'], data['Ly'], data['Lx'])
+    spatial = utils.paint_spatial(vals, data['stat'], data['Ly'], data['Lx'])
 
     # Generate output path and title
     if bin_index is None:
@@ -232,7 +114,7 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None):
         out = os.path.join(config.root, f'{config.prefix}spatial_{config.metric}_bin{bin_index:03d}.png')
         t0, t1 = t_slice.start, t_slice.stop
         title = f'{config.get_metric_title()}\nWindow {bin_index}: {t0 / config.fps:.1f}–{t1 / config.fps:.1f} s'
-
+    
     show_spatial(spatial, title, data['Lx'], data['Ly'], data['stat'],
                  pix_to_um=data['pix_to_um'], cmap='magma', outpath=out)
 

@@ -1,6 +1,4 @@
 import numpy as np
-from scipy.ndimage import percentile_filter
-from scipy.signal import butter, sosfilt, savgol_filter
 import os
 import time
 import utils
@@ -18,66 +16,6 @@ def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
 
     return cutoff_hz
 
-# ---------- per-trace helpers (1D) ----------
-def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
-    """Rolling percentile baseline on a 1D array, low-RAM."""
-    F = np.asarray(F, dtype=np.float32)
-    n = F.size
-
-    # interp over non-finite values if any
-    finite = np.isfinite(F)
-    if not finite.all():
-        F = np.interp(np.arange(n), np.flatnonzero(finite), F[finite]).astype(np.float32)
-
-    win = max(3, int(win_sec * fps) | 1)  # odd
-    win = min(win, n if n % 2 == 1 else n - 1)  # cannot exceed length & must be odd
-    if win < 3:  # too short to filter meaningfully
-        F0 = np.full_like(F, np.nanpercentile(F, perc))
-    else:
-        F0 = percentile_filter(F, size=win, percentile=perc, mode='nearest').astype(np.float32)
-
-    eps = np.nanpercentile(F0, 1) if np.isfinite(F0).any() else 1.0
-    eps = max(eps, 1e-9)
-    dff = (F - F0) / eps
-    return dff
-
-def lowpass_causal_1d(x, fps, cutoff_hz=5.0, order=2, zi=None, sos=None):
-    """Causal SOS low-pass (no filtfilt copies). Returns y, zf, sos."""
-    x = np.asarray(x, dtype=np.float32)
-    n = x.size
-    if n < 3:
-        return x.copy(), zi, sos
-
-    nyq = fps / 2.0
-    cutoff = min(max(1e-4, cutoff_hz), 0.95 * nyq)
-    if sos is None:
-        sos = butter(order, cutoff / nyq, btype='low', output='sos')
-
-    if zi is None:
-        # zi shape: (sections, 2). Init with first sample to avoid transient.
-        zi = np.zeros((sos.shape[0], 2), dtype=np.float32)
-        zi[:, 0] = x[0]
-        zi[:, 1] = x[0]
-
-    y, zf = sosfilt(sos, x, zi=zi)
-    return y.astype(np.float32), zf.astype(np.float32), sos
-
-def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
-    """Savitzky–Golay smoothed first derivative on 1D."""
-    x = np.asarray(x, dtype=np.float32)
-    n = x.size
-    win = max(3, int((win_ms / 1000.0) * fps) | 1)  # odd
-    if win >= n:
-        win = max(3, (n - (1 - n % 2)))  # largest valid odd <= n
-    if win < 3 or n < 3:
-        # fallback simple gradient
-        g = np.empty_like(x)
-        g[0] = 0.0
-        g[1:] = (x[1:] - x[:-1]) * fps
-        return g
-    return savgol_filter(x, window_length=win, polyorder=poly, deriv=1, delta=1.0 / fps).astype(np.float32)
-
-
 # ---------- batch processing over Suite2p matrices ----------
 def _normalize_and_transpose_arrays(F_cell, F_neuropil):
     """
@@ -92,16 +30,14 @@ def _normalize_and_transpose_arrays(F_cell, F_neuropil):
     if F_cell.ndim != 2 or F_neuropil.ndim != 2:
         raise ValueError("F and Fneu must be 2D: (nROIs, T) or (T, nROIs).")
 
-    # Detect orientation (Suite2p is nROIs x T). Convert to T x N.
-    if F_cell.shape[0] == F_neuropil.shape[0] and F_cell.shape[0] < F_cell.shape[1]:
-        # Likely nROIs x T -> transpose to T x N
+    num_frames, num_rois, time_major = utils.s2p_infer_orientation(F_cell)
+
+    if not time_major:
         F_cell = F_cell.T
         F_neuropil = F_neuropil.T
-    elif F_cell.shape[1] == F_neuropil.shape[1] and F_cell.shape[0] > F_cell.shape[1]:
-        # Already T x nROIs format
-        pass
-    else:
-        raise ValueError("F and Fneu shapes do not align.")
+    # (sanity) make sure shapes still align
+    if F_cell.shape != F_neuropil.shape or F_cell.shape != (num_frames, num_rois):
+        raise ValueError("F and Fneu shapes do not align after orientation handling.")
 
     num_timepoints, num_rois = F_cell.shape
     return F_cell, F_neuropil, num_timepoints, num_rois
@@ -130,42 +66,6 @@ def _setup_output_memmaps(out_dir, prefix, num_timepoints, num_rois):
     return dff_memmap, lowpass_memmap, derivative_memmap, file_paths
 
 
-def _compute_filter_coefficients(fps, cutoff_hz, filter_order=2):
-    """
-    Compute Butterworth filter SOS coefficients for low-pass filtering.
-
-    Returns:
-        ndarray: Second-order sections representation of the filter
-    """
-    from scipy.signal import butter
-
-    nyquist_freq = fps / 2.0
-    normalized_cutoff = min(max(1e-4, cutoff_hz), 0.95 * nyquist_freq)
-    sos = butter(filter_order, normalized_cutoff / nyquist_freq, btype='low', output='sos')
-    return sos.astype(np.float64)
-
-
-def _process_single_cell(trace, fps, win_sec, perc, cutoff_hz, sg_win_ms, sg_poly, sos):
-    """
-    Process a single cell trace through the complete analysis pipeline.
-
-    Returns:
-        tuple: (dff, lowpass_filtered, derivative)
-    """
-    # Compute ΔF/F
-    dff = robust_df_over_f_1d(trace, win_sec=win_sec, perc=perc, fps=fps)
-
-    # Apply low-pass causal filter
-    lowpass_filtered, _, _ = lowpass_causal_1d(dff, fps=fps, cutoff_hz=cutoff_hz,
-                                               order=2, zi=None, sos=sos)
-
-    # Compute Savitzky-Golay first derivative
-    derivative = sg_first_derivative_1d(lowpass_filtered, fps=fps,
-                                        win_ms=sg_win_ms, poly=sg_poly)
-
-    return dff, lowpass_filtered, derivative
-
-
 def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
                         cell_start_idx, fps, win_sec, perc, cutoff_hz,
                         sg_win_ms, sg_poly, sos,
@@ -178,14 +78,23 @@ def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
 
     num_cells_in_batch = corrected_batch.shape[1]
 
+    sos_local = sos
+
     # Process each cell in the batch
     for cell_idx in range(num_cells_in_batch):
         trace = corrected_batch[:, cell_idx]
         global_cell_idx = cell_start_idx + cell_idx
 
-        dff, lowpass_filtered, derivative = _process_single_cell(
-            trace, fps, win_sec, perc, cutoff_hz, sg_win_ms, sg_poly, sos
-        )
+        # 1) ΔF/F (robust)
+        dff = utils.robust_df_over_f_1d(trace, win_sec=win_sec, perc=perc, fps=fps)
+
+        # 2) Low-pass (build SOS once, then reuse)
+        lowpass_filtered, _, sos_local = utils.lowpass_causal_1d(
+                    dff, fps=fps, cutoff_hz=cutoff_hz, order=2, zi=None, sos=sos_local)
+
+        # 3) SG first derivative
+        derivative = utils.sg_first_derivative_1d(lowpass_filtered, fps=fps, win_ms=sg_win_ms, poly=sg_poly)
+
 
         # Write results to disk
         dff_memmap[:, global_cell_idx] = dff
@@ -226,8 +135,8 @@ def process_suite2p_traces(
         out_dir, prefix, num_timepoints, num_rois
     )
 
-    # Step 3: Precompute filter coefficients (reused for all cells)
-    sos = _compute_filter_coefficients(fps, cutoff_hz, filter_order=2)
+    # Step 3: initialized SOS filter coefficients will be calculated when first cell run
+    sos = None
 
     # Step 4: Process cells in batches
     for batch_start_idx in range(0, num_rois, batch_size):

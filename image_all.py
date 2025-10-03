@@ -32,21 +32,8 @@ def _load_imaging_data(root: str, prefix: str):
     Returns:
         tuple: (num_rois, num_frames, lowpass_memmap, derivative_memmap)
     """
-    F = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
-    if F.shape[0] < F.shape[1]:
-        num_rois, num_frames = F.shape
-    else:
-        num_frames, num_rois = F.shape
-
-    lowpass = np.memmap(
-        os.path.join(root, f'{prefix}dff_lowpass.memmap.float32'),
-        dtype='float32', mode='r', shape=(num_frames, num_rois)
-    )
-    derivative = np.memmap(
-        os.path.join(root, f'{prefix}dff_dt.memmap.float32'),
-        dtype='float32', mode='r', shape=(num_frames, num_rois)
-    )
-
+    _, lowpass, derivative, num_frames, num_rois = (None, None, None, None, None)
+    dff, lowpass, derivative, num_frames, num_rois = utils.s2p_open_memmaps(root, prefix=prefix)
     return num_rois, num_frames, lowpass, derivative
 
 

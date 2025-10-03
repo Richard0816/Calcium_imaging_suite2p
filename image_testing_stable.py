@@ -22,44 +22,17 @@ class Config:
 
 
 # --------------------------- I/O & Loading ---------------------------
-
-def _load_array(path: Path) -> np.ndarray:
-    """Load a .npy array with pickle disabled."""
-    if not path.exists():
-        raise FileNotFoundError(f"Required file not found: {path}")
-    return np.load(path, allow_pickle=False)
-
-
-def _infer_orientation(F: np.ndarray) -> Tuple[int, int, bool]:
-    """
-    Infer whether the shape is (N_ROIs, T) or (T, N_ROIs).
-    Returns (T, N, time_major), where time_major=True means (T, N).
-    """
-    if F.ndim != 2:
-        raise ValueError(f"Expected 2D array for F, got shape {F.shape}")
-    n0, n1 = F.shape
-    # Heuristic: Suite2p raw F is typically (N, T)
-    if n0 < n1:
-        # (N, T) -> time_major=False
-        T, N, time_major = n1, n0, False
-    else:
-        # (T, N) -> time_major=True
-        T, N, time_major = n0, n1, True
-    return T, N, time_major
-
-
 def load_suite2p_raw(root: Path, roi: int) -> Tuple[np.ndarray, np.ndarray, int, int]:
     """
     Load F and Fneu and return ROI traces in time-major form along with T and N.
     """
-    F = _load_array(root / "F.npy")
-    Fneu = _load_array(root / "Fneu.npy")
+    F, Fneu, num_frames, num_rois, time_major = utils.s2p_load_raw(root)
+
     if F.shape != Fneu.shape:
         raise ValueError(f"F and Fneu shapes differ: {F.shape} vs {Fneu.shape}")
 
-    T, N, time_major = _infer_orientation(F)
-    if roi < 0 or roi >= N:
-        raise IndexError(f"ROI index {roi} out of bounds for N={N}")
+    if roi < 0 or roi >= num_rois:
+        raise IndexError(f"ROI index {roi} out of bounds for N={num_rois}")
 
     if time_major:
         raw_trace = F[:, roi]
@@ -71,12 +44,12 @@ def load_suite2p_raw(root: Path, roi: int) -> Tuple[np.ndarray, np.ndarray, int,
         raw_trace = np.asarray(raw_trace)
         neu_trace = np.asarray(neu_trace)
 
-    if raw_trace.shape[0] != T:
-        # Ensure time-major (T,)
+    if raw_trace.shape[0] != num_frames:
+        # Ensure time-major (num_frames,)
         raw_trace = raw_trace.reshape(-1)
         neu_trace = neu_trace.reshape(-1)
 
-    return raw_trace, neu_trace, T, N
+    return raw_trace, neu_trace, num_frames, num_rois
 
 
 def load_processed_traces(root: Path, T: int, N: int, roi: int) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -84,9 +57,7 @@ def load_processed_traces(root: Path, T: int, N: int, roi: int) -> Tuple[np.ndar
     Load ΔF/F, low-pass ΔF/F, and derivative (all memmaps: (T, N)) and return
     1D ROI vectors (T,).
     """
-    dff = np.memmap(root / "r0p7_dff.memmap.float32", dtype="float32", mode="r", shape=(T, N))
-    low = np.memmap(root / "r0p7_dff_lowpass.memmap.float32", dtype="float32", mode="r", shape=(T, N))
-    dt  = np.memmap(root / "r0p7_dff_dt.memmap.float32", dtype="float32", mode="r", shape=(T, N))
+    dff, low, dt, _, _ = utils.s2p_open_memmaps(root, prefix="r0p7_")
 
     dff_trace = np.asarray(dff[:, roi])
     low_trace = np.asarray(low[:, roi])
@@ -114,14 +85,6 @@ def detect_onsets_hysteresis(z: np.ndarray, z_enter: float, z_exit: float, fps: 
 
 
 # --------------------------- Plotting ---------------------------
-
-def build_mask(time: np.ndarray, t_max: Union[float, None]) -> Union[np.ndarray, slice]:
-    """Return a boolean mask or slice(None) depending on t_max."""
-    if t_max is None:
-        return slice(None)
-    return time < t_max
-
-
 def plot_all(
     time: np.ndarray,
     raw_trace: np.ndarray,
@@ -140,7 +103,7 @@ def plot_all(
     """
     Create the 4-panel figure and return the Figure object.
     """
-    idx = build_mask(time, t_max)
+    idx = utils.build_time_mask(time, t_max)
 
     fig = plt.figure(figsize=(12, 9))
 
@@ -195,10 +158,10 @@ def plot_all(
 
 def run(cfg: Config) -> None:
     # Load raw traces
-    raw_trace, neu_trace, T, N = load_suite2p_raw(cfg.root, cfg.roi)
+    raw_trace, neu_trace, num_frames, num_rois = load_suite2p_raw(cfg.root, cfg.roi)
 
-    # Processed traces (T, N) memmaps -> 1D (T,) for ROI
-    dff_trace, low_trace, dt_trace = load_processed_traces(cfg.root, T, N, cfg.roi)
+    # Processed traces (num_frames, num_rois) memmaps -> 1D (T,) for ROI
+    dff_trace, low_trace, dt_trace = load_processed_traces(cfg.root, num_frames, num_rois, cfg.roi)
 
     # Robust z on derivative
     z, med, mad = robust_z_scores(dt_trace)
@@ -207,7 +170,7 @@ def run(cfg: Config) -> None:
     event_times = detect_onsets_hysteresis(z, cfg.z_enter, cfg.z_exit, cfg.fps)
 
     # Time axis
-    time = np.arange(T, dtype=float) / cfg.fps
+    time = np.arange(num_frames, dtype=float) / cfg.fps
 
     # Plot
     title = f"ROI {cfg.roi} • fps={cfg.fps:.1f} • onsets={len(event_times)}"
