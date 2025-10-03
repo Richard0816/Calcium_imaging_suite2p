@@ -167,4 +167,4 @@ def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
     if config.bin_seconds is not None and config.bin_seconds > 0:
         _generate_time_binned_maps(data, config)
 
-run_spatial_heatmap('D:\\data\\2p_shifted\\2024-07-01_00018\\', 'event_rate')
+run_spatial_heatmap('D:\\data\\2p_shifted\\2024-08-20_00002\\', 'event_rate')

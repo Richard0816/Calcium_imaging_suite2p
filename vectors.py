@@ -4,7 +4,7 @@ from scipy.spatial import cKDTree
 import os, imageio.v2 as imageio
 
 # ---------------- CONFIG ----------------
-root   = r'D:\data\2p_shifted\2024-11-05_00007\suite2p\plane0\\'  # Suite2p plane dir
+root   = r'D:\data\2p_shifted\2024-07-01_00018\suite2p\plane0\\'  # Suite2p plane dir
 prefix = 'r0p7_'      # Matches your processed filenames
 fps    = 30.0
 
@@ -14,10 +14,10 @@ fps    = 30.0
 signal_type = 'dt'     # 'dt' is usually best for propagation
 
 # Time binning for smoother vectors (in seconds). 0 → frame-by-frame.
-bin_sec = 0.5          # e.g., 0.5s = average changes over half a second
+bin_sec = 1          # e.g., 0.5s = average changes over half a second
 
 # Neighborhood for vector computation (graph on ROI centroids)
-k_neighbors = 12       # k-NN per ROI (try 8–20)
+k_neighbors = 50       # k-NN per ROI (try 8–20)
 radius_px   = None     # If set, use radius graph instead of k-NN
 
 # Vector scaling for quiver (matplotlib quiver convention: larger→shorter arrows)

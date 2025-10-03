@@ -170,7 +170,7 @@ def lowpass_causal_1d(x, fps, cutoff_hz=5.0, order=2, zi=None, sos=None):
 
     y, zf = sosfilt(sos, x, zi=zi)
     return y.astype(np.float32), zf.astype(np.float32), sos
-
+#box car filter
 def sg_first_derivative_1d(x, fps, win_ms=333, poly=3):
     """Savitzky–Golay smoothed first derivative on 1D."""
     x = np.asarray(x, dtype=np.float32)
@@ -437,3 +437,8 @@ def file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, dic):
     dictionary_value = aav_cleanup_and_dictionary_lookup(element, dic)
 
     return dictionary_value
+
+
+# k nearest neighbor
+# umap
+# PCA

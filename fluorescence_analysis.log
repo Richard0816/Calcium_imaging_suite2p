@@ -612,3 +612,15 @@ Wrote:
  low-pass   -> D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0\r0p7_dff_lowpass.memmap.float32
  d/dt       -> D:\data\2p_shifted\2024-07-01_00001\suite2p\plane0\r0p7_dff_dt.memmap.float32
 Total time 15.119978427886963 seconds.
+Processing 2024-06-03_00001
+cutoff_hz: 3.0
+Processing 2024-06-03_00001
+cutoff_hz: 3.0
+Processed cells 0–629 / 629 in 81.75 seconds.
+Wrote:
+ dF/F       -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff.memmap.float32
+ low-pass   -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff_lowpass.memmap.float32
+ d/dt       -> D:\data\2p_shifted\2024-06-03_00001\suite2p\plane0\r0p7_dff_dt.memmap.float32
+Total time 82.66952180862427 seconds.
+Processing 2024-06-03_00002
+cutoff_hz: 3.0
