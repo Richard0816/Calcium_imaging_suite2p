@@ -2,6 +2,56 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import utils
+from typing import Union
+
+# ---- Cell masking ----
+def _safe_div(x, d):
+    d = float(d) if d else 1.0
+    return x / d
+
+def compute_cell_scores(data, config,
+                        w_er=1.0, w_pz=1.0, w_area=0.5,
+                        scale_er=1.0, scale_pz=3.0, scale_area=50.0,
+                        bias=-2.0,
+                        t_slice=None):
+    """
+    Returns an array (N,) of cell probabilities for each ROI.
+    """
+    signals = {'low': data['low'], 'dt': data['dt']}
+    time_slice = t_slice if t_slice is not None else slice(None)
+
+    event_rate = utils.roi_metric(
+        signals, which='event_rate', t_slice=time_slice,
+        fps=config.fps, z_enter=config.z_enter, z_exit=config.z_exit,
+        min_sep_s=config.min_sep_s
+    )  # typically events/min
+
+    peak_dz = utils.roi_metric(
+        signals, which='peak_dz', t_slice=time_slice,
+        fps=config.fps, z_enter=config.z_enter, z_exit=config.z_exit,
+        min_sep_s=config.min_sep_s
+    )
+
+    pixel_area = np.array([s['npix'] for s in data['stat']], dtype=float)
+
+    # Vectorized logistic scoring
+    x_er   = event_rate / (scale_er if scale_er else 1.0)
+    x_pz   = peak_dz    / (scale_pz if scale_pz else 1.0)
+    x_area = pixel_area / (scale_area if scale_area else 1.0)
+    lin = bias + w_er * x_er + w_pz * x_pz + w_area * x_area
+    scores = 1.0 / (1.0 + np.exp(-lin))
+    return scores
+
+def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
+    """
+    Convert probabilities into a boolean mask.
+    If top_k_pct is set (e.g., 20 for top 20%), it overrides score_threshold.
+    """
+    if top_k_pct is not None:
+        k = max(1, int(np.ceil(scores.size * (top_k_pct / 100.0))))
+        thresh = np.partition(scores, -k)[-k]  # kth largest as cutoff
+        return scores >= thresh
+    return scores >= score_threshold
 
 # ---- Helpers ----
 def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath=None, ):
@@ -51,7 +101,7 @@ class SpatialHeatmapConfig:
 
         # Derived paths
         self.root = os.path.join(folder_name, "suite2p\\plane0\\")
-        self.sample_name = folder_name.split("\\")[-4] if "\\" in folder_name else folder_name.split("/")[-4]
+        self.sample_name = folder_name.split("\\")[-1] if "\\" in folder_name else folder_name.split("/")[-1]
 
     def get_metric_title(self):
         """Generate title based on metric type."""
@@ -95,7 +145,10 @@ def _load_suite2p_data(config):
     }
 
 
-def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None):
+def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None,
+                                  scores: Union[np.ndarray, None] =None,
+                                  score_threshold: float = 0.5,
+                                  top_k_pct: Union[float, None] =None):
     """Compute metric values and generate spatial heatmap."""
     signals = {'low': data['low'], 'dt': data['dt']}
     time_slice = t_slice if t_slice is not None else slice(None)
@@ -118,6 +171,21 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None):
     show_spatial(spatial, title, data['Lx'], data['Ly'], data['stat'],
                  pix_to_um=data['pix_to_um'], cmap='magma', outpath=out)
 
+    # 2) Probability-driven maps
+    if scores is not None:
+        # ROI-wise -> pixel map of probabilities
+        spatial_prob = utils.paint_spatial(scores, data['stat'], data['Ly'], data['Lx'])
+        show_spatial(spatial_prob, "Cell-likeness probability", data['Lx'], data['Ly'], data['stat'],
+                     pix_to_um=data['pix_to_um'], cmap='magma', outpath=out + '_prob.png')
+
+        # Soft mask from scores
+        mask = soft_cell_mask(scores, score_threshold=score_threshold, top_k_pct=top_k_pct)
+
+        # Masked metric
+        vals_masked = np.where(mask, vals, np.nan)
+        spatial_masked = utils.paint_spatial(vals_masked, data['stat'], data['Ly'], data['Lx'])
+        show_spatial(spatial_masked, title + " (prob-masked)", data['Lx'], data['Ly'], data['stat'],
+                     pix_to_um=data['pix_to_um'], cmap='magma', outpath=out + '_probmask.png')
 
 def _generate_time_binned_maps(data, config):
     """Generate time-binned spatial heatmaps."""
@@ -139,7 +207,12 @@ def _generate_time_binned_maps(data, config):
 
 
 def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
-                        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None):
+                        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None,
+                        # scoring params
+                        w_er=1.0, w_pz=1.0, w_area=0.5,
+                        scale_er=1.0, scale_pz=3.0, scale_area=50.0,
+                        bias=-2.0,
+                        score_threshold=0.5, top_k_pct=None):
     """
     Generate spatial heatmaps of calcium imaging metrics.
 
@@ -160,11 +233,36 @@ def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
 
     data = _load_suite2p_data(config)
 
+    # Global scores over whole recording (you can also recompute per bin)
+    scores = compute_cell_scores(
+        data, config,
+        w_er=w_er, w_pz=w_pz, w_area=w_area,
+        scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
+        bias=bias,
+        t_slice=None
+    )
     # Generate whole-recording map
-    _compute_and_save_spatial_map(data, config)
+    _compute_and_save_spatial_map(
+        data, config,
+        scores=scores,
+        score_threshold=score_threshold,
+        top_k_pct=top_k_pct
+    )
 
     # Generate optional time-binned maps
     if config.bin_seconds is not None and config.bin_seconds > 0:
         _generate_time_binned_maps(data, config)
 
-run_spatial_heatmap('D:\\data\\2p_shifted\\2024-08-20_00002\\', 'event_rate')
+run_spatial_heatmap(
+    r'F:\data\2p_shifted\2024-07-01_00018',
+    metric='event_rate',
+    fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+    # scoring: emphasize peak_dz slightly, normalize by typical ranges
+    w_er=0.7934, w_pz=2.1061, w_area=0.255,
+    scale_er=1.146,      # ~1 event/min considered “unit”
+    scale_pz=4.214,      # z≈5 as a “unit bump”
+    scale_area=37.065,   # 10 px as a “unit area”
+    bias=-6.955536301665436,            # stricter overall
+    score_threshold=0.5,  # classify as cell if P>=0.5
+    top_k_pct=None        # or set e.g. 25 for top-25% only
+)
