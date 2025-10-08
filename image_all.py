@@ -11,7 +11,7 @@ import utils
 class ImagingConfig:
     """Configuration parameters for imaging analysis."""
     fps: float = 30.0 # Imaging frame rate (Hz)
-    prefix: str = 'r0p7_'  # matches your processing run (prefix used by your saved memmaps)
+    prefix: str = 'r0p7_filtered_'  # matches your processing run (prefix used by your saved memmaps)
     plot_seconds: float = None  # None = full recording; or e.g., 300 for first 5 minutes
     time_cols_target: int = 1200  # target width (columns) for heatmaps; code downsamples time to ~this many bins
 
@@ -247,5 +247,6 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    utils.log("raster_and_heatmaps_plots.log", run_full_imaging_on_folder(r'F:\data\2p_shifted\2024-06-05_00007'))
+    run_full_imaging_on_folder(r'F:\data\2p_shifted\2024-06-03_00001')
+    #utils.log("raster_and_heatmaps_plots.log", run_full_imaging_on_folder(r'F:\data\2p_shifted\2024-06-05_00007'))
 

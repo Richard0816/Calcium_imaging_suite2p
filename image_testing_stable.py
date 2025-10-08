@@ -221,7 +221,7 @@ def parse_args() -> Config:
 # todo fast ROI loop and different batch z_entre/z_exit
 if __name__ == "__main__":
     cfg = Config(
-    root=Path(r"D:\data\2p_shifted\2024-07-01_00018\suite2p\plane0"),
+    root=Path(r'F:\data\2p_shifted\2024-11-05_00007\suite2p\plane0'),
     roi=10,
     fps=30.0,
     z_enter=3.5,

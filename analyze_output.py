@@ -2,6 +2,7 @@ import numpy as np
 import os
 import time
 import utils
+from spatial_heatmap import compute_cell_scores, soft_cell_mask, SpatialHeatmapConfig, _load_suite2p_data
 
 def custom_lowpass_cutoff(cutoffs, aav_info_csv, file_name):
     """
@@ -106,6 +107,31 @@ def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
     lowpass_memmap.flush()
     derivative_memmap.flush()
 
+def filter_rois_by_cell_score(root, fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+                              w_er=1.0, w_pz=1.2, w_area=0.4,
+                              scale_er=1.0, scale_pz=3.0, scale_area=50.0,
+                              bias=-2.0, score_threshold=0.5, top_k_pct=None):
+    """
+    Compute weighted cell scores for all ROIs and return a boolean mask
+    selecting only those that pass the threshold or top-k%.
+    """
+    cfg = SpatialHeatmapConfig(
+        folder_name=root.replace("suite2p\\plane0\\", ""),
+        fps=fps, z_enter=z_enter, z_exit=z_exit, min_sep_s=min_sep_s,
+        bin_seconds=None
+    )
+    data = _load_suite2p_data(cfg)
+    scores = compute_cell_scores(
+        data, cfg,
+        w_er=w_er, w_pz=w_pz, w_area=w_area,
+        scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
+        bias=bias
+    )
+    mask = soft_cell_mask(scores, score_threshold=score_threshold, top_k_pct=top_k_pct)
+    n_pass = int(mask.sum())
+    print(f"[Filter] Retained {n_pass}/{len(mask)} ROIs ({100*n_pass/len(mask):.1f}%)")
+    np.save(os.path.join(root, "r0p7_cell_mask_bool.npy"), mask)
+    return mask
 
 def process_suite2p_traces(
         F_cell, F_neuropil, fps,
@@ -173,10 +199,37 @@ def run_analysis_on_folder(folder_name: str):
     F_cell = np.load(os.path.join(root, 'F.npy'), allow_pickle=True)
     F_neu = np.load(os.path.join(root, 'Fneu.npy'), allow_pickle=True)
 
+    weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
+    sd_mu = [4.079, 11.24, 41.178]
+    sd_sd = [1.146, 4.214, 37.065]
+    thres = 0.5
+    bias = float(
+        weights[0]
+        - (weights[1] * sd_mu[0] / sd_sd[0])
+        - (weights[2] * sd_mu[1] / sd_sd[1])
+        - (weights[3] * sd_mu[2] / sd_sd[2])
+    )
+
+    mask = filter_rois_by_cell_score(
+        root,
+        fps=fps, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+        w_er=weights[1], w_pz=weights[2], w_area=weights[3],
+        scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
+        scale_pz=float(sd_sd[1]),  # z≈5 as a “unit bump”
+        scale_area=float(sd_sd[2]),  # 10 px as a “unit area”
+        bias=bias,  # stricter overall
+        score_threshold=thres,  # classify as cell if P>=0.5
+        top_k_pct=None  # or set e.g. 25 for top-25% only
+    )
+    # Apply mask to F and Fneu
+    F_cell = F_cell[mask, :]
+    F_neu = F_neu[mask, :]
+    print(f"[Filter] After applying mask: {F_cell.shape[0]} ROIs retained.")
+
     # Where to write outputs
     out_dir = root  # save alongside Suite2p
     # Optional: a prefix for filenames so you can run variants without clobbering
-    prefix = 'r0p7_'  # e.g., indicates r=0.7
+    prefix = 'r0p7_filtered_'  # e.g., indicates r=0.7
 
     print(f'Processing {sample_name}')
 
@@ -214,6 +267,7 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    utils.log("fluorescence_analysis.log", run)
+    run_analysis_on_folder(r'F:\data\2p_shifted\2024-06-03_00001')
+    #utils.log("fluorescence_analysis.log", run)
 
 

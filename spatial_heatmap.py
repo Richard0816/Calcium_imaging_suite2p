@@ -5,6 +5,33 @@ import utils
 from typing import Union
 
 # ---- Cell masking ----
+
+def edge_mask_from_stat(stat, Lx, Ly, edge_buffer_px=10, rule="centroid"):
+    """
+    True = ROI is safely inside the FOV (not near edges).
+    rule='centroid' uses the mean x/y of ROI pixels.
+    rule='bbox' excludes if any ROI pixel falls within edge_buffer of a border.
+    """
+    if rule == "centroid":
+        xs = np.array([np.mean(s['xpix']) for s in stat], dtype=float)
+        ys = np.array([np.mean(s['ypix']) for s in stat], dtype=float)
+        inside = (
+            (xs > edge_buffer_px) & (xs < (Lx - edge_buffer_px)) &
+            (ys > edge_buffer_px) & (ys < (Ly - edge_buffer_px))
+        )
+    elif rule == "bbox":
+        xmins = np.array([s['xpix'].min() for s in stat])
+        xmaxs = np.array([s['xpix'].max() for s in stat])
+        ymins = np.array([s['ypix'].min() for s in stat])
+        ymaxs = np.array([s['ypix'].max() for s in stat])
+        inside = (
+            (xmins > edge_buffer_px) & (xmaxs < (Lx - edge_buffer_px)) &
+            (ymins > edge_buffer_px) & (ymaxs < (Ly - edge_buffer_px))
+        )
+    else:
+        raise ValueError("rule must be 'centroid' or 'bbox'")
+    return inside.astype(bool)
+
 def _safe_div(x, d):
     d = float(d) if d else 1.0
     return x / d
@@ -13,10 +40,16 @@ def compute_cell_scores(data, config,
                         w_er=1.0, w_pz=1.0, w_area=0.5,
                         scale_er=1.0, scale_pz=3.0, scale_area=50.0,
                         bias=-2.0,
-                        t_slice=None):
+                        t_slice=None,
+                        edge_buffer_px=6,  # <<< NEW
+                        edge_rule="centroid",  # <<< NEW ('centroid' or 'bbox')
+                        save_masks=True  # <<< optional
+                        ):
     """
     Returns an array (N,) of cell probabilities for each ROI.
     """
+    stat = data['stat']
+    Lx, Ly = data['Lx'], data['Ly']
     signals = {'low': data['low'], 'dt': data['dt']}
     time_slice = t_slice if t_slice is not None else slice(None)
 
@@ -38,8 +71,20 @@ def compute_cell_scores(data, config,
     x_er   = event_rate / (scale_er if scale_er else 1.0)
     x_pz   = peak_dz    / (scale_pz if scale_pz else 1.0)
     x_area = pixel_area / (scale_area if scale_area else 1.0)
+
     lin = bias + w_er * x_er + w_pz * x_pz + w_area * x_area
     scores = 1.0 / (1.0 + np.exp(-lin))
+
+    mask_inside = edge_mask_from_stat(stat, Lx, Ly,
+                                      edge_buffer_px=edge_buffer_px,
+                                      rule=edge_rule)
+    scores = scores.copy()
+    scores[~mask_inside] = 0.0
+
+    if save_masks:
+        np.save(os.path.join(config.folder_name, f'roi_mask_inside_{edge_buffer_px}px.npy'), mask_inside)
+        np.save(os.path.join(config.folder_name, 'roi_scores.npy'), scores)
+
     return scores
 
 def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
@@ -47,6 +92,13 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
     Convert probabilities into a boolean mask.
     If top_k_pct is set (e.g., 20 for top 20%), it overrides score_threshold.
     """
+    zero_frac = np.mean(scores == 0)
+    if zero_frac >= 0.5:
+        return scores != 0
+    if (scores >= score_threshold).sum() < scores.size * 0.5:
+        k = int(np.ceil(0.5 * scores.size))
+        thresh = np.partition(scores, -k)[-k]
+        return scores >= thresh
     if top_k_pct is not None:
         k = max(1, int(np.ceil(scores.size * (top_k_pct / 100.0))))
         thresh = np.partition(scores, -k)[-k]  # kth largest as cutoff
@@ -181,11 +233,15 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None,
         # Soft mask from scores
         mask = soft_cell_mask(scores, score_threshold=score_threshold, top_k_pct=top_k_pct)
 
+        n_total = scores.size
+        n_pass = int(mask.sum())
+        print(f"[SpatialHeatmap] Retained {n_pass} / {n_total} ROIs (≥ score {score_threshold:.2f})")
+
         # Masked metric
         vals_masked = np.where(mask, vals, np.nan)
         spatial_masked = utils.paint_spatial(vals_masked, data['stat'], data['Ly'], data['Lx'])
         show_spatial(spatial_masked, title + " (prob-masked)", data['Lx'], data['Ly'], data['stat'],
-                     pix_to_um=data['pix_to_um'], cmap='magma', outpath=out + '_probmask.png')
+                     pix_to_um=data['pix_to_um'], cmap='magma', outpath=out + '_probmasked.png')
 
 def _generate_time_binned_maps(data, config):
     """Generate time-binned spatial heatmaps."""
@@ -253,16 +309,35 @@ def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
     if config.bin_seconds is not None and config.bin_seconds > 0:
         _generate_time_binned_maps(data, config)
 
-run_spatial_heatmap(
-    r'F:\data\2p_shifted\2024-07-01_00018',
-    metric='event_rate',
-    fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
-    # scoring: emphasize peak_dz slightly, normalize by typical ranges
-    w_er=0.7934, w_pz=2.1061, w_area=0.255,
-    scale_er=1.146,      # ~1 event/min considered “unit”
-    scale_pz=4.214,      # z≈5 as a “unit bump”
-    scale_area=37.065,   # 10 px as a “unit area”
-    bias=-6.955536301665436,            # stricter overall
-    score_threshold=0.5,  # classify as cell if P>=0.5
-    top_k_pct=None        # or set e.g. 25 for top-25% only
-)
+def run(file_name):
+    weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
+    sd_mu = [4.079, 11.24, 41.178]
+    sd_sd = [1.146, 4.214, 37.065]
+    thres = 0.68
+    bias = float(
+        weights[0]
+        - (weights[1] * sd_mu[0] / sd_sd[0])
+        - (weights[2] * sd_mu[1] / sd_sd[1])
+        - (weights[3] * sd_mu[2] / sd_sd[2])
+    )
+    run_spatial_heatmap(
+        file_name,
+        metric='event_rate',
+        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+        # scoring: emphasize peak_dz slightly, normalize by typical ranges
+        w_er=weights[1], w_pz=weights[2], w_area=weights[3],
+        scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
+        scale_pz=float(sd_sd[1]),  # z≈5 as a “unit bump”
+        scale_area=float(sd_sd[2]),  # 10 px as a “unit area”
+        bias=bias,  # stricter overall
+        score_threshold=thres,  # classify as cell if P>=0.5
+        top_k_pct=None  # or set e.g. 25 for top-25% only
+    )
+
+if __name__ == "__main__":
+    run(r'F:\data\2p_shifted\2024-06-03_00001')
+    #utils.log(
+    #    "cell_detection.log",
+    #    utils.run_on_folders(r'F:\data\2p_shifted',run)
+    #)
+#

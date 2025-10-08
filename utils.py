@@ -121,11 +121,15 @@ def s2p_open_memmaps(root: Union[str, Path], prefix: str = "r0p7_") -> tuple[np.
     # Here, we first read F to get num_frames, num_rois which is robust.
     F, _, num_frames, num_rois, _ = s2p_load_raw(root)
 
+    if prefix.split("_")[-2] == "filtered":
+        mask = np.load(root / "r0p7_cell_mask_bool.npy", allow_pickle=False)
+        F = F[mask, :]
+        num_rois = mask.sum()
+
     dff = np.memmap(root / f"{prefix}dff.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
     low = np.memmap(root / f"{prefix}dff_lowpass.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
     dt  = np.memmap(root / f"{prefix}dff_dt.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
     return dff, low, dt, num_frames, num_rois
-
 
 # ----------- Signal Processing -----------
 def robust_df_over_f_1d(F, win_sec=45, perc=10, fps=30.0):
