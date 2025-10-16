@@ -390,7 +390,7 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None,
 
 # 1) Load data as usual
 config = SpatialHeatmapConfig(
-    folder_name=r'F:\data\2p_shifted\2024-07-01_00018',
+    folder_name=r'D:\data\2p_shifted\2024-06-03_00007',
     metric='event_rate', fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3
 )
 data = _load_suite2p_data(config)
@@ -398,9 +398,9 @@ data = _load_suite2p_data(config)
 # 2) Fit on existing labels
 fit = fit_cell_scoring_from_labels(
     data, config,
-    label_source=r'F:\data\2p_shifted\2024-07-01_00018\suite2p\plane0\criteria.csv',   # or provide CSV path e.g. r'D:\labels.csv'
+    label_source=r'D:\data\2p_shifted\2024-06-03_00007\suite2p\plane0\criteria.csv',   # or provide CSV path e.g. r'D:\labels.csv'
     t_slice=None,             # or a slice to train on a time window
-    reg=1e-3, strategy='youden'   # L2 strength, threshold strategy
+    reg=1e-3, strategy='f1'   # L2 strength, threshold strategy
 )
 
 # 3) Score *all* ROIs on the full recording and export maps
