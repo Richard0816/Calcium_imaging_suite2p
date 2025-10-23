@@ -335,7 +335,7 @@ def run(file_name):
     )
 
 if __name__ == "__main__":
-    run(r'D:\data\2p_shifted\2024-06-03_00007')
+    run(r'D:\data\2p_shifted\2024-06-05_00006')
     #utils.log(
     #    "cell_detection.log",
     #    utils.run_on_folders(r'F:\data\2p_shifted',run)

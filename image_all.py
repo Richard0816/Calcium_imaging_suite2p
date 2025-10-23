@@ -247,6 +247,6 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    run_full_imaging_on_folder(r'D:\data\2p_shifted\2024-06-03_00007')
+    run_full_imaging_on_folder(r'D:\data\2p_shifted\2024-06-05_00006')
     #utils.log("raster_and_heatmaps_plots.log", run_full_imaging_on_folder(r'F:\data\2p_shifted\2024-06-05_00007'))
 
