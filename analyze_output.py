@@ -202,7 +202,7 @@ def run_analysis_on_folder(folder_name: str):
     weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
     sd_mu = [4.079, 11.24, 41.178]
     sd_sd = [1.146, 4.214, 37.065]
-    thres = 0.5
+    thres = 0.68
     bias = float(
         weights[0]
         - (weights[1] * sd_mu[0] / sd_sd[0])
@@ -267,7 +267,7 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    run_analysis_on_folder(r'D:\data\2p_shifted\2024-06-03_00007')
+    run_analysis_on_folder(r'F:\data\2p_shifted\Hip\2024-07-01_00001')
     #utils.log("fluorescence_analysis.log", run)
 
 
