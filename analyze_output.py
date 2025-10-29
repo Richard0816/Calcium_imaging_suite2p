@@ -241,7 +241,7 @@ def run_analysis_on_folder(folder_name: str):
     }
 
     cutoff_hz = custom_lowpass_cutoff(cutoffs, "human_SLE_2p_meta.csv", sample_name)
-    print(f'cutoff_hz: {cutoff_hz}')
+    print(f'cutoff_hz: {1.0}')
 
     batch_size = utils.change_batch_according_to_free_ram()*20
 
@@ -250,7 +250,7 @@ def run_analysis_on_folder(folder_name: str):
         r=0.7,
         batch_size=batch_size,
         win_sec=45, perc=10,
-        cutoff_hz=cutoff_hz, sg_win_ms=333, sg_poly=2,
+        cutoff_hz=1.0, sg_win_ms=333, sg_poly=2,
         out_dir=out_dir, prefix=prefix
     )
 
@@ -267,7 +267,7 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    run_analysis_on_folder(r'F:\data\2p_shifted\Hip\2024-07-01_00001')
+    run_analysis_on_folder(r'F:\data\2p_shifted\Cx\2024-11-20_00003')
     #utils.log("fluorescence_analysis.log", run)
 
 

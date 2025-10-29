@@ -2,11 +2,12 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple, Optional, Sequence, Union
-
+import scipy.fft as fft
 import numpy as np
 import matplotlib.pyplot as plt
 import utils
 
+import testing
 
 # --------------------------- Config ---------------------------
 
@@ -104,9 +105,8 @@ def plot_all(
     Create the 4-panel figure and return the Figure object.
     """
     idx = utils.build_time_mask(time, t_max)
-
     fig = plt.figure(figsize=(12, 9))
-
+    testing.plot_fft(dff_trace[idx],30)
     # Panel 1: Raw + neuropil fluorescence
     ax1 = fig.add_subplot(4, 1, 1)
     ax1.plot(time[idx], raw_trace[idx], label="F raw")
@@ -221,8 +221,8 @@ def parse_args() -> Config:
 # todo fast ROI loop and different batch z_entre/z_exit
 if __name__ == "__main__":
     cfg = Config(
-    root=Path(r'F:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0'),
-    roi=61,
+    root=Path(r'F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0'),
+    roi=52,
     fps=30.0,
     z_enter=3.5,
     z_exit=2.0,

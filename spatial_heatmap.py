@@ -569,9 +569,9 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    run(r'F:\data\2p_shifted\Hip\2024-07-01_00001')
+    run(r'F:\data\2p_shifted\Cx\2024-11-20_00003')
     coactivation_order_heatmaps(
-        folder_name=r'F:\data\2p_shifted\Hip\2024-07-01_00001',
+        folder_name=r'F:\data\2p_shifted\Cx\2024-11-20_00003',
         prefix='r0p7_',
         fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         bin_sec=0.5,  # 0.5 s bin size

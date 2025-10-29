@@ -8,7 +8,7 @@ else:
     print("GPU is not available, using CPU.")
 
 """
-import os
+"""import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks, peak_widths
@@ -74,3 +74,34 @@ for i, p in enumerate(peaks):
 plt.legend(); plt.xlabel('Time (s)'); plt.ylabel('ΔF/F')
 plt.title(f'ROI {roi} peaks (z ≥ {z_thr}) with FWHM lines')
 plt.tight_layout(); plt.show()
+"""
+
+import numpy as np
+import scipy.fft as fft
+import matplotlib.pyplot as plt
+def plot_fft(signal_data, sampling_rate):
+    N = len(signal_data)  # Number of samples
+    yf = fft.rfft(signal_data)  # Compute the FFT
+    xf = fft.rfftfreq(N, 1 / sampling_rate)  # Get the corresponding frequencies
+    power_spectrum = np.abs(yf)**2 # Power spectrum
+    # Or, for Power Spectral Density (PSD) using Welch's method:
+    #from scipy.signal import welch
+    #frequencies_welch, psd_welch = welch(signal_data, fs=sampling_rate, nperseg=256)
+    sorted_y_data = sorted(power_spectrum[3:])
+    second_largest_y = sorted_y_data[-1]
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(xf, power_spectrum)
+    plt.ylim(0, second_largest_y * 1.1)
+
+    plt.title('Power Spectrum of the Signal')
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Power')
+    plt.grid(True)
+    plt.show()
+"""
+import numpy as np
+import scipy.fft as fft
+import matplotlib.pyplot as plt
+
+"""
