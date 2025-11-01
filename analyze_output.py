@@ -267,7 +267,7 @@ def run():
 
 # ================== RUN IT ==================
 if __name__ == "__main__":
-    run_analysis_on_folder(r'F:\data\2p_shifted\Cx\2024-11-20_00003')
+    run_analysis_on_folder(r'F:\data\2p_shifted\Hip\2024-11-05_00003')
     #utils.log("fluorescence_analysis.log", run)
 
 

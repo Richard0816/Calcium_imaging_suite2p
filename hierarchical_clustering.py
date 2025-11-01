@@ -57,80 +57,77 @@ def plot_dendrogram_heatmap(dff: np.ndarray, Z, save_dir: Path, fps: float = 30.
     return order
 
 
-def plot_spatial_from_labels(root: Path, cmap,labels_file: str = "cluster_labels.npy"):
-    """Load precomputed cluster labels and color ROIs accordingly."""
+def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7_"):
+    """Color ROIs spatially by dendrogram leaf colors corresponding to their order."""
     import matplotlib as mpl
+    import numpy as np
 
-    labels_path = root / "cluster_results" /labels_file
-    if not labels_path.exists():
-        raise FileNotFoundError(f"{labels_path} not found")
-
-    cluster_labels = np.load(labels_path)
     ops = np.load(root / "ops.npy", allow_pickle=True).item()
     stat = np.load(root / "stat.npy", allow_pickle=True)
     Ly, Lx = ops["Ly"], ops["Lx"]
-    print(f"Loaded spatial map from {labels_path}")
 
-    # Paint cluster IDs onto spatial map
-    cluster_labels_full = cluster_labels.astype(float)
-    cluster_labels_full[np.isnan(cluster_labels_full)] = np.nan
-    img = utils.paint_spatial(cluster_labels_full, stat, Ly, Lx)
+    # --- Apply ROI mask if filtered ---
+    if "filtered" in prefix.split("_"):
+        mask_path = root / "r0p7_cell_mask_bool.npy"
+    if mask_path.exists():
+        mask = np.load(mask_path)
+        stat = [s for s, keep in zip(stat, mask) if keep]
+        print(f"Applied cell mask: {mask.sum()} / {len(mask)} ROIs kept.")
+    else:
+        print(f"Warning: {mask_path} not found; skipping mask application.")
 
-    out_path = root / "cluster_results" / "spatial_from_labels.png"
+    # --- Build per-ROI RGB array ---
+    roi_rgb = np.zeros((len(stat), 3))
+    for i, roi_idx in enumerate(order):
+        color = link_colors[i]
+        roi_rgb[roi_idx, :] = mpl.colors.to_rgb(color)
+
+    # --- Paint each color channel separately ---
+    R = utils.paint_spatial(roi_rgb[:, 0], stat, Ly, Lx)
+    G = utils.paint_spatial(roi_rgb[:, 1], stat, Ly, Lx)
+    B = utils.paint_spatial(roi_rgb[:, 2], stat, Ly, Lx)
+
+    # Stack to RGB image
+    img = np.dstack([R, G, B])
+    coverage = utils.paint_spatial(np.ones(len(stat)), stat, Ly, Lx)
+    img[coverage == 0] = np.nan  # transparent background
+
+    out_path = root / "cluster_results" / "spatial_dendrogram_colored_rois.png"
 
     spatial_heatmap.show_spatial(
         img,
-        title="Spatial Map from cluster_labels.npy",
+        title="Spatial map colored by dendrogram ROI colors",
         Lx=Lx,
         Ly=Ly,
         stat=stat,
         pix_to_um=ops.get("pix_to_um", None),
-        cmap=cmap,
+        cmap=None,
         outpath=out_path,
     )
     print(f"Saved: {out_path}")
 
-def cmap_from_link_colors(link_colors):
-    """
-    Create a matplotlib colormap from a list of dendrogram link colors,
-    where the first color is neutral grey instead of the first link color.
-    """
-    import matplotlib as mpl
-    from matplotlib.colors import ListedColormap
-
-    # Deduplicate while preserving order
-    unique_colors = []
-    for c in link_colors:
-        if c not in unique_colors:
-            unique_colors.append(c)
-
-    # Insert grey at the beginning
-    grey = "#808080"
-    colors = [grey] + unique_colors
-
-    # Build colormap
-    cmap = ListedColormap(colors, name="dendro_cmap")
-    return cmap
 
 def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "ward", metric: str = "euclidean"):
     save_dir = root / "cluster_results"
     dff = load_dff(root, prefix=prefix)
     Z = run_clustering(dff, method=method, metric=metric)
     order = plot_dendrogram_heatmap(dff, Z, save_dir, fps=fps)
-
     np.save(save_dir / "cluster_order.npy", np.array(order, dtype=int))
     print(f"Saved cluster order to {save_dir / 'cluster_order.npy'}")
 
     r = dendrogram(Z, no_plot=True, color_threshold=0.7 * max(Z[:, 2]))
-    link_colors = r['color_list']
-    custom_cmap = cmap_from_link_colors(link_colors)
-    plot_spatial_from_labels(root, custom_cmap)
+    link_colors = r['leaves_color_list']
+
+    plot_spatial_from_labels(root, order, link_colors, prefix=prefix)
+    print(
+        f"Saved spatial map colored by dendrogram ROI colors to {save_dir / 'spatial_dendrogram_colored_rois.png'}"
+    )
 
 
 if __name__ == "__main__":
-    root = Path(r'F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0')
+    root = Path(r'F:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0')
     fps = 30.0
-    prefix = 'r0p7_'
+    prefix = 'r0p7_filtered_'
     method = 'ward'
     metric = 'euclidean'
     main(root, fps, prefix, method, metric)
