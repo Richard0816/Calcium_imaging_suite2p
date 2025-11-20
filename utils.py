@@ -38,7 +38,7 @@ def change_batch_according_to_free_ram() -> int:
     else:
         return int(20 * available_mem - 170) # calculated using the two point form of the linear eqn (16, 150), (200, 4000)
 
-def run_on_folders(parent_folder: str, func, addon_vals: list = None, leaf_folders_only=False) -> None:
+def run_on_folders(parent_folder: str, func, log_filename, addon_vals: list = None, leaf_folders_only=False) -> None:
     """
     Run a custom function on every subfolder inside a parent folder (non-recursive).
 
@@ -46,19 +46,35 @@ def run_on_folders(parent_folder: str, func, addon_vals: list = None, leaf_folde
     :param func: the function that you want to run
     :param addon_vals: A list of values that are needed (optional, will pass None if none given)
     :param parent_folder: Path to the parent folder.
+
+    then
+    Logs the output of a given function to a specified log file as well as the standard
+    output. It intercepts the output of both standard output and standard error streams
+    and writes them to the specified log file whilst still displaying them in the console.
+
+    The function uses a helper class `Tee` and `contextlib.redirect_stdout` and
+    `contextlib.redirect_stderr` to handle output redirection.
+    :param log_filename: The path to the log file where the output should be stored.
     """
+
     for entry in os.scandir(parent_folder):
-        if entry.is_dir():
-            has_subfolders = any(sub.is_dir() for sub in os.scandir(entry.path))
-            if leaf_folders_only and has_subfolders: # if we are looking for only folders with no subfolders and we find a subfolder, skip this entry
-                continue
+        logfile = open(log_filename, "a", encoding="utf-8")
+        tee = Tee(sys.__stdout__, logfile)
 
-            if addon_vals: # if we have values to pass, pass the values
-                func(entry.path, addon_vals)
-            else: # if there's nothing just pass the path
-                func(entry.path)
+        # running in here just to store the output in the logfile
+        with contextlib.redirect_stdout(tee), contextlib.redirect_stderr(tee):
+            if entry.is_dir():
+                has_subfolders = any(sub.is_dir() for sub in os.scandir(entry.path))
+                if leaf_folders_only and has_subfolders: # if we are looking for only folders with no subfolders and we find a subfolder, skip this entry
+                    continue
 
-def log(log_filename: str, run_function) -> None:
+                if addon_vals: # if we have values to pass, pass the values
+                    func(entry.path, addon_vals)
+                else: # if there's nothing just pass the path
+                    func(entry.path)
+        logfile.close()
+
+'''def log(log_filename: str, run_function) -> None:
     """
     Logs the output of a given function to a specified log file as well as the standard
     output. It intercepts the output of both standard output and standard error streams
@@ -78,7 +94,7 @@ def log(log_filename: str, run_function) -> None:
     with contextlib.redirect_stdout(tee), contextlib.redirect_stderr(tee):
         run_function()
 
-    logfile.close()
+    logfile.close()'''
 
 # ---- Suite2p I/O + orientation ----
 def s2p_infer_orientation(F: np.ndarray) -> tuple[int, int, bool]:

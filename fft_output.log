@@ -1,0 +1,291 @@
+2025-11-15 5:41 pm
+Was running the ft file when my computer shut down, it looks like the data is still there but the output for the log file got wiped, I will update my code to skip the ones that already have an fft file in it to cut down on computation time (kinda sucks)
+Loaded ΔF/F: 15000 frames × 4978 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 3182 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 186 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 1452 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 4668 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 488 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 4326 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 4069 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 4533 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 12410 frames × 312 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 11808 frames × 203 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 697 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 534 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 391 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 2870 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 553 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 724 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 1407 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 4891 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 369 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 191 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 169 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 175 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 153 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 420 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 570 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 114 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 63 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 251 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 151 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 966 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 1473 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 308 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 5000 frames × 4894 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 473 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 378 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 4992 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 4978 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 1771 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 933 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 1061 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 4614 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 727 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 367 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 1365 ROIs
+Warning: F:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+looks like I already did all of them will run hip nextLoaded ΔF/F: 15000 frames × 352 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids ...
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_000.png
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_001.png
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_002.png
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_003.png
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_004.png
+Saved F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids\fft_batch_005.png
+All FFT grids saved.
+Loaded ΔF/F: 15000 frames × 630 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids ...
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_000.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_001.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_002.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_003.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_004.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_005.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_006.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_007.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_008.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_009.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids\fft_batch_010.png
+All FFT grids saved.
+Loaded ΔF/F: 15000 frames × 346 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids ...
+C:\Users\Richa\PycharmProjects\Calcium_imaging_suite2p\fft_all_rois.py:58: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  axes[i].set_ylim(0, second_largest_y * 1.1)
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_000.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_001.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_002.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_003.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_004.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids\fft_batch_005.png
+All FFT grids saved.
+Loaded ΔF/F: 15000 frames × 4709 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids ...
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_000.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_001.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_002.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_003.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_004.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_005.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_006.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_007.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_008.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_009.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_010.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_011.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_012.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_013.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_014.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_015.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_016.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_017.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_018.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_019.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_020.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_021.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_022.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_023.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_024.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_025.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_026.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_027.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_028.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_029.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_030.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_031.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_032.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_033.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_034.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_035.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_036.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_037.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_038.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_039.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_040.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_041.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_042.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_043.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_044.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_045.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_046.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_047.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_048.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_049.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_050.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_051.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_052.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_053.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_054.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_055.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_056.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_057.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_058.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_059.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_060.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_061.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_062.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_063.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_064.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_065.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_066.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_067.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_068.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_069.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_070.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_071.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_072.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_073.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_074.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_075.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_076.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_077.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids\fft_batch_078.png
+All FFT grids saved.
+Loaded ΔF/F: 10000 frames × 4616 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids ...
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_000.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_001.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_002.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_003.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_004.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_005.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_006.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_007.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_008.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_009.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_010.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_011.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_012.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_013.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_014.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_015.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_016.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_017.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_018.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_019.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_020.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_021.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_022.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_023.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_024.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_025.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_026.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_027.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_028.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_029.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_030.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_031.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_032.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_033.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_034.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_035.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_036.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_037.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_038.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_039.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_040.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_041.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_042.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_043.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_044.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_045.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_046.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_047.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_048.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_049.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_050.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_051.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_052.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_053.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_054.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_055.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_056.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_057.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_058.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_059.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_060.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_061.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_062.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_063.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_064.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_065.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_066.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_067.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_068.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_069.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_070.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_071.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_072.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_073.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_074.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_075.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch_076.png
+All FFT grids saved.
+Loaded ΔF/F: 15000 frames × 197 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids ...
+deleted F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids

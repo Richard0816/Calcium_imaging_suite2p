@@ -1,4 +1,3 @@
-import argparse
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -84,10 +83,15 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", rois_per_fig: int
     print(f"Loaded ΔF/F: {dff.shape[0]} frames × {dff.shape[1]} ROIs")
     save_dir = root / "fft_grids"
 
+    if save_dir.exists():
+        if any(save_dir.iterdir()):
+            print(f"Warning: {save_dir} is not empty; skipping FFT generation for this directory")
+            return
+
     plot_fft_grid(dff, fps, save_dir, rois_per_fig=rois_per_fig, freq_max=freq_max)
     print("All FFT grids saved.")
 
-def run_on_folders(root: str):
+def run_on_folder(root: str):
     root = Path(os.path.join(root, "suite2p\\plane0\\"))
     fps = 30.0
     prefix = "r0p7_"
@@ -96,4 +100,4 @@ def run_on_folders(root: str):
     main(root, fps, prefix, rois_per_fig, freq_max)
 
 if __name__ == "__main__":
-    utils.log("fft_output.log", utils.run_on_folders("F:\\data\\2p_shifted\\Cx\\", run_on_folders))
+    utils.run_on_folders("F:\\data\\2p_shifted\\Hip\\", run_on_folder, "fft_output.log")

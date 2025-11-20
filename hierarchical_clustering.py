@@ -66,6 +66,8 @@ def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7
     stat = np.load(root / "stat.npy", allow_pickle=True)
     Ly, Lx = ops["Ly"], ops["Lx"]
 
+    mask_path = root / "blank.npy" # manually define the mask as a .npy file
+
     # --- Apply ROI mask if filtered ---
     if "filtered" in prefix.split("_"):
         mask_path = root / "r0p7_cell_mask_bool.npy"
@@ -92,7 +94,7 @@ def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7
     coverage = utils.paint_spatial(np.ones(len(stat)), stat, Ly, Lx)
     img[coverage == 0] = np.nan  # transparent background
 
-    out_path = root / "cluster_results" / "spatial_dendrogram_colored_rois.png"
+    out_path = root / f"{prefix}cluster_results" / "spatial_dendrogram_colored_rois.png"
 
     spatial_heatmap.show_spatial(
         img,
@@ -108,7 +110,7 @@ def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7
 
 
 def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "ward", metric: str = "euclidean"):
-    save_dir = root / "cluster_results"
+    save_dir = root / f"{prefix}cluster_results"
     dff = load_dff(root, prefix=prefix)
     Z = run_clustering(dff, method=method, metric=metric)
     order = plot_dendrogram_heatmap(dff, Z, save_dir, fps=fps)
@@ -125,9 +127,9 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "wa
 
 
 if __name__ == "__main__":
-    root = Path(r'F:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0')
+    root = Path(r'F:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0')
     fps = 30.0
-    prefix = 'r0p7_filtered_'
+    prefix = 'r0p7_'
     method = 'ward'
     metric = 'euclidean'
     main(root, fps, prefix, method, metric)

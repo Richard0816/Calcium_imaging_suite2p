@@ -210,7 +210,10 @@ def coactivation_order_heatmaps(
         title = (f"Activation order in bin {b} ({t0:.2f}–{t1:.2f}s)\n"
                  f"active={active_counts[b]}/{A.shape[0]} ({100 * frac:.1f}%)")
 
-        out = os.path.join(config.root, f"{config.prefix}coact_order_bin{b:04d}_cells.png")
+        new_root = os.path.join(config.root, f"{config.prefix}coact_order_bin_cells")
+        if not os.path.exists(new_root):
+            os.makedirs(new_root)
+        out = os.path.join(new_root, f"{config.prefix}coact_order_bin{b:04d}_cells.png")
         show_spatial(spatial_order, title, Lx, Ly, stat_filtered,
                      pix_to_um=data['pix_to_um'], cmap=CYAN_TO_RED, outpath=out)
 
@@ -424,12 +427,15 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None,
 
     spatial = utils.paint_spatial(vals, data['stat'], data['Ly'], data['Lx'])
 
+    new_root = os.path.join(config.root, f'{config.prefix}spatial_{config.metric}')
+    if not os.path.exists(new_root):
+        os.makedirs(new_root)
     # Generate output path and title
     if bin_index is None:
-        out = os.path.join(config.root, f'{config.prefix}spatial_{config.metric}.png')
+        out = os.path.join(new_root, f'{config.prefix}spatial_{config.metric}')
         title = config.get_metric_title()
     else:
-        out = os.path.join(config.root, f'{config.prefix}spatial_{config.metric}_bin{bin_index:03d}.png')
+        out = os.path.join(new_root, f'{config.prefix}spatial_{config.metric}_bin{bin_index:03d}')
         t0, t1 = t_slice.start, t_slice.stop
         title = f'{config.get_metric_title()}\nWindow {bin_index}: {t0 / config.fps:.1f}–{t1 / config.fps:.1f} s'
     
@@ -569,13 +575,13 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    run(r'F:\data\2p_shifted\Hip\2024-11-05_00003')
+    run(r'F:\data\2p_shifted\Cx\2024-11-05_00007')
     coactivation_order_heatmaps(
-        folder_name=r'F:\data\2p_shifted\Hip\2024-11-05_00003',
+        folder_name=r'F:\data\2p_shifted\Cx\2024-11-05_00007',
         prefix='r0p7_',
         fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         bin_sec=0.5,  # 0.5 s bin size
-        frac_required=0.8,  # at least 80% of filtered cells active
+        frac_required=0.5,  # at least 80% of filtered cells active
         # weighted filter (use your fitted values if you have them)
         w_er=weights[1], w_pz=weights[2], w_area=weights[3],
         scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
