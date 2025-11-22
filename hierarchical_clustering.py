@@ -8,7 +8,34 @@ from scipy.spatial.distance import pdist
 import spatial_heatmap
 import utils
 
+def export_rois_by_leaf_color(root: Path, Z, color_threshold: float = 0.7, prefix: str = "r0p7_"):
+    """
+    Export lists of ROI indices grouped by dendrogram leaf color.
+    Each color (leaf cluster) is saved as <color>_rois.npy.
+    """
+    from scipy.cluster.hierarchy import dendrogram
+    import re
 
+    # Get dendrogram info
+    r = dendrogram(Z, no_plot=True, color_threshold=color_threshold * max(Z[:, 2]))
+    leaves = r['leaves']
+    leaf_colors = r['leaves_color_list']
+
+    # Group ROI indices by color
+    color_groups = {}
+    for roi, color in zip(leaves, leaf_colors):
+        color_groups.setdefault(color, []).append(roi)
+
+    # Save each color group as separate .npy file
+    save_dir = root / f"{prefix}cluster_results"
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    for color, roi_list in color_groups.items():
+        # sanitize color name (e.g., 'C0', '#FF8800') → 'C0' or 'FF8800'
+        color_name = re.sub(r'[^A-Za-z0-9]+', '_', color)
+        path = save_dir / f"{color_name}_rois.npy"
+        np.save(path, np.array(roi_list, dtype=int))
+        print(f"Saved {path} with {len(roi_list)} ROIs.")
 
 def load_dff(root: Path, prefix: str = "r0p7_"):
     dff, _, _ = utils.s2p_open_memmaps(root, prefix=prefix)[:3]
@@ -57,26 +84,38 @@ def plot_dendrogram_heatmap(dff: np.ndarray, Z, save_dir: Path, fps: float = 30.
     return order
 
 
-def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7_"):
+def plot_spatial_from_labels(root: Path, order, link_colors, labels_file: str = None, prefix: str = "r0p7_", directory_extension: str = "combined_cluster"):
     """Color ROIs spatially by dendrogram leaf colors corresponding to their order."""
     import matplotlib as mpl
     import numpy as np
+
 
     ops = np.load(root / "ops.npy", allow_pickle=True).item()
     stat = np.load(root / "stat.npy", allow_pickle=True)
     Ly, Lx = ops["Ly"], ops["Lx"]
 
-    mask_path = root / "blank.npy" # manually define the mask as a .npy file
 
-    # --- Apply ROI mask if filtered ---
-    if "filtered" in prefix.split("_"):
+    # --- Determine which ROIs to use ---
+    if labels_file is not None:
+        labels_path = root / f"{prefix}cluster_results" / directory_extension / labels_file
+        if not labels_path.exists():
+            raise FileNotFoundError(f"{labels_path} not found")
+        cluster_labels = np.load(labels_path)
+        print(f"Loaded {len(cluster_labels)} ROI indices from {labels_file}")
+        stat = [stat[i] for i in cluster_labels]
+        used_indices = cluster_labels
+    elif "filtered" in prefix.split("_"):
         mask_path = root / "r0p7_cell_mask_bool.npy"
-    if mask_path.exists():
-        mask = np.load(mask_path)
-        stat = [s for s, keep in zip(stat, mask) if keep]
-        print(f"Applied cell mask: {mask.sum()} / {len(mask)} ROIs kept.")
+        if mask_path.exists():
+            mask = np.load(mask_path)
+            stat = [s for s, keep in zip(stat, mask) if keep]
+            used_indices = np.where(mask)[0]
+            print(f"Applied cell mask: {mask.sum()} / {len(mask)} ROIs kept.")
+        else:
+            used_indices = np.arange(len(stat))
+            print(f"Warning: {mask_path} not found; skipping mask application.")
     else:
-        print(f"Warning: {mask_path} not found; skipping mask application.")
+        used_indices = np.arange(len(stat))
 
     # --- Build per-ROI RGB array ---
     roi_rgb = np.zeros((len(stat), 3))
@@ -94,7 +133,10 @@ def plot_spatial_from_labels(root: Path, order, link_colors, prefix: str = "r0p7
     coverage = utils.paint_spatial(np.ones(len(stat)), stat, Ly, Lx)
     img[coverage == 0] = np.nan  # transparent background
 
-    out_path = root / f"{prefix}cluster_results" / "spatial_dendrogram_colored_rois.png"
+    if labels_file is not None:
+        out_path = root / f"{prefix}cluster_results" / directory_extension / f"spatial_dendrogram_colored_rois.png"
+    else:
+        out_path = root / f"{prefix}cluster_results" / "spatial_dendrogram_colored_rois.png"
 
     spatial_heatmap.show_spatial(
         img,
@@ -125,12 +167,118 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "wa
         f"Saved spatial map colored by dendrogram ROI colors to {save_dir / 'spatial_dendrogram_colored_rois.png'}"
     )
 
+    export_rois_by_leaf_color(root, Z, prefix=prefix)
+    print("Saved ROI lists by dendrogram leaf color.")
+
+def main_from_existing_clustering(root: Path,
+                                  roi_files: list[str],
+                                  cluster_folder: str = None,
+                                  fps: float = 30.0,
+                                  prefix: str = "r0p7_",
+                                  method: str = "ward",
+                                  metric: str = "euclidean"):
+    """
+    Manual re-clustering utility that replaces main_selected_npy.
+    - Lets user manually select ROI .npy files (C1_rois.npy, C2_rois.npy, etc.) from any folder.
+    - Combines all selected ROI files into one clustering.
+    - Saves results, new spatial maps, and exports per-color ROI subsets.
+    """
+    from scipy.cluster.hierarchy import dendrogram
+
+    # Determine working directory
+    if cluster_folder is not None:
+        save_dir = root / f"{prefix}cluster_results" / cluster_folder
+    else:
+        save_dir = root / f"{prefix}cluster_results"
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    # --- Manually selected ROI files ---
+    combined_rois = []
+    for roi_file in roi_files:
+        # Allow selecting from parent or subfolders
+        roi_path = Path(roi_file)
+        if not roi_path.exists():
+            potential = save_dir / roi_file
+            if potential.exists():
+                roi_path = potential
+            else:
+                print(f"⚠️ Skipping {roi_file} (not found)")
+                continue
+
+        rois = np.load(roi_path)
+        combined_rois.extend(rois.tolist())
+        print(f"Loaded {len(rois)} ROIs from {roi_path}")
+
+    if not combined_rois:
+        raise ValueError("No valid ROI indices found across selected files.")
+
+    combined_rois = np.unique(combined_rois)
+    print(f"Total combined ROIs for manual re-clustering: {len(combined_rois)}")
+
+    # --- Load ΔF/F traces ---
+    dff = load_dff(root, prefix=prefix)
+    if np.max(combined_rois) >= dff.shape[1]:
+        raise ValueError(f"ROI indices exceed available ROIs ({dff.shape[1]})")
+
+    dff_subset = dff[:, combined_rois]
+    print(f"Subset shape for manual re-clustering: {dff_subset.shape}")
+
+    # --- Run clustering ---
+    Z = run_clustering(dff_subset, method=method, metric=metric)
+    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps)
+
+    np.save(save_dir / "manual_combined_rois.npy", combined_rois)
+    np.save(save_dir / "manual_order.npy", np.array(order, dtype=int))
+    np.save(save_dir / "manual_linkage.npy", Z)
+    print(f"Saved manual re-clustering results to {save_dir}")
+
+    # --- Generate dendrogram colors and spatial map ---
+    r = dendrogram(Z, no_plot=True, color_threshold=0.7 * max(Z[:, 2]))
+    link_colors = r["leaves_color_list"]
+
+    plot_spatial_from_labels(root, order, link_colors,
+                             labels_file="manual_combined_rois.npy",
+                             prefix=prefix,
+                             directory_extension=(cluster_folder or "manual_recluster"))
+
+    # --- Export color-based ROI lists ---
+    print("Exporting new ROI groups by leaf color...")
+    leaves = r['leaves']
+    leaf_colors = r['leaves_color_list']
+    color_groups = {}
+    for roi_local, color in zip(leaves, leaf_colors):
+        roi_global = combined_rois[roi_local]
+        color_groups.setdefault(color, []).append(int(roi_global))
+
+    for color, roi_list in color_groups.items():
+        color_name = color.replace('#', '').replace('C', 'C')
+        path = save_dir / f"{color_name}_rois.npy"
+        np.save(path, np.array(roi_list, dtype=int))
+        print(f"Saved {path} with {len(roi_list)} ROIs.")
+
+    print(f"✅ Exported {len(color_groups)} color-based ROI subsets in {save_dir}.")
+    print(f"✅ Manual re-clustering complete — results saved and ready for reuse.")
+
 
 if __name__ == "__main__":
-    root = Path(r'F:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0')
+    root = Path(r'F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0')
     fps = 30.0
-    prefix = 'r0p7_'
+    prefix = 'r0p7_filtered_'
     method = 'ward'
     metric = 'euclidean'
-    main(root, fps, prefix, method, metric)
+    #main_selected_npy(root, ['C2_rois.npy'], fps, prefix, method, metric)
+
+    # Manually selected ROI subsets — these can be in parent or subfolders
+    roi_files = [
+        r"F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy",
+        r"F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy"
+    ]
+
+    # Optional: specify a target folder name for new clustering outputs
+    cluster_folder = r"C2C3_recluster"
+
+    # Run manual re-clustering on these selected ROI sets
+    main_from_existing_clustering( root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
+
+    #main(root, fps, prefix, method, metric)
 

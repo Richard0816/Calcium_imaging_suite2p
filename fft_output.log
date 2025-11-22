@@ -288,4 +288,22 @@ Saved F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids\fft_batch
 All FFT grids saved.
 Loaded ΔF/F: 15000 frames × 197 ROIs
 Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids ...
-deleted F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids
+deleted F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_gridsLoaded ΔF/F: 15000 frames × 352 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 630 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 346 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 4709 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 10000 frames × 4616 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 197 ROIs
+Saving FFT plots to F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids ...
+Saved F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\fft_grids\fft_batch_000.png
+Loaded ΔF/F: 15000 frames × 352 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 630 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
+Loaded ΔF/F: 15000 frames × 346 ROIs
+Warning: F:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\fft_grids is not empty; skipping FFT generation for this directory
