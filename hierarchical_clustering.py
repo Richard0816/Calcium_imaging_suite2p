@@ -261,7 +261,7 @@ def main_from_existing_clustering(root: Path,
 
 
 if __name__ == "__main__":
-    root = Path(r'F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0')
+    root = Path(r'F:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0')
     fps = 30.0
     prefix = 'r0p7_filtered_'
     method = 'ward'
@@ -270,15 +270,16 @@ if __name__ == "__main__":
 
     # Manually selected ROI subsets — these can be in parent or subfolders
     roi_files = [
-        r"F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy",
-        r"F:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy"
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_cluster_results\C1_rois.npy",
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_cluster_results\C2_rois.npy",
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_cluster_results\C4_rois.npy"
     ]
 
     # Optional: specify a target folder name for new clustering outputs
-    cluster_folder = r"C2C3_recluster"
+    cluster_folder = r"C1C2C4_recluster"
 
     # Run manual re-clustering on these selected ROI sets
-    main_from_existing_clustering( root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
+    #main_from_existing_clustering(root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
 
-    #main(root, fps, prefix, method, metric)
+    main(root, fps, prefix, method, metric)
 

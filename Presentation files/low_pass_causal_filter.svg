@@ -1,0 +1,112 @@
+<svg width="900" height="900" viewBox="0 0 900 800" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .box { fill:#e8f0ff; stroke:#003366; stroke-width:2; rx:12; }
+  .startend { fill:#ffecec; stroke:#990000; stroke-width:2; rx:40; }
+  .decision { fill:#fff8d6; stroke:#b38f00; stroke-width:2; }
+  .arrow { stroke:#000; stroke-width:2; marker-end:url(#arrowhead); }
+  text { font-family:Arial, sans-serif; font-size:16px; }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- Start -->
+<rect class="startend" x="310" y="20" width="280" height="50"/>
+<text x="450" y="52" text-anchor="middle">Start: lowpass_causal_1d</text>
+
+<!-- Inputs -->
+<rect class="box" x="230" y="100" width="440" height="80"/>
+<text x="450" y="135" text-anchor="middle">
+Inputs: x (1D), fps, cutoff_hz, order, zi, sos
+</text>
+<text x="450" y="160" text-anchor="middle">
+Convert x → float32, n = len(x)
+</text>
+
+<!-- Decision: n < 3? -->
+<polygon class="decision" points="450,210 560,260 450,310 340,260"/>
+<text x="450" y="260" text-anchor="middle">
+Is n &lt; 3?
+</text>
+
+<!-- Short signal branch -->
+<rect class="box" x="60" y="340" width="350" height="80"/>
+<text x="235" y="375" text-anchor="middle">
+Return copy of x, zi, sos
+</text>
+<text x="235" y="400" text-anchor="middle">
+(no filtering for very short signals)
+</text>
+
+<!-- Compute Nyquist + cutoff -->
+<rect class="box" x="430" y="340" width="360" height="100"/>
+<text x="610" y="375" text-anchor="middle">
+nyq = fps / 2
+</text>
+<text x="610" y="400" text-anchor="middle">
+cutoff = clamp(cutoff_hz,
+</text>
+<text x="610" y="425" text-anchor="middle">
+1e−4 to 0.95·nyq)
+</text>
+
+<!-- Design SOS if needed -->
+<rect class="box" x="430" y="460" width="360" height="80"/>
+<text x="610" y="495" text-anchor="middle">
+If sos is None:
+</text>
+<text x="610" y="520" text-anchor="middle">
+sos = butter(order, cutoff/nyq, low-pass, sos)
+</text>
+
+<!-- Init zi if needed -->
+<rect class="box" x="430" y="560" width="360" height="100"/>
+<text x="610" y="595" text-anchor="middle">
+If zi is None:
+</text>
+<text x="610" y="620" text-anchor="middle">
+zi = zeros((n_sections, 2))
+</text>
+<text x="610" y="645" text-anchor="middle">
+zi[:,0] = zi[:,1] = x[0]  (steady start)
+</text>
+
+<!-- Apply filter -->
+<rect class="box" x="230" y="680" width="440" height="90"/>
+<text x="450" y="715" text-anchor="middle">
+Causal filtering:
+</text>
+<text x="450" y="740" text-anchor="middle">
+y, zf = sosfilt(sos, x, zi)
+</text>
+<text x="450" y="765" text-anchor="middle">
+Return y, zf, sos
+</text>
+
+<!-- End -->
+<rect class="startend" x="310" y="790" width="280" height="50"/>
+<text x="450" y="822" text-anchor="middle">End</text>
+
+<!-- Arrows -->
+<line class="arrow" x1="450" y1="70" x2="450" y2="100"/>
+<line class="arrow" x1="450" y1="180" x2="450" y2="210"/>
+
+<!-- Decision YES branch -->
+<line class="arrow" x1="400" y1="310" x2="235" y2="340"/>
+
+<!-- Decision NO branch -->
+<line class="arrow" x1="500" y1="310" x2="610" y2="340"/>
+
+<!-- Downwards through SOS steps -->
+<line class="arrow" x1="610" y1="440" x2="610" y2="460"/>
+<line class="arrow" x1="610" y1="540" x2="610" y2="560"/>
+
+<!-- Merge to final filter box -->
+<line class="arrow" x1="610" y1="660" x2="450" y2="680"/>
+<line class="arrow" x1="235" y1="420" x2="450" y2="680"/>
+
+<line class="arrow" x1="450" y1="770" x2="450" y2="790"/>
+
+</svg>

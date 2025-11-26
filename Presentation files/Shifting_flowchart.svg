@@ -1,0 +1,96 @@
+<svg width="600" height="1100" viewBox="0 0 600 1100" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Styles -->
+<style>
+    .box { fill: #e8f0ff; stroke: #003366; stroke-width: 2px; }
+    .startend { fill: #ffecec; stroke: #990000; stroke-width: 2px; }
+    .decision { fill: #fff8d6; stroke: #b38f00; stroke-width: 2px; }
+    .arrow { stroke: #000; stroke-width: 2px; marker-end: url(#arrowhead); }
+    text { font-family: Arial, sans-serif; font-size: 18px; }
+</style>
+
+<!-- Arrowhead -->
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7"
+          refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+  </marker>
+</defs>
+
+<!-- START -->
+<ellipse class="startend" cx="300" cy="60" rx="120" ry="40"/>
+<text x="300" y="65" text-anchor="middle">Start</text>
+
+<!-- Load TIFF -->
+<rect class="box" x="150" y="130" width="300" height="80" rx="10"/>
+<text x="300" y="175" text-anchor="middle">
+Load TIFF file from unshifted_dir
+</text>
+
+<!-- Convert to int32 -->
+<rect class="box" x="150" y="250" width="300" height="80" rx="10"/>
+<text x="300" y="295" text-anchor="middle">
+Convert image to int32
+</text>
+
+<!-- Compute min -->
+<rect class="box" x="150" y="370" width="300" height="80" rx="10"/>
+<text x="300" y="415" text-anchor="middle">
+Compute minimum pixel value m
+</text>
+
+<!-- Shift -->
+<rect class="box" x="150" y="490" width="300" height="80" rx="10"/>
+<text x="300" y="535" text-anchor="middle">
+Shift image: I = I + |m|
+</text>
+
+<!-- Decision -->
+<polygon class="decision" points="300,630 430,700 300,770 170,700"/>
+<text x="300" y="705" text-anchor="middle">
+Is max(I) &lt; 65535?
+</text>
+
+<!-- Convert to uint16 -->
+<rect class="box" x="150" y="820" width="300" height="80" rx="10"/>
+<text x="300" y="865" text-anchor="middle">
+Convert to uint16
+</text>
+
+<!-- Save -->
+<rect class="box" x="150" y="940" width="300" height="80" rx="10"/>
+<text x="300" y="985" text-anchor="middle">
+Save shifted TIFF in folder
+</text>
+
+<!-- END -->
+<ellipse class="startend" cx="300" cy="1060" rx="120" ry="40"/>
+<text x="300" y="1065" text-anchor="middle">End</text>
+
+<!-- Error box for No branch -->
+<rect class="box" x="415" y="760" width="160" height="80" rx="10" fill="#ffe3cc" stroke="#cc6600"/>
+<text x="495" y="805" text-anchor="middle">
+Error: exceeds
+</text>
+<text x="495" y="830" text-anchor="middle">
+uint16 range
+</text>
+
+<!-- Arrows -->
+<line class="arrow" x1="300" y1="100" x2="300" y2="130"/>
+<line class="arrow" x1="300" y1="210" x2="300" y2="250"/>
+<line class="arrow" x1="300" y1="330" x2="300" y2="370"/>
+<line class="arrow" x1="300" y1="450" x2="300" y2="490"/>
+<line class="arrow" x1="300" y1="570" x2="300" y2="630"/>
+<line class="arrow" x1="300" y1="770" x2="300" y2="820"/>
+<line class="arrow" x1="300" y1="900" x2="300" y2="940"/>
+<line class="arrow" x1="300" y1="1020" x2="300" y2="1060"/>
+
+<!-- Decision YES path -->
+<line class="arrow" x1="300" y1="770" x2="300" y2="820"/>
+
+<!-- Decision NO path -->
+<line class="arrow" x1="370" y1="700" x2="415" y2="700"/>
+<line class="arrow" x1="495" y1="760" x2="495" y2="740"/>
+
+</svg>

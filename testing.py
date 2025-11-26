@@ -76,7 +76,7 @@ plt.title(f'ROI {roi} peaks (z ≥ {z_thr}) with FWHM lines')
 plt.tight_layout(); plt.show()
 """
 
-import numpy as np
+"""import numpy as np
 import scipy.fft as fft
 import matplotlib.pyplot as plt
 def plot_fft(signal_data, sampling_rate):
@@ -98,10 +98,16 @@ def plot_fft(signal_data, sampling_rate):
     plt.xlabel('Frequency (Hz)')
     plt.ylabel('Power')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
 """
 import numpy as np
 import scipy.fft as fft
 import matplotlib.pyplot as plt
 
 """
+
+
+import numpy as np
+
+rois = np.load(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy")
+print(len(rois))

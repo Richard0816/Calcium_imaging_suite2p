@@ -1,0 +1,191 @@
+<svg width="1300" height="900" viewBox="0 0 1300 900" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+  .box { fill:#e8f0ff; stroke:#003366; stroke-width:2; rx:12; }
+  .startend { fill:#ffecec; stroke:#990000; stroke-width:2; rx:40; }
+  .decision { fill:#fff8d6; stroke:#b38f00; stroke-width:2; }
+  .arrow { stroke:#000; stroke-width:2; marker-end:url(#arrowhead); }
+  text { font-family:Arial, sans-serif; font-size:16px; }
+  .small { font-size:14px; }
+</style>
+
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- ========== LEFT COLUMN: INPUT + LOADING ========== -->
+
+<!-- Start -->
+<rect class="startend" x="120" y="40" width="320" height="60"/>
+<text x="280" y="77" text-anchor="middle">Start: run_spatial_heatmap()</text>
+
+<!-- Inputs -->
+<rect class="box" x="80" y="130" width="400" height="90"/>
+<text x="280" y="165" text-anchor="middle">
+Inputs:
+</text>
+<text x="280" y="190" text-anchor="middle" class="small">
+folder_name, metric (event_rate / mean_dff / peak_dz),
+</text>
+<text x="280" y="210" text-anchor="middle" class="small">
+prefix, fps, z_enter, z_exit, min_sep_s, bin_seconds,
+</text>
+<text x="280" y="230" text-anchor="middle" class="small">
+scoring weights (w_er, w_pz, w_area, bias, scales)
+</text>
+
+<!-- Config -->
+<rect class="box" x="80" y="250" width="400" height="80"/>
+<text x="280" y="285" text-anchor="middle">
+Construct SpatialHeatmapConfig
+</text>
+<text x="280" y="310" text-anchor="middle" class="small">
+(root folder, sample_name, fps, thresholds, bin_seconds)
+</text>
+
+<!-- Load suite2p data -->
+<rect class="box" x="80" y="360" width="400" height="130"/>
+<text x="280" y="395" text-anchor="middle">
+_load_suite2p_data(config)
+</text>
+<text x="280" y="420" text-anchor="middle" class="small">
+Load ops.npy → Ly, Lx, pix_to_um
+</text>
+<text x="280" y="440" text-anchor="middle" class="small">
+Load stat.npy → ROI masks, coordinates
+</text>
+<text x="280" y="460" text-anchor="middle" class="small">
+Load memmaps: dff_lowpass, dff_dt
+</text>
+<text x="280" y="480" text-anchor="middle" class="small">
+Reshape low, dt → (T, N)
+</text>
+
+<!-- Arrow down left -->
+<line class="arrow" x1="280" y1="100" x2="280" y2="130"/>
+<line class="arrow" x1="280" y1="220" x2="280" y2="250"/>
+<line class="arrow" x1="280" y1="330" x2="280" y2="360"/>
+
+<!-- Connector to right column -->
+<line class="arrow" x1="480" y1="425" x2="650" y2="425"/>
+
+
+<!-- ========== RIGHT COLUMN: METRIC + SCORING + MAPS ========== -->
+
+<!-- Compute cell scores -->
+<rect class="box" x="700" y="70" width="480" height="150"/>
+<text x="940" y="105" text-anchor="middle">
+compute_cell_scores(data, config)
+</text>
+<text x="940" y="130" class="small" text-anchor="middle">
+signals = {'low': low, 'dt': dt}
+</text>
+<text x="940" y="150" class="small" text-anchor="middle">
+event_rate = roi_metric(signals, 'event_rate')
+</text>
+<text x="940" y="170" class="small" text-anchor="middle">
+peak_dz   = roi_metric(signals, 'peak_dz')
+</text>
+<text x="940" y="190" class="small" text-anchor="middle">
+pixel_area = stat['npix']
+</text>
+<text x="940" y="210" class="small" text-anchor="middle">
+scores = sigmoid(bias + w_er·ER + w_pz·peak_dz + w_area·area)
+</text>
+<text x="940" y="230" class="small" text-anchor="middle">
+edge_mask_from_stat → force scores=0 near edges
+</text>
+
+<!-- Metric per ROI -->
+<rect class="box" x="700" y="250" width="480" height="100"/>
+<text x="940" y="285" text-anchor="middle">
+Compute metric values per ROI
+</text>
+<text x="940" y="310" class="small" text-anchor="middle">
+vals = roi_metric(signals, which=config.metric)
+</text>
+<text x="940" y="330" class="small" text-anchor="middle">
+(event_rate / mean_dff / peak_dz)
+</text>
+
+<!-- Paint base spatial map -->
+<rect class="box" x="700" y="380" width="480" height="100"/>
+<text x="940" y="410" text-anchor="middle">
+Base spatial metric map
+</text>
+<text x="940" y="435" class="small" text-anchor="middle">
+spatial = paint_spatial(vals, stat, Ly, Lx)
+</text>
+<text x="940" y="455" class="small" text-anchor="middle">
+show_spatial(spatial, title, cmap='magma') → PNG
+</text>
+
+<!-- Probability map -->
+<rect class="box" x="700" y="520" width="480" height="110"/>
+<text x="940" y="550" text-anchor="middle">
+Cell-likeness probability map
+</text>
+<text x="940" y="575" class="small" text-anchor="middle">
+spatial_prob = paint_spatial(scores, stat, Ly, Lx)
+</text>
+<text x="940" y="595" class="small" text-anchor="middle">
+show_spatial(spatial_prob, "Cell-likeness probability")
+</text>
+<text x="940" y="615" class="small" text-anchor="middle">
+soft_cell_mask(scores, score_threshold / top_k_pct)
+</text>
+
+<!-- Prob-masked metric map -->
+<rect class="box" x="700" y="660" width="480" height="120"/>
+<text x="940" y="690" text-anchor="middle">
+Probability-masked + filtered maps
+</text>
+<text x="940" y="715" class="small" text-anchor="middle">
+vals_masked = where(mask, vals, NaN)
+</text>
+<text x="940" y="735" class="small" text-anchor="middle">
+spatial_masked = paint_spatial(vals_masked, stat)
+</text>
+<text x="940" y="755" class="small" text-anchor="middle">
+subset ROIs (idx_keep) → spatial_filtered
+</text>
+<text x="940" y="775" class="small" text-anchor="middle">
+show_spatial(... "prob-masked", "cells_only") → PNGs
+</text>
+
+<!-- Optional time-binned maps -->
+<rect class="box" x="80" y="640" width="400" height="120"/>
+<text x="280" y="670" text-anchor="middle">
+Optional time-binned maps
+</text>
+<text x="280" y="695" class="small" text-anchor="middle">
+_generate_time_binned_maps(data, config)
+</text>
+<text x="280" y="715" class="small" text-anchor="middle">
+Split T into windows of bin_seconds
+</text>
+<text x="280" y="735" class="small" text-anchor="middle">
+For each bin: _compute_and_save_spatial_map(...)
+</text>
+
+<!-- Final End -->
+<rect class="startend" x="510" y="820" width="280" height="60"/>
+<text x="650" y="857" text-anchor="middle">
+End: spatial PNGs on disk
+</text>
+
+<!-- Right column arrows -->
+<line class="arrow" x1="650" y1="425" x2="700" y2="145"/>
+<line class="arrow" x1="940" y1="220" x2="940" y2="250"/>
+<line class="arrow" x1="940" y1="350" x2="940" y2="380"/>
+<line class="arrow" x1="940" y1="480" x2="940" y2="520"/>
+<line class="arrow" x1="940" y1="630" x2="940" y2="660"/>
+
+<!-- Left column to bins + end -->
+<line class="arrow" x1="280" y1="490" x2="280" y2="640"/>
+<line class="arrow" x1="280" y1="760" x2="650" y2="820"/>
+<line class="arrow" x1="940" y1="780" x2="650" y2="820"/>
+
+</svg>

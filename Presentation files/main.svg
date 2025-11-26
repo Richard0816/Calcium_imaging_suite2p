@@ -1,0 +1,116 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+.box { fill: #e8f0ff; stroke: #003366; stroke-width: 2; rx: 12; }
+.startend { fill: #ffecec; stroke: #990000; stroke-width: 2; rx: 50; }
+.decision { fill: #fff8d6; stroke: #b38f00; stroke-width: 2; }
+.arrow { stroke: #000; stroke-width: 2; marker-end: url(#arrowhead); }
+text { font-family: Arial, sans-serif; font-size: 18px; }
+</style>
+
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7"
+          refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- COLUMN 1 (LEFT) -->
+
+<!-- Start -->
+<rect class="startend" x="150" y="30" width="280" height="60"/>
+<text x="290" y="68" text-anchor="middle">Start (main.py)</text>
+
+<!-- Load tau values -->
+<rect class="box" x="100" y="130" width="380" height="80"/>
+<text x="290" y="175" text-anchor="middle">
+Load tau dictionary (GCaMP → tau)
+</text>
+
+<!-- Load ops -->
+<rect class="box" x="100" y="250" width="380" height="80"/>
+<text x="290" y="295" text-anchor="middle">
+Load ops file (numpy dictionary)
+</text>
+
+<!-- Call run_suite2p -->
+<rect class="box" x="100" y="370" width="380" height="80"/>
+<text x="290" y="415" text-anchor="middle">
+Call run_suite2p_on_folder()
+</text>
+
+<!-- Inside run_suite2p: extract -->
+<rect class="box" x="100" y="490" width="380" height="80"/>
+<text x="290" y="535" text-anchor="middle">
+Extract ops and tau_vals
+</text>
+
+<!-- Column 1 Arrows -->
+<line class="arrow" x1="290" y1="90" x2="290" y2="130"/>
+<line class="arrow" x1="290" y1="210" x2="290" y2="250"/>
+<line class="arrow" x1="290" y1="330" x2="290" y2="370"/>
+<line class="arrow" x1="290" y1="450" x2="290" y2="490"/>
+
+<!-- Connector arrow to column 2 -->
+<line class="arrow" x1="480" y1="530" x2="600" y2="530"/>
+
+
+<!-- COLUMN 2 (RIGHT) -->
+
+<!-- change_tau -->
+<rect class="box" x="650" y="130" width="380" height="90"/>
+<text x="840" y="165" text-anchor="middle">
+Apply change_tau_according_to_GCaMP()
+</text>
+<text x="840" y="195" text-anchor="middle">
+Lookup AAV → assign ops["tau"]
+</text>
+
+<!-- Modify ops settings -->
+<rect class="box" x="650" y="260" width="380" height="110"/>
+<text x="840" y="300" text-anchor="middle">
+Modify ops settings:
+</text>
+<text x="840" y="330" text-anchor="middle">
+batch_size, hp_filter, threshold_scaling
+</text>
+
+<!-- Define db -->
+<rect class="box" x="650" y="410" width="380" height="80"/>
+<text x="840" y="455" text-anchor="middle">
+Define Suite2p DB (data_path)
+</text>
+
+<!-- Decision -->
+<polygon class="decision" points="840,540 970,600 840,660 710,600"/>
+<text x="840" y="605" text-anchor="middle">
+Run suite2p?
+</text>
+
+<!-- run_s2p -->
+<rect class="box" x="650" y="700" width="380" height="80"/>
+<text x="840" y="745" text-anchor="middle">
+suite2p.run_s2p(ops, db)
+</text>
+
+<!-- Print differences -->
+<rect class="box" x="650" y="820" width="380" height="80"/>
+<text x="840" y="865" text-anchor="middle">
+Print output ops differences
+</text>
+
+<!-- End -->
+<rect class="startend" x="650" y="930" width="380" height="60"/>
+<text x="840" y="970" text-anchor="middle">End</text>
+
+
+<!-- Column 2 Arrows -->
+<line class="arrow" x1="600" y1="530" x2="650" y2="175"/>
+<line class="arrow" x1="840" y1="220" x2="840" y2="260"/>
+<line class="arrow" x1="840" y1="370" x2="840" y2="410"/>
+<line class="arrow" x1="840" y1="490" x2="840" y2="540"/>
+<line class="arrow" x1="840" y1="660" x2="840" y2="700"/>
+<line class="arrow" x1="840" y1="780" x2="840" y2="820"/>
+<line class="arrow" x1="840" y1="900" x2="840" y2="930"/>
+
+</svg>

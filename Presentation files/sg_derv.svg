@@ -1,0 +1,96 @@
+<svg width="900" height="750" viewBox="0 0 900 750" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .box { fill:#e8f0ff; stroke:#003366; stroke-width:2; rx:12; }
+  .startend { fill:#ffecec; stroke:#990000; stroke-width:2; rx:40; }
+  .decision { fill:#fff8d6; stroke:#b38f00; stroke-width:2; }
+  .arrow { stroke:#000; stroke-width:2; marker-end:url(#arrowhead); }
+  text { font-family:Arial, sans-serif; font-size:16px; }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- Start -->
+<rect class="startend" x="310" y="20" width="280" height="50"/>
+<text x="450" y="52" text-anchor="middle">Start: sg_first_derivative_1d</text>
+
+<!-- Inputs -->
+<rect class="box" x="230" y="100" width="440" height="70"/>
+<text x="450" y="130" text-anchor="middle">
+Inputs: x (1D), fps, win_ms, poly
+</text>
+<text x="450" y="155" text-anchor="middle">
+Convert x → float32, n = len(x)
+</text>
+
+<!-- Compute window -->
+<rect class="box" x="230" y="190" width="440" height="90"/>
+<text x="450" y="220" text-anchor="middle">
+Compute window:
+</text>
+<text x="450" y="245" text-anchor="middle">
+win = max(3, int(win_ms/1000·fps) forced odd)
+</text>
+
+<!-- Adjust if win >= n -->
+<rect class="box" x="230" y="300" width="440" height="80"/>
+<text x="450" y="335" text-anchor="middle">
+If win ≥ n:
+</text>
+<text x="450" y="360" text-anchor="middle">
+win = largest odd ≤ n (≥ 3)
+</text>
+
+<!-- Decision: small or short? -->
+<polygon class="decision" points="450,410 560,460 450,510 340,460"/>
+<text x="450" y="460" text-anchor="middle">
+Is win &lt; 3 or n &lt; 3?
+</text>
+
+<!-- Fallback: finite difference -->
+<rect class="box" x="60" y="550" width="350" height="90"/>
+<text x="235" y="585" text-anchor="middle">
+Fallback derivative:
+</text>
+<text x="235" y="610" text-anchor="middle">
+g[0] = 0
+</text>
+<text x="235" y="635" text-anchor="middle">
+g[1:] = (x[1:] − x[:-1]) · fps
+</text>
+
+<!-- SG derivative -->
+<rect class="box" x="490" y="550" width="350" height="90"/>
+<text x="665" y="585" text-anchor="middle">
+Savitzky–Golay derivative:
+</text>
+<text x="665" y="610" text-anchor="middle">
+g = savgol_filter(x,
+</text>
+<text x="665" y="635" text-anchor="middle">
+window=win, polyorder=poly, deriv=1)
+</text>
+
+<!-- End -->
+<rect class="startend" x="310" y="670" width="280" height="50"/>
+<text x="450" y="702" text-anchor="middle">
+Return g (dx/dt)
+</text>
+
+<!-- Arrows -->
+<line class="arrow" x1="450" y1="70" x2="450" y2="100"/>
+<line class="arrow" x1="450" y1="170" x2="450" y2="190"/>
+<line class="arrow" x1="450" y1="280" x2="450" y2="300"/>
+<line class="arrow" x1="450" y1="380" x2="450" y2="410"/>
+
+<!-- Decision branches -->
+<line class="arrow" x1="400" y1="510" x2="235" y2="550"/>
+<line class="arrow" x1="500" y1="510" x2="665" y2="550"/>
+
+<!-- Merge to End -->
+<line class="arrow" x1="235" y1="640" x2="450" y2="670"/>
+<line class="arrow" x1="665" y1="640" x2="450" y2="670"/>
+
+</svg>

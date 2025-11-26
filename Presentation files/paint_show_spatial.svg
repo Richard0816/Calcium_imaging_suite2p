@@ -1,0 +1,184 @@
+<svg width="1300" height="950" viewBox="0 0 1300 650" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+  .box { fill:#e8f0ff; stroke:#003366; stroke-width:2; rx:12; }
+  .startend { fill:#ffecec; stroke:#990000; stroke-width:2; rx:40; }
+  .arrow { stroke:#000; stroke-width:2; marker-end:url(#arrowhead); }
+  text { font-family:Arial, sans-serif; font-size:16px; }
+  .small { font-size:14px; }
+</style>
+
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- LEFT: paint_spatial -->
+
+<!-- Start paint_spatial -->
+<rect class="startend" x="80" y="40" width="420" height="60"/>
+<text x="290" y="77" text-anchor="middle">utils.paint_spatial(values_per_roi, stat_list, Ly, Lx)</text>
+
+<!-- Inputs -->
+<rect class="box" x="80" y="130" width="420" height="110"/>
+<text x="290" y="160" text-anchor="middle">
+Inputs:
+</text>
+<text x="290" y="185" text-anchor="middle" class="small">
+values_per_roi: one scalar per ROI (metric)
+</text>
+<text x="290" y="205" text-anchor="middle" class="small">
+stat_list: Suite2p 'stat' (ypix, xpix, lam)
+</text>
+<text x="290" y="225" text-anchor="middle" class="small">
+Ly, Lx: imaging plane size
+</text>
+
+<!-- Init img and w -->
+<rect class="box" x="80" y="270" width="420" height="90"/>
+<text x="290" y="300" text-anchor="middle">
+Initialize arrays (Ly, Lx)
+</text>
+<text x="290" y="325" text-anchor="middle" class="small">
+img = 0 (float32)  — accumulated weighted values
+</text>
+<text x="290" y="345" text-anchor="middle" class="small">
+w   = 0 (float32)  — accumulated lambda weights
+</text>
+
+<!-- Loop ROIs -->
+<rect class="box" x="80" y="390" width="420" height="130"/>
+<text x="290" y="420" text-anchor="middle">
+For each ROI j in stat_list:
+</text>
+<text x="290" y="445" text-anchor="middle" class="small">
+v    = values_per_roi[j]
+</text>
+<text x="290" y="465" text-anchor="middle" class="small">
+ypix = stat[j]['ypix'],  xpix = stat[j]['xpix']
+</text>
+<text x="290" y="485" text-anchor="middle" class="small">
+lam  = stat[j]['lam'] (float32)
+</text>
+<text x="290" y="505" text-anchor="middle" class="small">
+img[ypix, xpix] += v * lam
+</text>
+<text x="290" y="525" text-anchor="middle" class="small">
+w[ypix, xpix]   += lam
+</text>
+
+<!-- Normalize -->
+<rect class="box" x="80" y="545" width="420" height="90"/>
+<text x="290" y="575" text-anchor="middle">
+Normalize and return image
+</text>
+<text x="290" y="600" text-anchor="middle" class="small">
+m = (w &gt; 0);  img[m] /= w[m]
+</text>
+
+<!-- Arrows left side -->
+<line class="arrow" x1="290" y1="100" x2="290" y2="130"/>
+<line class="arrow" x1="290" y1="240" x2="290" y2="270"/>
+<line class="arrow" x1="290" y1="360" x2="290" y2="390"/>
+<line class="arrow" x1="290" y1="520" x2="290" y2="545"/>
+
+<!-- Arrow from paint_spatial to show_spatial -->
+<line class="arrow" x1="500" y1="590" x2="650" y2="590"/>
+
+<text x="575" y="580" text-anchor="middle" class="small">
+img (Ly × Lx float32)
+</text>
+
+
+<!-- RIGHT: show_spatial -->
+
+<!-- Start show_spatial -->
+<rect class="startend" x="780" y="40" width="420" height="60"/>
+<text x="990" y="77" text-anchor="middle">
+show_spatial(img, title, Lx, Ly, stat, pix_to_um, cmap, outpath)
+</text>
+
+<!-- Inputs -->
+<rect class="box" x="780" y="130" width="420" height="120"/>
+<text x="990" y="160" text-anchor="middle">
+Inputs:
+</text>
+<text x="990" y="185" text-anchor="middle" class="small">
+img: painted spatial map (Ly, Lx)
+</text>
+<text x="990" y="205" text-anchor="middle" class="small">
+stat: ROI list (xpix, ypix)
+</text>
+<text x="990" y="225" text-anchor="middle" class="small">
+Lx, Ly, optional pix_to_um, colormap, outpath, title
+</text>
+
+<!-- Axes and extent -->
+<rect class="box" x="780" y="270" width="420" height="110"/>
+<text x="990" y="300" text-anchor="middle">
+Compute axes labels and extent
+</text>
+<text x="990" y="325" text-anchor="middle" class="small">
+If pix_to_um is None:
+</text>
+<text x="990" y="345" text-anchor="middle" class="small">
+  extent = None, axes in pixels
+</text>
+<text x="990" y="365" text-anchor="middle" class="small">
+Else:
+</text>
+<text x="990" y="385" text-anchor="middle" class="small">
+  extent = [0, Lx·µm, 0, Ly·µm], axes in µm
+</text>
+
+<!-- Imshow -->
+<rect class="box" x="780" y="410" width="420" height="110"/>
+<text x="990" y="440" text-anchor="middle">
+Plot main image
+</text>
+<text x="990" y="465" text-anchor="middle" class="small">
+plt.figure(figsize=(8, 7))
+</text>
+<text x="990" y="485" text-anchor="middle" class="small">
+imshow(img, origin='lower', cmap=cmap,
+</text>
+<text x="990" y="505" text-anchor="middle" class="small">
+       extent=extent, aspect='equal')
+</text>
+
+<!-- ROI centroids + colorbar -->
+<rect class="box" x="780" y="540" width="420" height="140"/>
+<text x="990" y="570" text-anchor="middle">
+Overlay ROI centroids + labels
+</text>
+<text x="990" y="595" text-anchor="middle" class="small">
+xs = median(xpix per ROI), ys = median(ypix)
+</text>
+<text x="990" y="615" text-anchor="middle" class="small">
+Convert to µm if pix_to_um; scatter white dots (alpha≈0.35)
+</text>
+<text x="990" y="635" text-anchor="middle" class="small">
+colorbar(label=title), title, xlabel, ylabel, tight_layout()
+</text>
+
+<!-- Save or show -->
+<rect class="box" x="780" y="700" width="420" height="80"/>
+<text x="990" y="735" text-anchor="middle">
+Save or display
+</text>
+<text x="990" y="760" text-anchor="middle" class="small">
+If outpath: savefig(outpath, dpi=200), close()
+</text>
+<text x="990" y="780" text-anchor="middle" class="small">
+Else: plt.show()
+</text>
+
+<!-- Arrows right side -->
+<line class="arrow" x1="990" y1="100" x2="990" y2="130"/>
+<line class="arrow" x1="990" y1="250" x2="990" y2="270"/>
+<line class="arrow" x1="990" y1="380" x2="990" y2="410"/>
+<line class="arrow" x1="990" y1="520" x2="990" y2="540"/>
+<line class="arrow" x1="990" y1="680" x2="990" y2="700"/>
+
+</svg>
