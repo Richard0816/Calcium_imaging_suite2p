@@ -1,0 +1,88 @@
+<svg width="1650" height="780" viewBox="0 0 1650 780" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+  .box { fill:#e8f0ff; stroke:#003366; stroke-width:2; rx:12; }
+  .startend { fill:#ffecec; stroke:#990000; stroke-width:2; rx:40; }
+  .arrow { stroke:#000; stroke-width:2; marker-end:url(#arrowhead); }
+  text { font-family:Arial, sans-serif; font-size:18px; }
+  .small { font-size:15px; }
+</style>
+
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+  </marker>
+</defs>
+
+<!-- START -->
+<rect class="startend" x="60" y="60" width="260" height="70"/>
+<text x="190" y="105" text-anchor="middle">Raw TIFF Movies</text>
+
+<!-- SHIFT FILE -->
+<rect class="box" x="360" y="60" width="300" height="120"/>
+<text x="510" y="95" text-anchor="middle">Shift Files</text>
+<text x="510" y="125" class="small" text-anchor="middle">Ensure min=0, convert to uint16</text>
+
+<!-- SUITE2P -->
+<rect class="box" x="720" y="60" width="360" height="150"/>
+<text x="900" y="95" text-anchor="middle">Suite2p Processing</text>
+<text x="900" y="125" class="small" text-anchor="middle">Registration, ROI detection</text>
+<text x="900" y="150" class="small" text-anchor="middle">F, Fneu, stat.npy</text>
+
+<!-- SIGNAL PROCESS -->
+<rect class="box" x="1150" y="60" width="360" height="160"/>
+<text x="1330" y="95" text-anchor="middle">Signal Processing</text>
+<text x="1330" y="125" class="small" text-anchor="middle">ΔF/F • Low-pass • Derivative</text>
+<text x="1330" y="150" class="small" text-anchor="middle">(robust baseline + SG)</text>
+
+<!-- SPATIAL MAP GENERATION -->
+<rect class="box" x="360" y="300" width="360" height="200"/>
+<text x="540" y="335" text-anchor="middle">Spatial Metric Generation</text>
+<text x="540" y="365" class="small" text-anchor="middle">Compute per-ROI metrics</text>
+<text x="540" y="390" class="small" text-anchor="middle">event rate, peak dz, mean dff</text>
+<text x="540" y="415" class="small" text-anchor="middle">paint_spatial(vals, stat)</text>
+<text x="540" y="440" class="small" text-anchor="middle">Probability + masked maps</text>
+
+<!-- CLUSTERING -->
+<rect class="box" x="780" y="300" width="360" height="170"/>
+<text x="960" y="335" text-anchor="middle">Hierarchical Clustering</text>
+<text x="960" y="365" class="small" text-anchor="middle">Inputs:</text>
+<text x="960" y="390" class="small" text-anchor="middle">Suite2p ROIs + dff/dt traces</text>
+<text x="960" y="413" class="small" text-anchor="middle">Metrics from spatial maps</text>
+<text x="960" y="435" class="small" text-anchor="middle">Dendrogram → colored clusters</text>
+
+<!-- CROSS-CORRELATION -->
+<rect class="box" x="1180" y="300" width="360" height="170"/>
+<text x="1360" y="335" text-anchor="middle">Cross-Correlation</text>
+<text x="1360" y="365" class="small" text-anchor="middle">For each cluster pair:</text>
+<text x="1360" y="390" class="small" text-anchor="middle">C1 × C2 cross-correlations</text>
+<text x="1360" y="415" class="small" text-anchor="middle">Saved into /cross_correlation</text>
+
+<!-- OUTPUT -->
+<rect class="startend" x="680" y="560" width="320" height="80"/>
+<text x="840" y="605" text-anchor="middle">Final Maps + Clusters + XCors</text>
+
+<!-- TOP ARROWS -->
+<line class="arrow" x1="320" y1="95" x2="360" y2="95"/>
+<line class="arrow" x1="660" y1="95" x2="720" y2="95"/>
+<line class="arrow" x1="1080" y1="95" x2="1150" y2="95"/>
+
+<!-- DOWN ARROWS from Suite2p & Signal Process -->
+<line class="arrow" x1="900" y1="210" x2="900" y2="300"/>
+<line class="arrow" x1="1330" y1="220" x2="1330" y2="300"/>
+
+<!-- ***Removed Shift → Spatial arrow*** -->
+
+
+
+<!-- FLOW BETWEEN SPATIAL → CLUSTERING -->
+<line class="arrow" x1="720" y1="385" x2="780" y2="385"/>
+
+<!-- CLUSTERING → CROSSCORR -->
+<line class="arrow" x1="1140" y1="385" x2="1180" y2="385"/>
+
+<!-- DOWN TO FINAL -->
+<line class="arrow" x1="960" y1="470" x2="960" y2="560"/>
+<line class="arrow" x1="1360" y1="470" x2="960" y2="560"/>
+
+</svg>

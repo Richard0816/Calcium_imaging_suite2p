@@ -336,7 +336,7 @@ def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath
     plt.scatter(xs, ys, s=4, c='white', alpha=0.35, linewidths=0)
     plt.colorbar(im, label=title)
     plt.title(title)
-    plt.xlabel(xlabel);
+    plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.tight_layout()
     if outpath:
