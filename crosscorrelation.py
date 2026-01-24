@@ -76,12 +76,44 @@ def compute_cross_correlation(sig1, sig2, fps, max_lag_seconds=5):
     return lags_sec, corr, best_lag_sec, max_corr
 
 
+def compute_zero_lag_corr_cpu(sig1, sig2):
+    """Zero-lag Pearson correlation (CPU)."""
+    sig1 = sig1 - sig1.mean()
+    sig2 = sig2 - sig2.mean()
+    denom = np.sqrt(np.sum(sig1 * sig1) * np.sum(sig2 * sig2))
+    if denom == 0:
+        return np.nan
+    return float(np.sum(sig1 * sig2) / denom)
+
+
+def compute_zero_lag_corr_gpu(sig1_np, sig2_np):
+    """Zero-lag Pearson correlation (GPU). Requires CuPy."""
+    if cp is None:
+        raise RuntimeError("CuPy not available for GPU zero-lag correlation.")
+
+    sig1 = cp.asarray(sig1_np, dtype=cp.float32)
+    sig2 = cp.asarray(sig2_np, dtype=cp.float32)
+
+    sig1 = sig1 - cp.mean(sig1)
+    sig2 = sig2 - cp.mean(sig2)
+
+    denom = cp.sqrt(cp.sum(sig1 * sig1) * cp.sum(sig2 * sig2))
+    if float(denom) == 0.0:
+        return np.nan
+
+    r0 = cp.sum(sig1 * sig2) / denom
+    return float(r0)
+
+
+
 def run_cluster_cross_correlations_gpu(root: Path,
                                        prefix: str = "r0p7_",
                                        fps: float = 30.0,
                                        cluster_folder: str = None,
                                        max_lag_seconds: float = 5.0,
-                                       cpu_fallback: bool = True):
+                                       cpu_fallback: bool = True,
+                                       zero_lag: bool = False,
+                                       zero_lag_only: bool = False):
     """
     GPU-accelerated cluster × cluster cross-correlation using CuPy.
 
@@ -115,7 +147,10 @@ def run_cluster_cross_correlations_gpu(root: Path,
     base_dir.mkdir(parents=True, exist_ok=True)
 
     # Find cluster ROI files
-    roi_files = sorted(f for f in base_dir.glob("*_rois.npy"))
+    roi_files = [
+        f for f in sorted(base_dir.glob("*_rois.npy"))
+        if "manual_combined" not in f.stem.lower()
+    ]
     if len(roi_files) < 2:
         raise ValueError(f"Need at least two *_rois.npy files in {base_dir} to cross-correlate.")
 
@@ -149,7 +184,12 @@ def run_cluster_cross_correlations_gpu(root: Path,
             summary_path = pair_dir / f"{cA}x{cB}_summary.csv"
             with open(summary_path, "w", newline="") as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(["roiA", "roiB", "best_lag_sec", "max_corr"])
+                header = ["roiA", "roiB"]
+                if not zero_lag_only:
+                    header += ["best_lag_sec", "max_corr"]
+                if zero_lag or zero_lag_only:
+                    header += ["zero_lag_corr"]
+                writer.writerow(header)
 
                 # Iterate through all ROI pairs
                 for roiA in roisA:
@@ -158,23 +198,38 @@ def run_cluster_cross_correlations_gpu(root: Path,
                     for roiB in roisB:
                         sigB = dff[:, roiB]
 
-                        if use_gpu:
-                            lags_sec, corr, best_lag_sec, max_corr = \
-                                compute_cross_correlation_gpu(sigA, sigB, fps, max_lag_seconds)
-                        else:
-                            # CPU fallback (reuse your CPU helper if you prefer)
-                            lags_sec, corr, best_lag_sec, max_corr = \
-                                compute_cross_correlation(sigA, sigB, fps, max_lag_seconds)
+                        # -- zero-lag corr
+                        zero_lag_corr = None
+                        if zero_lag_only or zero_lag:
+                            if use_gpu:
+                                zero_lag_corr = compute_zero_lag_corr_gpu(sigA, sigB)
+                            else:
+                                zero_lag_corr = compute_zero_lag_corr_cpu(sigA, sigB)
+                        if not zero_lag_only:
+                            if use_gpu:
+                                lags_sec, corr, best_lag_sec, max_corr = \
+                                    compute_cross_correlation_gpu(sigA, sigB, fps, max_lag_seconds)
+                            else:
+                                # CPU fallback (reuse your CPU helper if you prefer)
+                                lags_sec, corr, best_lag_sec, max_corr = \
+                                    compute_cross_correlation(sigA, sigB, fps, max_lag_seconds)
 
                         # Save numeric output
                         out_npz = {
                             "roiA": int(roiA),
                             "roiB": int(roiB),
-                            "lags_sec": lags_sec,
-                            "corr": corr,
-                            "best_lag_sec": float(best_lag_sec),
-                            "max_corr": float(max_corr),
                         }
+
+                        if not zero_lag_only:
+                            out_npz.update(
+                                {"lags_sec": lags_sec,
+                                "corr": corr,
+                                "best_lag_sec": float(best_lag_sec),
+                                "max_corr": float(max_corr)}
+                            )
+                        if zero_lag_only or zero_lag:
+                            out_npz["zero_lag_corr"] = float(zero_lag_corr)
+
                         outfile = pair_dir / f"roi{roiA:04d}_roi{roiB:04d}.npz"
                         np.savez(outfile, **out_npz)
 
@@ -193,7 +248,12 @@ def run_cluster_cross_correlations_gpu(root: Path,
                         #plt.close()
 #
                         # CSV row
-                        writer.writerow([roiA, roiB, best_lag_sec, max_corr])
+                        row = [int(roiA), int(roiB)]
+                        if not zero_lag_only:
+                            row += [float(best_lag_sec), float(max_corr)]
+                        if zero_lag_only or zero_lag:
+                            row += [float(zero_lag_corr)]
+                        writer.writerow(row)
 
             print(f"  ✔ Summary CSV saved to: {summary_path}")
 
@@ -647,6 +707,9 @@ def _bh_fdr(pvals, alpha=0.05):
     p_adj[order] = p_adj_ranked
     return reject, p_adj
 
+def _perm_test_with_zero_lag():
+    return None
+
 
 def _perm_test_mean_lag_signflip(lags_sec, n_perm=10_000, seed=0):
     """
@@ -801,7 +864,7 @@ def _compute_clusterpair_lag_stats(
 
 
 # ----------------------------
-# Main wrapper you asked for
+# Main wrapper
 # ----------------------------
 
 def run_or_load_clusterpair_lag_stats(
@@ -847,7 +910,6 @@ def run_or_load_clusterpair_lag_stats(
             fps=fps,
             cluster_folder=cluster_folder,
             max_lag_seconds=max_lag_seconds,
-            use_gpu=use_gpu,
             cpu_fallback=cpu_fallback
         )
 
@@ -867,7 +929,7 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    root = Path(r"E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = 30.0
     #run_cluster_cross_correlations_gpu(
@@ -878,18 +940,29 @@ if __name__ == "__main__":
     #    max_lag_seconds=5.0,
     #    cpu_fallback=True,  # set False if you want it to hard-fail when CuPy is missing
     #)
-    run_or_load_clusterpair_lag_stats(
+    #run_or_load_clusterpair_lag_stats(
+    #    root=root,
+    #    prefix="r0p7_",
+    #    fps=30.0,
+    #    cluster_folder="C1C2C4_recluster",
+    #    max_lag_seconds=5.0,
+    #    xcorr_dirname="cross_correlation_gpu",  # matches your function’s folder name
+    #    n_perm=10000,
+    #    seed=0,
+    #    alpha=0.05,
+    #    min_pairs=10
+    #)
+    run_cluster_cross_correlations_gpu(
         root=root,
         prefix="r0p7_",
         fps=30.0,
         cluster_folder="C1C2C4_recluster",
         max_lag_seconds=5.0,
-        xcorr_dirname="cross_correlation_gpu",  # matches your function’s folder name
-        n_perm=10000,
-        seed=0,
-        alpha=0.05,
-        min_pairs=10
+        cpu_fallback=True,
+        zero_lag=True,
+        zero_lag_only=False,
     )
+
     #run_crosscorr_from_sync_onsets_to_end(
     #    root=root,
     #    prefix="r0p7_",
