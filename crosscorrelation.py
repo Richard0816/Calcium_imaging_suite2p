@@ -932,14 +932,6 @@ if __name__ == "__main__":
     root = Path(r"E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = 30.0
-    #run_cluster_cross_correlations_gpu(
-    #    root=root,
-    #    prefix="r0p7_",
-    #    fps=fps,
-    #    cluster_folder="C1C2C4_recluster",  # or None if using base cluster_results
-    #    max_lag_seconds=5.0,
-    #    cpu_fallback=True,  # set False if you want it to hard-fail when CuPy is missing
-    #)
     #run_or_load_clusterpair_lag_stats(
     #    root=root,
     #    prefix="r0p7_",
