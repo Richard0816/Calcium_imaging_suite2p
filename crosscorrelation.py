@@ -862,6 +862,260 @@ def _compute_clusterpair_lag_stats(
     print(f"✅ Saved lag stats: {out_csv}")
     return rows
 
+def run_clusterpair_zero_lag_shift_surrogate_stats(
+    root: Path,
+    prefix: str = "r0p7_",
+    fps: float = 30.0,
+    cluster_folder: str = None,
+    *,
+    n_surrogates: int = 1000,
+    min_shift_s: float = 1.0,
+    max_shift_s: float = 10.0,
+    shift_cluster: str = "B",
+    two_sided: bool = False,
+    seed: int = 0,
+    max_pairs: int = 250_000,
+    output_dirname: str = "zero_lag_shift_surrogate",
+):
+    """
+    Monte Carlo (time-shift surrogate) test for ZERO-LAG synchrony between cluster pairs.
+
+    For each cluster pair (e.g., C1xC2):
+      1) Compute observed zero-lag mean correlation across ROI pairs.
+      2) Build a null distribution by circularly shifting EACH ROI trace in one cluster
+         (default: cluster B) by an independent random long offset, then recomputing
+         the same mean zero-lag correlation.
+      3) p-value is computed by counting how often the surrogate statistic is as (or more)
+         extreme than the observed statistic (one-sided by default: obs > null).
+
+    This preserves per-ROI autocorrelation and amplitude distribution, while destroying
+    fine temporal alignment between clusters.
+    """
+    root = Path(root)
+
+    # ---- load dF/F memmap ----
+    dff, *_ = utils.s2p_open_memmaps(root, prefix=prefix)
+    T, n_rois = dff.shape
+    if T < 10:
+        raise ValueError("Recording too short.")
+
+    # ---- locate clusters ----
+    base_dir = root / f"{prefix}cluster_results"
+    if cluster_folder is not None:
+        base_dir = base_dir / cluster_folder
+
+    roi_files = [
+        f for f in sorted(base_dir.glob("*_rois.npy"))
+        if "manual_combined" not in f.stem.lower()
+    ]
+    if len(roi_files) < 2:
+        raise ValueError(f"Need at least two *_rois.npy files in {base_dir}")
+
+    clusters = {f.stem.replace("_rois", ""): np.load(f) for f in roi_files}
+
+    # ---- output ----
+    out_root = base_dir / output_dirname
+    out_root.mkdir(parents=True, exist_ok=True)
+
+    rng = np.random.default_rng(seed)
+
+    # shift range in frames
+    min_shift_f = int(round(min_shift_s * fps))
+    max_shift_f = int(round(max_shift_s * fps))
+    min_shift_f = max(min_shift_f, 1)
+    max_shift_f = max(max_shift_f, min_shift_f)
+
+    if min_shift_f >= T:
+        raise ValueError(f"min_shift_s too large for recording length (min_shift_f={min_shift_f}, T={T}).")
+    if max_shift_f >= T:
+        max_shift_f = T - 1
+
+    def _zscore_matrix(traces_TxN: np.ndarray) -> np.ndarray:
+        X = traces_TxN.astype(np.float32, copy=False)
+        X = X - np.nanmean(X, axis=0, keepdims=True)
+        sd = np.nanstd(X, axis=0, ddof=0, keepdims=True)
+        sd[sd == 0] = np.nan
+        return X / sd
+
+    def _mean_zero_lag_corr(ZA: np.ndarray, ZB: np.ndarray, pair_idx=None) -> float:
+        """
+        Mean Pearson correlation at lag=0 across ROI pairs using z-scored matrices.
+        If pair_idx provided, uses subsampled pairs (tuple of arrays iA, iB).
+        """
+        if pair_idx is None:
+            C = (ZA.T @ ZB) / ZA.shape[0]   # (nA x nB)
+            return float(np.nanmean(C))
+
+        iA, iB = pair_idx
+        vals = np.sum(ZA[:, iA] * ZB[:, iB], axis=0) / ZA.shape[0]
+        return float(np.nanmean(vals))
+
+    rows = []
+    keys = sorted(clusters.keys())
+
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            cA, cB = keys[i], keys[j]
+            roisA = clusters[cA].astype(int)
+            roisB = clusters[cB].astype(int)
+            if roisA.size == 0 or roisB.size == 0:
+                continue
+
+            XA = np.asarray(dff[:, roisA])
+            XB = np.asarray(dff[:, roisB])
+            ZA = _zscore_matrix(XA)
+            ZB = _zscore_matrix(XB)
+
+            # bound compute by subsampling pairs if needed
+            n_pairs_total = roisA.size * roisB.size
+            pair_idx = None
+            n_pairs_used = n_pairs_total
+            if n_pairs_total > max_pairs:
+                n_pairs_used = int(max_pairs)
+                flat = rng.integers(0, n_pairs_total, size=n_pairs_used, endpoint=False)
+                iA = flat // roisB.size
+                iB = flat % roisB.size
+                pair_idx = (iA, iB)
+
+            obs = _mean_zero_lag_corr(ZA, ZB, pair_idx=pair_idx)
+
+            null = np.empty(n_surrogates, dtype=np.float32)
+
+            if shift_cluster.upper() == "A":
+                Z_shift_base = ZA
+                Z_fixed = ZB
+                n_shift = ZA.shape[1]
+                compute = lambda Zs: _mean_zero_lag_corr(Zs, Z_fixed, pair_idx=pair_idx)
+            else:
+                Z_shift_base = ZB
+                Z_fixed = ZA
+                n_shift = ZB.shape[1]
+                compute = lambda Zs: _mean_zero_lag_corr(Z_fixed, Zs, pair_idx=pair_idx)
+
+            # -------------------------
+            # One-surrogate distribution (per-pair r0 values)
+            # -------------------------
+            save_one_surrogate_dist = True  # or make this a function argument
+            one_surrogate_bins = 60
+            one_surrogate_max_pairs = 500_000  # subsample pairs if you want
+
+            if save_one_surrogate_dist:
+                # 1) Build ONE surrogate-shifted matrix Zs
+                shifts = rng.integers(min_shift_f, max_shift_f + 1, size=n_shift, endpoint=False)
+                Zs = np.empty_like(Z_shift_base)
+                for k, sh in enumerate(shifts):
+                    Zs[:, k] = np.roll(Z_shift_base[:, k], int(sh))
+
+                # 2) Compute correlation matrix for that surrogate and flatten to per-pair values
+                #    We want per-pair r at lag 0, not the mean.
+                if shift_cluster.upper() == "A":
+                    # shifted A vs fixed B
+                    C = (Zs.T @ Z_fixed) / Zs.shape[0]  # nA x nB
+                else:
+                    # fixed A vs shifted B
+                    C = (Z_fixed.T @ Zs) / Z_fixed.shape[0]  # nA x nB
+
+                vals = C.ravel()
+                vals = vals[np.isfinite(vals)]
+
+                # Optional: subsample to keep file sizes and plotting fast
+                if vals.size > one_surrogate_max_pairs:
+                    idx = rng.choice(vals.size, size=one_surrogate_max_pairs, replace=False)
+                    vals_plot = vals[idx]
+                else:
+                    vals_plot = vals
+
+                # 3) Save histogram + the values (optional)
+                hist_dir = out_root / "one_surrogate_pairwise_r0_hists"
+                hist_dir.mkdir(exist_ok=True)
+
+                # Save raw values (handy for later comparisons)
+                np.save(hist_dir / f"{cA}x{cB}_one_surrogate_pairwise_r0.npy", vals_plot)
+
+                # Plot histogram
+                import matplotlib.pyplot as plt
+
+                plt.figure(figsize=(5, 4))
+                plt.hist(vals_plot, bins=one_surrogate_bins, density=True)
+                plt.xlabel("Pairwise zero-lag correlation (one surrogate)")
+                plt.ylabel("Probability density")
+                plt.title(f"One surrogate distribution: {cA} × {cB}\n(n={vals_plot.size} pairs)")
+                plt.tight_layout()
+                plt.savefig(hist_dir / f"{cA}x{cB}_one_surrogate_pairwise_r0_hist.png", dpi=200)
+                plt.close()
+
+            for s in range(n_surrogates):
+                shifts = rng.integers(min_shift_f, max_shift_f + 1, size=n_shift, endpoint=False)
+                Zs = np.empty_like(Z_shift_base)
+                for k, sh in enumerate(shifts):
+                    Zs[:, k] = np.roll(Z_shift_base[:, k], int(sh))
+                null[s] = compute(Zs)
+
+            # -------------------------
+            # Save null histogram
+            # -------------------------
+            hist_dir = out_root / "null_histograms"
+            hist_dir.mkdir(exist_ok=True)
+
+            plt.figure(figsize=(5, 4))
+            plt.hist(null, bins=40, density=True, alpha=0.7, color="gray", label="Null (time-shift)")
+            plt.axvline(obs, color="red", lw=2, label="Observed")
+
+            plt.xlabel("Mean zero-lag correlation")
+            plt.ylabel("Probability density")
+            plt.title(f"Null distribution: {cA} × {cB}")
+            plt.legend(frameon=False)
+
+            hist_path = hist_dir / f"{cA}x{cB}_null_hist.png"
+            plt.tight_layout()
+            plt.savefig(hist_path, dpi=200)
+            plt.close()
+
+            # Monte Carlo p-value by counting (no Gaussian assumption)
+            if two_sided:
+                p = float((np.sum(np.abs(null) >= abs(obs)) + 1) / (n_surrogates + 1))
+                print((np.sum(np.abs(null) >= abs(obs)) + 1))
+                print((n_surrogates + 1))
+                print('new p val assigned')
+            else:
+                # one-sided test: obs > null  (equivalently count null >= obs)
+                p = float((np.sum(null >= obs) + 1) / (n_surrogates + 1))
+
+            rows.append({
+                "pair": f"{cA}x{cB}",
+                "clusterA": cA,
+                "clusterB": cB,
+                "n_rois_A": int(roisA.size),
+                "n_rois_B": int(roisB.size),
+                "n_pairs_total": int(n_pairs_total),
+                "n_pairs_used": int(n_pairs_used),
+                "observed_mean_r0": float(obs),
+                "null_mean_r0": float(np.nanmean(null)),
+                "null_std_r0": float(np.nanstd(null)),
+                "p_mc": float(p),
+                "n_surrogates": int(n_surrogates),
+                "min_shift_s": float(min_shift_s),
+                "max_shift_s": float(max_shift_s),
+                "shift_cluster": str(shift_cluster),
+                "two_sided": bool(two_sided),
+                "seed": int(seed),
+            })
+
+            print(f"✔ {cA}×{cB}: obs={obs:.4f}, null={float(np.mean(null)):.4f}±{float(np.std(null)):.4f}, p={p:.4g}")
+
+    out_csv = out_root / "zero_lag_shift_surrogate_stats.csv"
+    if rows:
+        with open(out_csv, "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            w.writeheader()
+            w.writerows(rows)
+    else:
+        with open(out_csv, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["pair","observed_mean_r0","null_mean_r0","null_std_r0","p_mc"])
+
+    print(f"✅ Saved: {out_csv}")
+    return rows
 
 # ----------------------------
 # Main wrapper
@@ -929,7 +1183,7 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = 30.0
     #run_or_load_clusterpair_lag_stats(
@@ -944,17 +1198,28 @@ if __name__ == "__main__":
     #    alpha=0.05,
     #    min_pairs=10
     #)
-    run_cluster_cross_correlations_gpu(
+    #run_cluster_cross_correlations_gpu(
+    #    root=root,
+    #    prefix="r0p7_",
+    #    fps=30.0,
+    #    cluster_folder="C1C2C4_recluster",
+    #    max_lag_seconds=5.0,
+    #    cpu_fallback=True,
+    #    zero_lag=True,
+    #    zero_lag_only=False,
+    #)
+    rows = run_clusterpair_zero_lag_shift_surrogate_stats(
         root=root,
         prefix="r0p7_",
         fps=30.0,
         cluster_folder="C1C2C4_recluster",
-        max_lag_seconds=5.0,
-        cpu_fallback=True,
-        zero_lag=True,
-        zero_lag_only=False,
+        n_surrogates=1000,
+        min_shift_s=1.0,
+        max_shift_s=10.0,
+        shift_cluster="B",  # shift C2, leave C1 fixed
+        two_sided=True,  # synchrony: usually one-sided
+        seed=0,
     )
-
     #run_crosscorr_from_sync_onsets_to_end(
     #    root=root,
     #    prefix="r0p7_",
