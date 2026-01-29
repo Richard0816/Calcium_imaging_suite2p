@@ -679,9 +679,6 @@ def run_crosscorr_from_sync_onsets_to_end(
 
                 print(f"  ✔ {cA}×{cB} saved in {pair_dir}")
 
-import numpy as np
-import csv
-from pathlib import Path
 
 # ----------------------------
 # Stats helpers

@@ -1,16 +1,19 @@
+from typing import Union, Tuple, Any
+
 import utils
 import hierarchical_clustering
 import crosscorrelation
 import analyze_output
 import spatial_heatmap
 import image_all
-
+import psutil
 from pathlib import Path
 import os
 
 import io
 import sys
 import contextlib
+
 
 class Tee(io.TextIOBase):
     def __init__(self, *streams):
@@ -55,13 +58,31 @@ def run_with_logging(logfile_name: str, func, *args, **kwargs) -> None:
             func(*args, **kwargs)
 
 
-def need_to_run_analysis_py(folder_name: str) -> bool:
+def need_to_run_analysis_py(folder_name: str) -> Union[tuple[bool, str], tuple[bool, None]]:
     """
     :param folder_name: Current folder name
     :return: Boolean if we have dff.memmap.float32 etc
     """
+    working_directory = Path(folder_name + r'\suite2p\plane0')
 
-    return True
+    required_files_suffix = [  # r0p7 is an arbitrary choice and is subject to change
+        "_filtered_dff.memmap.float32",
+        "_filtered_dff_dt.memmap.float32",
+        "_filtered_dff_lowpass.memmap.float32"
+    ]
+
+    # Collect all filenames
+    files = {p.name for p in working_directory.iterdir() if p.is_file()}
+
+    for file_name in files:
+        for suffix in required_files_suffix:
+            if file_name.endswith(suffix):
+                prefix = file_name.removesuffix(suffix)
+                # update required_files_suffix to just required files eg. r0p7_filtered_dff.memmap.float32
+                if all(f'{prefix}{suf}' in files for suf in required_files_suffix):
+                    return False, prefix
+
+    return True, None
 
 
 def need_to_run_spatial_heatmap(folder_name: str) -> bool:
@@ -71,6 +92,7 @@ def need_to_run_spatial_heatmap(folder_name: str) -> bool:
     """
     return True
 
+
 def need_to_run_image_all_py(folder_name: str) -> bool:
     """
     :param folder_name: Current folder name
@@ -78,12 +100,14 @@ def need_to_run_image_all_py(folder_name: str) -> bool:
     """
     return True
 
+
 def need_to_run_hierarchial_cluster(folder_name: str) -> bool:
     """
     :param folder_name: Current folder name
     :return:
     """
     return True
+
 
 def need_to_run_crosscorrelation(folder_name: str) -> bool:
     """
@@ -94,17 +118,16 @@ def need_to_run_crosscorrelation(folder_name: str) -> bool:
 
 
 def main(folder_name: str):
-    #Check if we need to analyze
-    if need_to_run_analysis_py(folder_name):
+    # Check if we need to analyze
+    need_to_run_analysis_py_truth, prefix = need_to_run_analysis_py(folder_name)
+    if need_to_run_analysis_py_truth:
         run_with_logging(
             "fluorescence_analysis_test.log",
             analyze_output.run_analysis_on_folder,
             folder_name
         )
 
-
-
-    #Check if we need to run imaging (spatial heatmap)
+    # Check if we need to run imaging (spatial heatmap)
     if need_to_run_spatial_heatmap(folder_name):
         run_with_logging(
             "raster_and_heatmaps_plots_test.log",
@@ -112,8 +135,7 @@ def main(folder_name: str):
             folder_name
         )
 
-
-    #Check if we need to run image_all.py
+    # Check if we need to run image_all.py
     if need_to_run_image_all_py(folder_name):
         run_with_logging(
             "image_all_test.log",
@@ -121,10 +143,10 @@ def main(folder_name: str):
             folder_name
         )
 
-    #Check if we need to run hierarchical clustering
+    # Check if we need to run hierarchical clustering
     if need_to_run_hierarchial_cluster(folder_name):
         params = dict(
-            root=Path(folder_name+r'\suite2p\plane0'),
+            root=Path(folder_name + r'\suite2p\plane0'),
             fps=30.0,
             prefix="r0p7_filtered_",
             method="ward",
@@ -136,11 +158,10 @@ def main(folder_name: str):
             **params
         )
 
-
-    #Check if we need to run cross correlations
+    # Check if we need to run cross correlations
     if need_to_run_crosscorrelation(folder_name):
         params = dict(
-            root=Path(folder_name+r'\suite2p\plane0'),
+            root=Path(folder_name + r'\suite2p\plane0'),
             fps=30.0,
             prefix="r0p7_filtered_",
             cluster_folder="",
@@ -156,17 +177,9 @@ def main(folder_name: str):
             **params
         )
 
-
-
-
-
     return None
 
 
-
-
-
 if __name__ == '__main__':
-    main(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
-
-
+    print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
+    #main(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
