@@ -86,6 +86,10 @@ def _select_high_coactivation_bins(A, frac_required=0.8, min_count=None):
     if min_count is None:
         min_count = int(np.ceil(frac_required * N))
     keep_bins = np.where(active_counts >= min_count)[0]
+    if keep_bins.size < 20:
+        keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 0.7)
+    if keep_bins.size > 100:
+        keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 1.1)
     return keep_bins, active_counts
 
 
@@ -577,11 +581,11 @@ if __name__ == "__main__":
     )
     #run(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
     coactivation_order_heatmaps(
-        folder_name=r'F:\data\2p_shifted\Hip\2024-06-03_00009',
+        folder_name=r'D:\data\2p_shifted\Hip\2024-06-03_00009',
         prefix='r0p7_',
         fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         bin_sec=0.5,  # 0.5 s bin size
-        frac_required=0.02,  # at least 80% of filtered cells active
+        frac_required=0.8,  # at least 80% of filtered cells active
         # weighted filter (use your fitted values if you have them)
         w_er=weights[1], w_pz=weights[2], w_area=weights[3],
         scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
