@@ -167,6 +167,6 @@ def main(folder_name: str):
 
 
 if __name__ == '__main__':
-    main('E:\\data\\2p_shifted\\Cx\\2024-06-03_00012')
+    main(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
 
 

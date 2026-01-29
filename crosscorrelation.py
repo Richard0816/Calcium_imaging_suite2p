@@ -126,6 +126,19 @@ def run_cluster_cross_correlations_gpu(root: Path,
     If CuPy is not available and cpu_fallback=True, silently falls back
     to the CPU version.
     """
+
+    def zscore_1d(x):
+        """
+        Z-score a 1D signal: (x - mean) / std
+        Returns zeros if std == 0.
+        """
+        x = np.asarray(x, dtype=np.float32)
+        mu = np.mean(x)
+        sd = np.std(x)
+        if sd == 0:
+            return np.zeros_like(x)
+        return (x - mu) / sd
+
     # Check for GPU availability
     use_gpu = (cp is not None and cp_signal is not None)
     if not use_gpu:
@@ -234,19 +247,20 @@ def run_cluster_cross_correlations_gpu(root: Path,
                         np.savez(outfile, **out_npz)
 
                         # Save figure (matplotlib still on CPU, but using small arrays)
-                        #plt.figure(figsize=(6, 3))
-                        #plt.plot(lags_sec, corr)
-                        #plt.axvline(best_lag_sec, color="r", ls="--")
-                        #plt.title(
-                        #    f"ROI {roiA} vs ROI {roiB}\n"
-                        #    f"Peak lag = {best_lag_sec:.3f}s, Max corr = {max_corr:.3f}"
-                        #)
-                        #plt.xlabel("Lag (s)")
-                        #plt.ylabel("Correlation")
-                        #plt.tight_layout()
-                        #plt.savefig(outfile.with_suffix(".png"))
-                        #plt.close()
-#
+                        corr = zscore_1d(corr)
+                        plt.figure(figsize=(6, 3))
+                        plt.plot(lags_sec, corr)
+                        plt.axvline(best_lag_sec, color="r", ls="--")
+                        plt.title(
+                            f"ROI {roiA} vs ROI {roiB}\n"
+                            f"Peak lag = {best_lag_sec:.3f}s, Max corr = {max_corr:.3f}"
+                        )
+                        plt.xlabel("Lag (s)")
+                        plt.ylabel("Correlation")
+                        plt.tight_layout()
+                        plt.savefig(outfile.with_suffix(".png"))
+                        plt.close()
+
                         # CSV row
                         row = [int(roiA), int(roiB)]
                         if not zero_lag_only:
@@ -917,11 +931,11 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
     out_root = base_dir / output_dirname
     out_root.mkdir(parents=True, exist_ok=True)
 
-    rng = np.random.default_rng(seed)
+    rng = np.random.default_rng()
 
     # shift range in frames
     min_shift_f = int(round(min_shift_s * fps))
-    max_shift_f = int(round(max_shift_s * fps))
+    max_shift_f = int(len(dff)/2)#int(round(max_shift_s * fps))
     min_shift_f = max(min_shift_f, 1)
     max_shift_f = max(max_shift_f, min_shift_f)
 
@@ -1044,9 +1058,9 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                 plt.savefig(hist_dir / f"{cA}x{cB}_one_surrogate_pairwise_r0_hist.png", dpi=200)
                 plt.close()
 
-            for s in range(n_surrogates):
-                shifts = rng.integers(min_shift_f, max_shift_f + 1, size=n_shift, endpoint=False)
-                Zs = np.empty_like(Z_shift_base)
+            for s in range(n_surrogates): # number of null distributions
+                shifts = rng.integers(min_shift_f, max_shift_f + 1, size=n_shift, endpoint=False) # Generate an array of random integers between min_shift_f and max_shift_f (inclusive)
+                Zs = np.empty_like(Z_shift_base) # Create an empty array of the same shape as Z_shift_base
                 for k, sh in enumerate(shifts):
                     Zs[:, k] = np.roll(Z_shift_base[:, k], int(sh))
                 null[s] = compute(Zs)
@@ -1183,7 +1197,7 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    root = Path(r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = 30.0
     #run_or_load_clusterpair_lag_stats(
@@ -1198,24 +1212,24 @@ if __name__ == "__main__":
     #    alpha=0.05,
     #    min_pairs=10
     #)
-    #run_cluster_cross_correlations_gpu(
-    #    root=root,
-    #    prefix="r0p7_",
-    #    fps=30.0,
-    #    cluster_folder="C1C2C4_recluster",
-    #    max_lag_seconds=5.0,
-    #    cpu_fallback=True,
-    #    zero_lag=True,
-    #    zero_lag_only=False,
-    #)
+    run_cluster_cross_correlations_gpu(
+        root=root,
+        prefix="r0p7_filtered_",
+        fps=30.0,
+        cluster_folder="C2_recluster",
+        max_lag_seconds=5.0,
+        cpu_fallback=True,
+        zero_lag=True,
+        zero_lag_only=False,
+    )
     rows = run_clusterpair_zero_lag_shift_surrogate_stats(
         root=root,
-        prefix="r0p7_",
+        prefix="r0p7_filtered_",
         fps=30.0,
-        cluster_folder="C1C2C4_recluster",
-        n_surrogates=1000,
-        min_shift_s=1.0,
-        max_shift_s=10.0,
+        cluster_folder="C2_recluster",
+        n_surrogates=100,
+        min_shift_s=1,
+        max_shift_s=500,
         shift_cluster="B",  # shift C2, leave C1 fixed
         two_sided=True,  # synchrony: usually one-sided
         seed=0,
