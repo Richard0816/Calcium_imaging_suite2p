@@ -78,20 +78,105 @@ def _activation_matrix(onsets_by_roi, edges):
     return A, first_time
 
 
-def _select_high_coactivation_bins(A, frac_required=0.8, min_count=None):
+import numpy as np
+
+def _select_high_coactivation_bins(
+    A,
+    frac_required=0.8,
+    min_count=None,
+    target_min=20,
+    target_max=50,
+    max_iters=300,
+    relax_factor=0.7,
+    tighten_factor=1.1,
+):
     """
-    Return indices of bins where the fraction (or count) of active ROIs exceeds threshold.
+    Return indices of bins where the count of active ROIs exceeds a threshold.
+
+    Behavior:
+    - If min_count is provided, it is used as the initial threshold (integer).
+    - Otherwise threshold is ceil(frac_required * N).
+    - Iteratively relax/tighten threshold to try to get keep_bins in [target_min, target_max].
+    - Never recurses; bounded by max_iters.
+    - Safe fallbacks when recordings have too few / zero coactivation bins.
     """
+    A = np.asarray(A)
+    if A.ndim != 2:
+        raise ValueError(f"A must be 2D (N, B). Got {A.shape}")
     N, B = A.shape
+
     active_counts = A.sum(axis=0)
+
+    # If there are no bins or no activity at all, return empty safely.
+    if B == 0 or active_counts.max(initial=0) == 0:
+        return np.array([], dtype=int), active_counts
+
+    # Initial threshold
     if min_count is None:
-        min_count = int(np.ceil(frac_required * N))
-    keep_bins = np.where(active_counts >= min_count)[0]
-    if keep_bins.size < 20:
-        keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 0.7)
-    if keep_bins.size > 50:
-        keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 1.1)
-    return keep_bins, active_counts
+        # clamp frac_required to [0, 1] for safety
+        frac = float(frac_required)
+        frac = max(0.0, min(1.0, frac))
+        thresh = int(np.ceil(frac * N))
+    else:
+        thresh = int(min_count)
+
+    # Clamp threshold to valid range
+    thresh = max(1, min(N, thresh))
+
+    def bins_for_threshold(t: int):
+        return np.where(active_counts >= t)[0]
+
+    keep_bins = bins_for_threshold(thresh)
+
+    # If total bins are small, just return what we can without trying to hit 20–50.
+    if B < target_min:
+        return keep_bins, active_counts
+
+    # Iterate to get within desired range
+    for _ in range(max_iters):
+        k = keep_bins.size
+        if target_min <= k <= target_max:
+            return keep_bins, active_counts
+
+        if k < target_min:
+            # Too few bins: relax threshold (make it easier)
+            # Adjust frac_required or directly reduce thresh; here we directly reduce thresh.
+            new_thresh = max(1, int(np.floor(thresh * relax_factor)))
+            if new_thresh == thresh:
+                new_thresh = max(1, thresh - 1)
+            thresh = new_thresh
+
+        else:  # k > target_max
+            # Too many bins: tighten threshold (make it harder)
+            new_thresh = min(N, int(np.ceil(thresh * tighten_factor)))
+            if new_thresh == thresh:
+                new_thresh = min(N, thresh + 1)
+            thresh = new_thresh
+
+        keep_bins = bins_for_threshold(thresh)
+
+        # If threshold hits bounds and we still can't satisfy, stop.
+        if thresh == 1 and keep_bins.size < target_min:
+            break
+        if thresh == N and keep_bins.size > target_max:
+            break
+
+    # ----- Fallbacks if we couldn't hit the target window -----
+    # If we have *some* bins but fewer than target_min, keep them.
+    if 0 < keep_bins.size < target_min:
+        return keep_bins, active_counts
+
+    # If we still have too many bins, choose top bins by coactivation count.
+    if keep_bins.size > target_max:
+        # pick bins with highest active_counts
+        order = np.argsort(active_counts)[::-1]
+        top = order[:target_max]
+        top.sort()
+        return top.astype(int), active_counts
+
+    # If we ended up with none, return empty safely.
+    return np.array([], dtype=int), active_counts
+
 
 
 def _order_map_for_bin(first_time_col, active_mask_col):
@@ -141,7 +226,7 @@ def _paint_order_map(order_rank, stat, Ly, Lx):
 def coactivation_order_heatmaps(
     folder_name,
     prefix='r0p7_',
-    fps=30.0,
+    fps=15.0,
     z_enter=3.5,
     z_exit=1.5,
     min_sep_s=0.3,
@@ -341,9 +426,10 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
             mu = scores[valid].mean()
             sigma = scores[valid].std()
             tail_thresh = mu + 1.0 * sigma
-            print(f"[SpatialHeatmap] Falling back to tail threshold {tail_thresh:.2f}")
-            mask = scores >= tail_thresh
-
+            mask_alt = scores >= tail_thresh
+            if mask_alt.sum() > mask.sum():
+                print(f"[SpatialHeatmap] Falling back to tail threshold {tail_thresh:.2f}")
+                mask = mask_alt
     return mask
 
 # ---- Helpers ----
@@ -382,7 +468,7 @@ class SpatialHeatmapConfig:
     """Configuration parameters for spatial heatmap generation."""
 
     def __init__(self, folder_name, metric='event_rate', prefix='r0p7_',
-                 fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None):
+                 fps=15.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None):
         self.folder_name = folder_name
         self.metric = metric
         self.prefix = prefix
@@ -517,7 +603,7 @@ def _generate_time_binned_maps(data, config):
 
 
 def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
-                        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None,
+                        fps=15.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3, bin_seconds=None,
                         # scoring params
                         w_er=1.0, w_pz=1.0, w_area=0.5,
                         scale_er=1.0, scale_pz=3.0, scale_area=50.0,
@@ -577,10 +663,11 @@ def run(file_name):
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
+    fps = utils.get_fps_from_notes(file_name)
     run_spatial_heatmap(
         file_name,
         metric='event_rate',
-        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+        fps=fps, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         # scoring: emphasize peak_dz slightly, normalize by typical ranges
         w_er=weights[1], w_pz=weights[2], w_area=weights[3],
         scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
@@ -603,12 +690,13 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    run(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
-
+    root = r'F:\data\2p_shifted\Hip\2024-06-03_00009'
+    run(root)
+    fps = utils.get_fps_from_notes(root)
     coactivation_order_heatmaps(
-        folder_name=r'F:\data\2p_shifted\Hip\2024-06-03_00009',
+        folder_name=root,
         prefix='r0p7_',
-        fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+        fps=fps, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         bin_sec=0.5,  # 0.5 s bin size
         frac_required=0.8,  # at least 80% of filtered cells active
         # weighted filter (use your fitted values if you have them)

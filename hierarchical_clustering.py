@@ -299,7 +299,7 @@ def main_from_existing_clustering(root: Path,
 
 if __name__ == "__main__":
     root = Path(r'F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0')
-    fps = 30.0
+    fps = utils.get_fps_from_notes(root)
     prefix = 'r0p7_filtered_'
     method = 'ward'
     metric = 'euclidean'

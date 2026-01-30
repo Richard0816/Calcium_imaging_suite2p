@@ -6,7 +6,7 @@ import crosscorrelation
 import analyze_output
 import spatial_heatmap
 import image_all
-import psutil
+import glob
 from pathlib import Path
 import os
 
@@ -106,7 +106,12 @@ def need_to_run_hierarchial_cluster(folder_name: str) -> bool:
     :param folder_name: Current folder name
     :return:
     """
-    return True
+    exists = any(
+        os.path.isdir(p)
+        for p in glob.glob(os.path.join(folder_name, "*_filtered_cluster_results"))
+    )
+
+    return not exists
 
 
 def need_to_run_crosscorrelation(folder_name: str) -> bool:
@@ -133,7 +138,7 @@ def main(folder_name: str):
             "raster_and_heatmaps_plots_test.log",
             spatial_heatmap.run_spatial_heatmap,
             folder_name,
-            score_threshold=0.5  # classify as cell if P>=0.5
+            score_threshold=0.68  # classify as cell if P>=0.5
         )
         run_with_logging(
             "raster_and_heatmaps_plots_test.log",
@@ -153,7 +158,7 @@ def main(folder_name: str):
     if need_to_run_hierarchial_cluster(folder_name):
         params = dict(
             root=Path(folder_name + r'\suite2p\plane0'),
-            fps=30.0,
+            fps=utils.get_fps_from_notes(folder_name),
             prefix="r0p7_filtered_",
             method="ward",
             metric="euclidean",
@@ -164,11 +169,9 @@ def main(folder_name: str):
             **params
         )
 
-    # Check if we need to run cross correlations
-    if need_to_run_crosscorrelation(folder_name):
         params = dict(
             root=Path(folder_name + r'\suite2p\plane0'),
-            fps=30.0,
+            fps=utils.get_fps_from_notes(folder_name),
             prefix="r0p7_filtered_",
             cluster_folder="",
             max_lag_seconds=5.0,
@@ -187,5 +190,5 @@ def main(folder_name: str):
 
 
 if __name__ == '__main__':
-    print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
-    #main(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
+    #print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
+    main(r'F:\data\2p_shifted\Hip\2024-06-03_00002')

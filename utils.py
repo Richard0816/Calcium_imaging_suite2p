@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import io
 import contextlib
@@ -458,6 +460,76 @@ def file_name_to_aav_to_dictionary_lookup(file_name, aav_info_csv, dic):
 
     return dictionary_value
 
+RECORDING_DIR_RE = re.compile(r"\d{4}-\d{2}-\d{2}_\d+")
+
+def _find_recording_root(path: Path) -> Path | None:
+    """
+    Walk upward until we find a folder named YYYY-MM-DD_#####.
+    """
+    for p in [path] + list(path.parents):
+        if RECORDING_DIR_RE.fullmatch(p.name):
+            return p
+    return None
+
+def get_fps_from_notes(
+    path: str,
+    notes_root: str = r"F:\notes_recordings",
+    default_fps: float = 15.0,
+) -> float:
+    """
+    Resolve FPS for a recording, given ANY path inside that recording.
+    Safe fallback to default_fps if metadata is missing.
+    """
+    try:
+        path = Path(path)
+
+        rec_root = _find_recording_root(path)
+        if rec_root is None:
+            return default_fps
+
+        date_str, rec_str = rec_root.name.split("_", 1)
+        target = f"{date_str}-{rec_str}"
+
+        notes_root = Path(notes_root)
+        notes_path = notes_root / f"{date_str}.xlsx"
+
+        if not notes_path.exists():
+            candidates = sorted(notes_root.glob(f"*{date_str}*.xlsx"))
+            if not candidates:
+                return default_fps
+            notes_path = candidates[0]
+
+        df = pd.read_excel(notes_path, sheet_name="2P settings")
+        df.columns = [str(c).strip() for c in df.columns]
+        cols = {c.lower(): c for c in df.columns}
+
+        if "filename" not in cols or "rate (hz)" not in cols:
+            return default_fps
+
+        fn_col = cols["filename"]
+        rate_col = cols["rate (hz)"]
+
+        fn = df[fn_col].astype(str).str.strip()
+
+        hits = df.loc[fn == target]
+
+        if hits.empty:
+            hits = df.loc[
+                fn.str.endswith(f"-{rec_str}", na=False) |
+                (fn == rec_str)
+            ]
+
+        if hits.empty:
+            return default_fps
+
+        rate_val = hits.iloc[0][rate_col]
+        if pd.isna(rate_val):
+            return default_fps
+
+        return float(rate_val)
+
+    except Exception:
+        return default_fps
 
 # k nearest neighbor
 # umap

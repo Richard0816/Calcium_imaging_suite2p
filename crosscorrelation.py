@@ -1196,7 +1196,7 @@ def run_or_load_clusterpair_lag_stats(
 if __name__ == "__main__":
     root = Path(r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0")
     prefix = "r0p7_filtered_"
-    fps = 30.0
+    fps = utils.get_fps_from_notes(root)
     #run_or_load_clusterpair_lag_stats(
     #    root=root,
     #    prefix="r0p7_",
@@ -1212,7 +1212,7 @@ if __name__ == "__main__":
     run_cluster_cross_correlations_gpu(
         root=root,
         prefix="r0p7_filtered_",
-        fps=30.0,
+        fps=fps,
         cluster_folder="C2_recluster",
         max_lag_seconds=5.0,
         cpu_fallback=True,
@@ -1222,7 +1222,7 @@ if __name__ == "__main__":
     rows = run_clusterpair_zero_lag_shift_surrogate_stats(
         root=root,
         prefix="r0p7_filtered_",
-        fps=30.0,
+        fps=fps,
         cluster_folder="C2_recluster",
         n_surrogates=100,
         min_shift_s=1,

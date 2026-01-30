@@ -10,7 +10,6 @@ import utils
 @dataclass
 class ImagingConfig:
     """Configuration parameters for imaging analysis."""
-    fps: float = 30.0 # Imaging frame rate (Hz)
     prefix: str = 'r0p7_filtered_'  # matches your processing run (prefix used by your saved memmaps)
     plot_seconds: float = None  # None = full recording; or e.g., 300 for first 5 minutes
     time_cols_target: int = 1200  # target width (columns) for heatmaps; code downsamples time to ~this many bins
@@ -38,7 +37,7 @@ def _load_imaging_data(root: str, prefix: str):
 
 
 def _process_roi(roi_index: int, lowpass_data: np.ndarray, derivative_data: np.ndarray,
-                 config: ImagingConfig, downsample_factor: int, num_cols: int):
+                 config: ImagingConfig, downsample_factor: int, num_cols: int, fps: float = 15.0):
     """Process a single ROI to generate heatmap row, event raster, and event count.
 
     Returns:
@@ -50,7 +49,7 @@ def _process_roi(roi_index: int, lowpass_data: np.ndarray, derivative_data: np.n
     # Detect events using hysteresis on derivative z-scores
     z_scores, median, mad = utils.mad_z(derivative_roi)
     onsets = utils.hysteresis_onsets(
-        z_scores, config.z_enter, config.z_exit, config.fps, min_sep_s=config.min_separation_s
+        z_scores, config.z_enter, config.z_exit, fps, min_sep_s=config.min_separation_s
     )
     event_count = onsets.size
 
@@ -82,7 +81,7 @@ def _process_roi(roi_index: int, lowpass_data: np.ndarray, derivative_data: np.n
 
 
 def _build_summaries(num_rois: int, lowpass: np.ndarray, derivative: np.ndarray,
-                     time_slice: slice, config: ImagingConfig, downsample_factor: int, num_cols: int):
+                     time_slice: slice, config: ImagingConfig, downsample_factor: int, num_cols: int, fps: float = 15.0):
     """Build heatmap matrix, event raster, and event counts for all ROIs.
 
     Returns:
@@ -98,7 +97,7 @@ def _build_summaries(num_rois: int, lowpass: np.ndarray, derivative: np.ndarray,
 
         heatmap_row, event_row, count = _process_roi(
             roi_index, lowpass_slice, derivative_slice,
-            config, downsample_factor, num_cols
+            config, downsample_factor, num_cols, fps=fps
         )
 
         heatmap[roi_index, :] = heatmap_row
@@ -112,13 +111,13 @@ def _build_summaries(num_rois: int, lowpass: np.ndarray, derivative: np.ndarray,
 
 
 def _save_heatmap(heatmap_sorted: np.ndarray, root: str, config: ImagingConfig,
-                  num_rois: int, num_cols: int, downsample_factor: int, sample_name: str):
+                  num_rois: int, num_cols: int, downsample_factor: int, sample_name: str, fps: float = 15.0):
     """Generate and save the global heatmap visualization."""
     plt.figure(figsize=(14, 10))
     plt.imshow(heatmap_sorted, aspect='auto', interpolation='nearest')
     plt.title(
         f'Low-pass ΔF/F (sorted by event count)  N={num_rois}, '
-        f'width~{num_cols} bins (~{num_cols * downsample_factor / config.fps:.1f}s), '
+        f'width~{num_cols} bins (~{num_cols * downsample_factor / fps:.1f}s), '
         f'sample ({sample_name})'
     )
     plt.xlabel('Time (downsampled bins)')
@@ -147,9 +146,9 @@ def _save_event_raster(event_raster_sorted: np.ndarray, root: str, config: Imagi
 
 
 def _save_small_multiples(lowpass: np.ndarray, sorted_order: np.ndarray, event_counts: np.ndarray,
-                          root: str, config: ImagingConfig, num_rois: int, num_frames_cropped: int):
+                          root: str, config: ImagingConfig, num_rois: int, num_frames_cropped: int, fps: float):
     """Generate and save small multiples line plots for top active ROIs."""
-    time_axis = np.arange(num_frames_cropped) / config.fps
+    time_axis = np.arange(num_frames_cropped) / fps
     max_pages = 5
     num_pages = math.ceil(min(num_rois, max_pages * config.top_k) / config.top_k)
 
@@ -205,13 +204,13 @@ def run_full_imaging_on_folder(folder_name: str):
     root = os.path.join(folder_name, "suite2p\\plane0\\") # Path to a single Suite2p plane folder
     sample_name = root.split("\\")[-4]  # Human-readable sample name from path
     print(f'Processing {sample_name}')
-
+    fps = utils.get_fps_from_notes(root)
     # Load data
     num_rois, num_frames, lowpass, derivative = _load_imaging_data(root, config.prefix)
 
     # Determine time cropping and downsampling
     if config.plot_seconds is not None:
-        num_frames_cropped = min(num_frames, int(config.plot_seconds * config.fps))
+        num_frames_cropped = min(num_frames, int(config.plot_seconds * fps))
         time_slice = slice(0, num_frames_cropped)
     else:
         num_frames_cropped = num_frames
@@ -222,7 +221,7 @@ def run_full_imaging_on_folder(folder_name: str):
 
     # Build summaries
     heatmap, event_raster, event_counts, sorted_order = _build_summaries(
-        num_rois, lowpass, derivative, time_slice, config, downsample_factor, num_cols
+        num_rois, lowpass, derivative, time_slice, config, downsample_factor, num_cols, fps
     )
     print("Summaries built: heatmap matrix =", heatmap.shape, "event raster =", event_raster.shape)
 
@@ -230,9 +229,9 @@ def run_full_imaging_on_folder(folder_name: str):
     heatmap_sorted = heatmap[sorted_order]
     event_raster_sorted = event_raster[sorted_order]
 
-    _save_heatmap(heatmap_sorted, root, config, num_rois, num_cols, downsample_factor, sample_name)
+    _save_heatmap(heatmap_sorted, root, config, num_rois, num_cols, downsample_factor, sample_name, fps=fps)
     _save_event_raster(event_raster_sorted, root, config, num_rois, sample_name)
-    _save_small_multiples(lowpass, sorted_order, event_counts, root, config, num_rois, num_frames_cropped)
+    _save_small_multiples(lowpass, sorted_order, event_counts, root, config, num_rois, num_frames_cropped, fps)
 
     print("Saved:",
           os.path.join(root, f'{config.prefix}overview_heatmap.png'),

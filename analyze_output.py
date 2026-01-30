@@ -107,7 +107,7 @@ def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
     lowpass_memmap.flush()
     derivative_memmap.flush()
 
-def filter_rois_by_cell_score(root, fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
+def filter_rois_by_cell_score(root, fps=15.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
                               w_er=1.0, w_pz=1.2, w_area=0.4,
                               scale_er=1.0, scale_pz=3.0, scale_area=50.0,
                               bias=-2.0, score_threshold=0.5, top_k_pct=None):
@@ -191,7 +191,7 @@ def process_suite2p_traces(
 
 def run_analysis_on_folder(folder_name: str):
     start_time = time.time()
-    fps = 30.0
+    fps = utils.get_fps_from_notes(folder_name)
     root = os.path.join(folder_name, "suite2p\\plane0\\")
     sample_name = root.split("\\")[-4]  # Human-readable sample name from path
 
