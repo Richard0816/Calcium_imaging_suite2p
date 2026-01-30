@@ -8,6 +8,12 @@ from scipy.spatial.distance import pdist
 import spatial_heatmap
 import utils
 
+def count_leaf_color_groups(Z, color_threshold: float) -> int:
+    """How many dendrogram leaf-color groups would we get at this threshold fraction?"""
+    r = dendrogram(Z, no_plot=True, color_threshold=color_threshold * np.max(Z[:, 2]))
+    return len(set(r["leaves_color_list"]))
+
+
 def export_rois_by_leaf_color(root: Path, Z, color_threshold: float = 0.7, prefix: str = "r0p7_"):
     """
     Export lists of ROI indices grouped by dendrogram leaf color.
@@ -71,7 +77,18 @@ def plot_dendrogram_heatmap(dff: np.ndarray, Z, save_dir: Path, fps: float = 30.
     plt.close()
 
     plt.figure(figsize=(10, 5))
-    dendrogram(Z, color_threshold=color_threshold * max(Z[:, 2]))
+
+    T = color_threshold * np.max(Z[:, 2])
+
+    dendrogram(Z, color_threshold=T)
+
+    # draw the cut line
+    plt.axhline(T, linestyle="--", linewidth=2)
+    plt.text(
+        0.99, T, f" cut @ {T:.3g}  ({color_threshold:.2f}×max)",
+        transform=plt.gca().get_yaxis_transform(),  # x in axes coords, y in data coords
+        ha="right", va="bottom"
+    )
     plt.title("ROI Hierarchical Clustering Dendrogram")
     plt.xlabel("ROIs")
     plt.ylabel("Linkage distance")
@@ -155,11 +172,30 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "wa
     save_dir = root / f"{prefix}cluster_results"
     dff = load_dff(root, prefix=prefix)
     Z = run_clustering(dff, method=method, metric=metric)
-    order = plot_dendrogram_heatmap(dff, Z, save_dir, fps=fps, color_threshold=0.65)
+    # --- Automatically choose a color_threshold that yields ~4–5 groups ---
+    target_counts = {4, 5}
+    start = 0.90
+    stop = 0.05
+    step = 0.01
+
+    chosen = start
+    chosen_n = count_leaf_color_groups(Z, chosen)
+
+    for ct in np.arange(start, stop - 1e-9, -step):
+        n_groups = count_leaf_color_groups(Z, float(ct))
+        if n_groups in target_counts:
+            chosen = float(ct)
+            chosen_n = n_groups
+            break
+
+    color_threshold = chosen
+    print(f"[dendrogram] auto color_threshold={color_threshold:.2f} → {chosen_n} groups")
+
+    order = plot_dendrogram_heatmap(dff, Z, save_dir, fps=fps, color_threshold=color_threshold)
     np.save(save_dir / "cluster_order.npy", np.array(order, dtype=int))
     print(f"Saved cluster order to {save_dir / 'cluster_order.npy'}")
 
-    r = dendrogram(Z, no_plot=True, color_threshold=0.65 * max(Z[:, 2]))
+    r = dendrogram(Z, no_plot=True, color_threshold=color_threshold * max(Z[:, 2]))
     link_colors = r['leaves_color_list']
 
     plot_spatial_from_labels(root, order, link_colors, prefix=prefix)
@@ -167,7 +203,7 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "wa
         f"Saved spatial map colored by dendrogram ROI colors to {save_dir / 'spatial_dendrogram_colored_rois.png'}"
     )
 
-    export_rois_by_leaf_color(root, Z, color_threshold=0.65, prefix=prefix)
+    export_rois_by_leaf_color(root, Z, color_threshold=color_threshold, prefix=prefix)
     print("Saved ROI lists by dendrogram leaf color.")
 
 def main_from_existing_clustering(root: Path,
@@ -225,7 +261,7 @@ def main_from_existing_clustering(root: Path,
 
     # --- Run clustering ---
     Z = run_clustering(dff_subset, method=method, metric=metric)
-    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps, color_threshold=0.75)
+    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps, color_threshold=0.9)
 
     np.save(save_dir / "manual_combined_rois.npy", combined_rois)
     np.save(save_dir / "manual_order.npy", np.array(order, dtype=int))
@@ -234,7 +270,7 @@ def main_from_existing_clustering(root: Path,
 
     # --- Generate dendrogram colors and spatial map ---
 
-    r = dendrogram(Z, no_plot=True, color_threshold=0.75 * max(Z[:, 2]))
+    r = dendrogram(Z, no_plot=True, color_threshold=0.9 * max(Z[:, 2]))
     link_colors = r["leaves_color_list"]
 
     plot_spatial_from_labels(root, order, link_colors,
@@ -271,15 +307,14 @@ if __name__ == "__main__":
 
     # Manually selected ROI subsets — these can be in parent or subfolders
     roi_files = [
-        r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy",
-        r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy"
+        r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy"
     ]
 
     # Optional: specify a target folder name for new clustering outputs
-    cluster_folder = r"C4C5_recluster"
+    cluster_folder = r"C1_recluster"
 
     # Run manual re-clustering on these selected ROI sets
-    main_from_existing_clustering(root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
+    #main_from_existing_clustering(root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
 
-    #main(root, fps, prefix, method, metric)
+    main(root, fps, prefix, method, metric)
 

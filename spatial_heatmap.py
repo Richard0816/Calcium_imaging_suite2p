@@ -168,7 +168,7 @@ def coactivation_order_heatmaps(
     data = _load_suite2p_data(config)
 
     # --- filter to "cells" via scores ---
-    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')) and False: #Todo remove and False
+    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')):
         scores = np.load(os.path.join(folder_name, 'roi_scores.npy'))
     else:
         scores = compute_cell_scores(
@@ -335,7 +335,7 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
         mask = scores >= score_threshold
 
     # fall back if too little cells
-    if mask.sum() < 10:
+    if mask.sum() < 0.02 * scores.size:
         valid = scores > 0  # ignore structural zeros
         if valid.sum() >= 10:
             mu = scores[valid].mean()
@@ -542,7 +542,7 @@ def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
                                   z_enter, z_exit, min_sep_s, bin_seconds)
 
     data = _load_suite2p_data(config)
-    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')) and False: #Todo remove and False
+    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')):
         scores = np.load(os.path.join(folder_name, 'roi_scores.npy'))
     else:
         # Global scores over whole recording (you can also recompute per bin)
@@ -603,7 +603,7 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    #run(r'E:\data\2p_shifted\Hip\2024-06-03_00009')
+    run(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
 
     coactivation_order_heatmaps(
         folder_name=r'F:\data\2p_shifted\Hip\2024-06-03_00009',
