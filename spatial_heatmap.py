@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import utils
 from typing import Union
 import matplotlib as mpl
+import sys
 
 # --- Custom cyan→blue→red map with grey background ---
 CYAN_TO_RED = mpl.colors.LinearSegmentedColormap.from_list(
@@ -88,7 +89,7 @@ def _select_high_coactivation_bins(A, frac_required=0.8, min_count=None):
     keep_bins = np.where(active_counts >= min_count)[0]
     if keep_bins.size < 20:
         keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 0.7)
-    if keep_bins.size > 100:
+    if keep_bins.size > 50:
         keep_bins, active_counts = _select_high_coactivation_bins(A, frac_required=frac_required * 1.1)
     return keep_bins, active_counts
 
@@ -167,12 +168,16 @@ def coactivation_order_heatmaps(
     data = _load_suite2p_data(config)
 
     # --- filter to "cells" via scores ---
-    scores = compute_cell_scores(
-        data, config,
-        w_er=w_er, w_pz=w_pz, w_area=w_area,
-        scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
-        bias=bias
-    )
+    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')):
+        scores = np.load(os.path.join(folder_name, 'roi_scores.npy'))
+    else:
+        scores = compute_cell_scores(
+            data, config,
+            w_er=w_er, w_pz=w_pz, w_area=w_area,
+            scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
+            bias=bias
+        )
+
     cell_mask = soft_cell_mask(scores, score_threshold=score_threshold, top_k_pct=top_k_pct)
     print(f"[CoAct] Using {cell_mask.sum()} / {len(cell_mask)} ROIs after filter.")
 
@@ -312,9 +317,10 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
     Convert probabilities into a boolean mask.
     If top_k_pct is set (e.g., 20 for top 20%), it overrides score_threshold.
     """
-    zero_frac = np.mean(scores == 0)
+
+    """zero_frac = np.mean(scores == 0)
     if zero_frac >= 0.1:
-        return scores != 0
+        return scores != 0""" #only include this code block if 0 is invalid
     #if (scores >= score_threshold).sum() < scores.size * 0.1:
     #    k = int(np.ceil(0.1 * scores.size))
     #    thresh = np.partition(scores, -k)[-k]
@@ -521,15 +527,18 @@ def run_spatial_heatmap(folder_name, metric='event_rate', prefix='r0p7_',
                                   z_enter, z_exit, min_sep_s, bin_seconds)
 
     data = _load_suite2p_data(config)
+    if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')):
+        scores = np.load(os.path.join(folder_name, 'roi_scores.npy'))
+    else:
+        # Global scores over whole recording (you can also recompute per bin)
+        scores = compute_cell_scores(
+            data, config,
+            w_er=w_er, w_pz=w_pz, w_area=w_area,
+            scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
+            bias=bias,
+            t_slice=None
+        )
 
-    # Global scores over whole recording (you can also recompute per bin)
-    scores = compute_cell_scores(
-        data, config,
-        w_er=w_er, w_pz=w_pz, w_area=w_area,
-        scale_er=scale_er, scale_pz=scale_pz, scale_area=scale_area,
-        bias=bias,
-        t_slice=None
-    )
     # Generate whole-recording map
     _compute_and_save_spatial_map(
         data, config,
@@ -572,16 +581,17 @@ if __name__ == "__main__":
     weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
     sd_mu = [4.079, 11.24, 41.178]
     sd_sd = [1.146, 4.214, 37.065]
-    thres = 0.68
+    thres = 0.2
     bias = float(
         weights[0]
         - (weights[1] * sd_mu[0] / sd_sd[0])
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    #run(r'F:\data\2p_shifted\Hip\2024-06-03_00009')
+    #run(r'E:\data\2p_shifted\Hip\2024-06-03_00009')
+
     coactivation_order_heatmaps(
-        folder_name=r'D:\data\2p_shifted\Hip\2024-06-03_00009',
+        folder_name=r'E:\data\2p_shifted\Hip\2024-06-03_00009',
         prefix='r0p7_',
         fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
         bin_sec=0.5,  # 0.5 s bin size

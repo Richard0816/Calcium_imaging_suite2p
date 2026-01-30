@@ -129,31 +129,16 @@ def main(folder_name: str):
 
     # Check if we need to run imaging (spatial heatmap)
     if need_to_run_spatial_heatmap(folder_name):
-        weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
-        sd_mu = [4.079, 11.24, 41.178]
-        sd_sd = [1.146, 4.214, 37.065]
-        thres = 0.68
-        bias = float(
-            weights[0]
-            - (weights[1] * sd_mu[0] / sd_sd[0])
-            - (weights[2] * sd_mu[1] / sd_sd[1])
-            - (weights[3] * sd_mu[2] / sd_sd[2])
-        )
-
         run_with_logging(
             "raster_and_heatmaps_plots_test.log",
             spatial_heatmap.run_spatial_heatmap,
             folder_name,
-            metric='event_rate',
-            fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
-            # scoring: emphasize peak_dz slightly, normalize by typical ranges
-            w_er=weights[1], w_pz=weights[2], w_area=weights[3],
-            scale_er=float(sd_sd[0]),  # ~1 event/min considered “unit”
-            scale_pz=float(sd_sd[1]),  # z≈5 as a “unit bump”
-            scale_area=float(sd_sd[2]),  # 10 px as a “unit area”
-            bias=bias,  # stricter overall
-            score_threshold=thres,  # classify as cell if P>=0.5
-            top_k_pct=None  # or set e.g. 25 for top-25% only
+            score_threshold=0.5  # classify as cell if P>=0.5
+        )
+        run_with_logging(
+            "raster_and_heatmaps_plots_test.log",
+            spatial_heatmap.coactivation_order_heatmaps,
+            folder_name
         )
 
     # Check if we need to run image_all.py
