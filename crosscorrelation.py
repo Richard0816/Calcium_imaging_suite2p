@@ -873,7 +873,394 @@ def _compute_clusterpair_lag_stats(
     print(f"✅ Saved lag stats: {out_csv}")
     return rows
 
+
+def plot_pvalue_histogram(
+        p_pair: np.ndarray,
+        pair_name: str,
+        out_png: Path,
+        n_bins: int = 40,
+):
+    """
+    Plot histogram of Monte Carlo p-values for a cluster-pair.
+    Includes uniform reference line (null expectation).
+    """
+    p_pair = np.asarray(p_pair)
+    p_pair = p_pair[np.isfinite(p_pair)]
+
+    if p_pair.size == 0:
+        return
+
+    fig, ax = plt.subplots(figsize=(5, 4))
+
+    # Histogram (density so it integrates to 1)
+    ax.hist(
+        p_pair,
+        bins=n_bins,
+        range=(0, 1),
+        density=True,
+        alpha=0.7,
+        color="tab:blue",
+        edgecolor="black",
+        label="Observed p-values",
+    )
+
+    # Uniform null reference
+    ax.axhline(
+        1.0,
+        color="black",
+        linestyle="--",
+        linewidth=1.5,
+        label="Uniform null",
+    )
+
+    ax.set_xlabel("Monte Carlo p-value")
+    ax.set_ylabel("Density")
+    ax.set_title(f"P-value distribution: {pair_name}")
+    ax.set_xlim(0, 1)
+
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(out_png, dpi=200)
+    plt.close(fig)
+
+
 def run_clusterpair_zero_lag_shift_surrogate_stats(
+        root: Path,
+        prefix: str = "r0p7_",
+        fps: float = 30.0,
+        cluster_folder: str = None,
+        *,
+        n_surrogates: int = 1000,
+        min_shift_s: float = 1.0,
+        max_shift_s: float = 10.0,
+        shift_cluster: str = "B",
+        two_sided: bool = False,
+        seed: int = 0,
+        max_pairs: int = 250_000,
+        output_dirname: str = "zero_lag_shift_surrogate",
+        use_gpu: bool = True,
+        fdr_alpha: float = 0.05,
+        save_pairwise_csv: bool = True,
+):
+    """
+    Monte Carlo (time-shift surrogate) test for ZERO-LAG synchrony between cluster pairs.
+
+    For each cluster pair (e.g., C1xC2):
+      1) Compute observed zero-lag mean correlation across ROI pairs.
+      2) Build a null distribution by circularly shifting EACH ROI trace in one cluster
+         (default: cluster B) by an independent random long offset, then recomputing
+         the same mean zero-lag correlation.
+      3) p-value is computed by counting how often the surrogate statistic is as (or more)
+         extreme than the observed statistic (one-sided by default: obs > null).
+
+    This preserves per-ROI autocorrelation and amplitude distribution, while destroying
+    fine temporal alignment between clusters.
+    """
+    root = Path(root)
+
+    # ---- load dF/F memmap ----
+    dff, *_ = utils.s2p_open_memmaps(root, prefix=prefix)
+    T, n_rois = dff.shape
+    if T < 10:
+        raise ValueError("Recording too short.")
+
+    # ---- locate clusters ----
+    base_dir = root / f"{prefix}cluster_results"
+    if cluster_folder is not None:
+        base_dir = base_dir / cluster_folder
+
+    roi_files = [
+        f for f in sorted(base_dir.glob("*_rois.npy"))
+        if "manual_combined" not in f.stem.lower()
+    ]
+    if len(roi_files) < 2:
+        raise ValueError(f"Need at least two *_rois.npy files in {base_dir}")
+
+    clusters = {f.stem.replace("_rois", ""): np.load(f) for f in roi_files}
+
+    # ---- output ----
+    out_root = base_dir / output_dirname
+    out_root.mkdir(parents=True, exist_ok=True)
+
+    rng = np.random.default_rng()
+
+    # shift range in frames
+    min_shift_f = int(round(min_shift_s * fps))
+    max_shift_f = int(len(dff) / 2)  # int(round(max_shift_s * fps))
+    min_shift_f = max(min_shift_f, 1)
+    max_shift_f = max(max_shift_f, min_shift_f)
+
+    if min_shift_f >= T:
+        raise ValueError(f"min_shift_s too large for recording length (min_shift_f={min_shift_f}, T={T}).")
+    if max_shift_f >= T:
+        max_shift_f = T - 1
+
+    # -----------------------------------------
+    # Decide GPU availability
+    # - We assume you already have `cp` imported conditionally at top-level
+    #   e.g. try: import cupy as cp; except: cp=None
+    # -----------------------------------------
+    gpu_ok = (use_gpu and (cp is not None))
+    if use_gpu and not gpu_ok:
+        print("⚠️ use_gpu=True but CuPy not available; falling back to CPU.")
+
+    def _zscore_matrix_np(traces_TxN: np.ndarray) -> np.ndarray:
+        X = traces_TxN.astype(np.float32, copy=False)
+        X = X - np.nanmean(X, axis=0, keepdims=True)
+        sd = np.nanstd(X, axis=0, ddof=0, keepdims=True)
+        sd[sd == 0] = np.nan
+        return X / sd
+
+    def _pairwise_r0_np(ZA: np.ndarray, ZB: np.ndarray, iA: np.ndarray, iB: np.ndarray) -> np.ndarray:
+        # r[p] = mean_t ZA[t,iA[p]] * ZB[t,iB[p]]
+        vals = np.sum(ZA[:, iA] * ZB[:, iB], axis=0) / float(ZA.shape[0])
+        return vals.astype(np.float32, copy=False)
+
+    def _pairwise_r0_gpu(ZA_gpu, ZB_gpu, iA_gpu, iB_gpu):
+        vals = cp.mean(ZA_gpu[:, iA_gpu] * ZB_gpu[:, iB_gpu], axis=0)
+        return vals
+
+    def _shift_columns_gpu(Z_gpu, shifts_gpu):
+        """
+        Z_gpu: (T, N)
+        shifts_gpu: (N,) int
+        Returns Zs_gpu: (T, N) where each column is circularly shifted by its own shift.
+        Vectorized using take_along_axis.
+        """
+        t = cp.arange(Z_gpu.shape[0], dtype=cp.int32)[:, None]  # (T,1)
+        idx = (t - shifts_gpu[None, :]) % Z_gpu.shape[0]  # (T,N)
+        return cp.take_along_axis(Z_gpu, idx, axis=0)
+
+    rows = []
+    keys = sorted(clusters.keys())
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            cA, cB = keys[i], keys[j]
+            roisA = clusters[cA]
+            roisB = clusters[cB]
+            if roisA.size == 0 or roisB.size == 0:
+                continue
+
+            pair_dir = out_root / f"{cA}x{cB}"
+            pair_dir.mkdir(exist_ok=True)
+
+            # -----------------------------------------
+            # Load signals for ROIs in each cluster
+            # Shape: (T, nA) and (T, nB)
+            # -----------------------------------------
+            XA = np.asarray(dff[:, roisA])
+            XB = np.asarray(dff[:, roisB])
+
+            # Standardize so r is mean(product)
+            ZA = _zscore_matrix_np(XA)
+            ZB = _zscore_matrix_np(XB)
+
+            nA, nB = ZA.shape[1], ZB.shape[1]
+            n_pairs_total = nA * nB
+
+            # -----------------------------------------
+            # Build the list of ROI pairs:
+            # - if small enough, use all pairs
+            # - else sample max_pairs uniformly
+            # -----------------------------------------
+            if n_pairs_total <= max_pairs:
+                iA = np.repeat(np.arange(nA, dtype=np.int32), nB)
+                iB = np.tile(np.arange(nB, dtype=np.int32), nA)
+            else:
+                flat = rng.integers(0, n_pairs_total, size=int(max_pairs), endpoint=False)
+                iA = (flat // nB).astype(np.int32)
+                iB = (flat % nB).astype(np.int32)
+
+            P = int(iA.size)
+
+            # -----------------------------------------
+            # Compute observed r per pair
+            # -----------------------------------------
+            if gpu_ok:
+                ZA_gpu = cp.asarray(ZA, dtype=cp.float32)
+                ZB_gpu = cp.asarray(ZB, dtype=cp.float32)
+                iA_gpu = cp.asarray(iA, dtype=cp.int32)
+                iB_gpu = cp.asarray(iB, dtype=cp.int32)
+
+                r_obs_gpu = _pairwise_r0_gpu(ZA_gpu, ZB_gpu, iA_gpu, iB_gpu)
+                r_obs = cp.asnumpy(r_obs_gpu).astype(np.float32)
+            else:
+                r_obs = _pairwise_r0_np(ZA, ZB, iA, iB)
+
+            # Exceedance counts for Monte Carlo p-values (one counter per pair)
+            exceed = cp.zeros(P, dtype=cp.int32) if gpu_ok else np.zeros(P, dtype=np.int32)
+
+            # -----------------------------------------
+            # Decide which cluster's traces we shift
+            # -----------------------------------------
+            shift_A = (shift_cluster.upper() == "A")
+
+            # -----------------------------------------
+            # Surrogate loop
+            # -----------------------------------------
+            if gpu_ok:
+                # keep everything on GPU for speed
+                Z_shift_base = ZA_gpu if shift_A else ZB_gpu
+                Z_fixed = ZB_gpu if shift_A else ZA_gpu
+                r_obs_ref = r_obs_gpu  # GPU copy
+
+                for s in range(n_surrogates):
+                    # One random shift PER ROI in the shifted cluster
+                    shifts = cp.asarray(
+                        rng.integers(min_shift_f, max_shift_f + 1, size=Z_shift_base.shape[1], endpoint=False),
+                        dtype=cp.int32,
+                    )
+
+                    # Apply all shifts at once (vectorized)
+                    Zs = _shift_columns_gpu(Z_shift_base, shifts)
+
+                    # Compute null correlations for the SAME pairs
+                    if shift_A:
+                        r_null = _pairwise_r0_gpu(Zs, Z_fixed, iA_gpu, iB_gpu)
+                    else:
+                        r_null = _pairwise_r0_gpu(Z_fixed, Zs, iA_gpu, iB_gpu)
+
+                    # Update exceedance counts (one- or two-sided)
+                    if two_sided:
+                        exceed += (cp.abs(r_null) >= cp.abs(r_obs_ref))
+                    else:
+                        exceed += (r_null >= r_obs_ref)
+
+                # Monte Carlo p-value per pair (with +1 correction so p never equals 0)
+                p_pair = (exceed.astype(cp.float32) + 1.0) / float(n_surrogates + 1)
+
+                # Move results back to CPU for saving/FDR
+                p_pair = cp.asnumpy(p_pair).astype(np.float32)
+                exceed_cpu = cp.asnumpy(exceed).astype(np.int32)
+
+            else:
+                # CPU path: shifts require a Python loop over ROIs (slower)
+                Z_shift_base = ZA if shift_A else ZB
+                Z_fixed = ZB if shift_A else ZA
+
+                # Reuse buffer to avoid reallocating every surrogate
+                Zs = np.empty_like(Z_shift_base, dtype=np.float32)
+
+                for s in range(n_surrogates):
+                    shifts = rng.integers(min_shift_f, max_shift_f + 1, size=Z_shift_base.shape[1], endpoint=False)
+
+                    # Shift each ROI column independently
+                    for k, sh in enumerate(shifts):
+                        Zs[:, k] = np.roll(Z_shift_base[:, k], int(sh))
+
+                    if shift_A:
+                        r_null = _pairwise_r0_np(Zs, Z_fixed, iA, iB)
+                    else:
+                        r_null = _pairwise_r0_np(Z_fixed, Zs, iA, iB)
+
+                    if two_sided:
+                        exceed += (np.abs(r_null) >= np.abs(r_obs))
+                    else:
+                        exceed += (r_null >= r_obs)
+
+                p_pair = (exceed.astype(np.float32) + 1.0) / float(n_surrogates + 1)
+                exceed_cpu = exceed
+
+            # -----------------------------------------
+            # Multiple comparisons correction (within this cluster pair)
+            # -----------------------------------------
+            reject_fdr, p_fdr = _bh_fdr(p_pair, alpha=fdr_alpha)
+
+            # -----------------------------------------
+            # Plot p-value histogram
+            # -----------------------------------------
+            plot_pvalue_histogram(
+                p_pair=p_pair,
+                pair_name=f"{cA}x{cB}",
+                out_png=pair_dir / "pvalue_histogram.png",
+            )
+
+            # -----------------------------------------
+            # Save per-pair results (optional)
+            # -----------------------------------------
+            if save_pairwise_csv:
+                out_csv = pair_dir / "pairwise_pvals.csv"
+                with open(out_csv, "w", newline="") as f:
+                    w = csv.writer(f)
+                    w.writerow([
+                        "pair_idx",
+                        "roiA_global", "roiB_global",
+                        "roiA_in_cluster", "roiB_in_cluster",
+                        "r_obs",
+                        "exceed_count",
+                        "p_mc",
+                        "p_fdr",
+                        "reject_fdr",
+                    ])
+
+                    # Map cluster-local indices back to global ROI ids
+                    roiA_global = roisA[iA]
+                    roiB_global = roisB[iB]
+
+                    for k in range(P):
+                        w.writerow([
+                            int(k),
+                            int(roiA_global[k]), int(roiB_global[k]),
+                            int(iA[k]), int(iB[k]),
+                            float(r_obs[k]),
+                            int(exceed_cpu[k]),
+                            float(p_pair[k]),
+                            float(p_fdr[k]),
+                            bool(reject_fdr[k]),
+                        ])
+
+            # -----------------------------------------
+            # Save a cluster-pair summary row
+            # (Useful for quick QC and comparisons)
+            # -----------------------------------------
+            rows.append({
+                "pair": f"{cA}x{cB}",
+                "clusterA": cA,
+                "clusterB": cB,
+                "n_rois_A": int(roisA.size),
+                "n_rois_B": int(roisB.size),
+                "n_pairs_total": int(n_pairs_total),
+                "n_pairs_used": int(P),
+                "mean_r_obs": float(np.nanmean(r_obs)),
+                "median_r_obs": float(np.nanmedian(r_obs)),
+                "frac_p_less_than_0p05": float(np.mean(p_pair < 0.05)),
+                "frac_fdr_reject": float(np.mean(reject_fdr)),
+                "min_p": float(np.nanmin(p_pair)) if p_pair.size else np.nan,
+                "n_surrogates": int(n_surrogates),
+                "min_shift_s": float(min_shift_s),
+                "max_shift_s": float(max_shift_s),
+                "shift_cluster": str(shift_cluster),
+                "two_sided": bool(two_sided),
+                "seed": int(seed),
+                "used_gpu": bool(gpu_ok),
+            })
+
+            print(
+                f"✔ {cA}×{cB}: pairs_used={P}/{n_pairs_total}, "
+                f"mean(r_obs)={float(np.nanmean(r_obs)):.4f}, "
+                f"frac(p<0.05)={float(np.mean(p_pair < 0.05)):.3f}, "
+                f"frac(FDR)={float(np.mean(reject_fdr)):.3f}, "
+                f"min_p={float(np.min(p_pair)):.3g}, gpu={gpu_ok}"
+            )
+
+        # -----------------------------------------
+        # Save overall summary across all cluster pairs
+        # -----------------------------------------
+    out_summary = out_root / "zero_lag_shift_surrogate_pairwise_stats.csv"
+    if rows:
+        with open(out_summary, "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            w.writeheader()
+            w.writerows(rows)
+    else:
+        with open(out_summary, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["pair", "n_pairs_used", "mean_r_obs", "frac_p_lt_0p05", "frac_fdr_reject"])
+
+    print(f"✅ Saved: {out_summary}")
+    return rows
+
+def run_clusterpair_zero_lag_shift_surrogate_stats_legacy( # legacy model
     root: Path,
     prefix: str = "r0p7_",
     fps: float = 30.0,
@@ -1194,7 +1581,7 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0")
+    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = utils.get_fps_from_notes(root)
     #run_or_load_clusterpair_lag_stats(
@@ -1209,27 +1596,29 @@ if __name__ == "__main__":
     #    alpha=0.05,
     #    min_pairs=10
     #)
-    run_cluster_cross_correlations_gpu(
-        root=root,
-        prefix="r0p7_filtered_",
-        fps=fps,
-        cluster_folder="C2_recluster",
-        max_lag_seconds=5.0,
-        cpu_fallback=True,
-        zero_lag=True,
-        zero_lag_only=False,
-    )
+    #run_cluster_cross_correlations_gpu(
+    #    root=root,
+    #    prefix="r0p7_filtered_",
+    #    fps=fps,
+    #    cluster_folder="C2_recluster",
+    #    max_lag_seconds=5.0,
+    #    cpu_fallback=True,
+    #    zero_lag=True,
+    #    zero_lag_only=False,
+    #)
     rows = run_clusterpair_zero_lag_shift_surrogate_stats(
         root=root,
         prefix="r0p7_filtered_",
         fps=fps,
-        cluster_folder="C2_recluster",
-        n_surrogates=100,
+        n_surrogates=5000,
         min_shift_s=1,
         max_shift_s=500,
         shift_cluster="B",  # shift C2, leave C1 fixed
-        two_sided=True,  # synchrony: usually one-sided
+        two_sided=False,  # synchrony: usually one-sided
         seed=0,
+        use_gpu=True,
+        fdr_alpha=0.05,
+        save_pairwise_csv=True
     )
     #run_crosscorr_from_sync_onsets_to_end(
     #    root=root,
