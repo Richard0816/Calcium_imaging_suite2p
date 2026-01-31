@@ -1,0 +1,11 @@
+Loaded ΔF/F: 15000 frames × 1000 ROIs
+Loaded C0: 992 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy
+Loaded C1: 2 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy
+Loaded C2: 2 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy
+Loaded C3: 2 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy
+Loaded C4: 2 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy
+
+▶ [GPU] Computing C0 × C1 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1\C0xC1_summary.csv
+
+▶ [GPU] Computing C0 × C2 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2

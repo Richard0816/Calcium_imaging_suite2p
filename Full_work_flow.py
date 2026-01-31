@@ -220,4 +220,12 @@ def main(folder_name: str):
 
 if __name__ == '__main__':
     #print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
-    main(r'E:\data\2p_shifted\Cx\2024-08-20_00001')
+    for entry in os.scandir(r'E:\data\2p_shifted\Cx'):
+        # running in here just to store the output in the logfile
+        if entry.is_dir():
+            main(entry.path)
+    for entry in os.scandir(r'E:\data\2p_shifted\Hip'):
+        # running in here just to store the output in the logfile
+        if entry.is_dir():
+            main(entry.path)
+    #main(r'E:\data\2p_shifted\Cx\2024-08-20_00001')

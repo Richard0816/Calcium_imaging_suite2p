@@ -430,6 +430,10 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
             if mask_alt.sum() > mask.sum():
                 print(f"[SpatialHeatmap] Falling back to tail threshold {tail_thresh:.2f}")
                 mask = mask_alt
+
+    if mask.sum() > 1000: # default
+        mask = scores >= 0.68
+
     return mask
 
 # ---- Helpers ----
