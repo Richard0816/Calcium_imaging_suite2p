@@ -22,11 +22,11 @@ import smtplib
 
 # --- Email Configuration ---
 # Use environment variables for sensitive info (e.g., passwords) for security
-SMTP_SERVER = "smt.gmail.com"  # e.g., smtp.gmail.com, SMTP.office365.com
+SMTP_SERVER = "smtp.gmail.com"  # e.g., smtp.gmail.com, SMTP.office365.com
 SMTP_PORT = 587  # typically 587 for TLS, 465 for SSL
 SENDER_EMAIL = "richard.script.use@gmail.com"
 RECIPIENT_EMAIL = "richardjiang2004@gmail.com"
-EMAIL_PASSWORD = "wewi0816" # Or an app-specific password
+EMAIL_PASSWORD = "uhau dvea emsk bair" # Or an app-specific password
 
 # --- Setup Logging with SMTPHandler ---
 # Create a logger

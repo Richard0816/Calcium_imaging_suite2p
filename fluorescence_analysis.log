@@ -789,3 +789,17 @@ Wrote:
  low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
  d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
 Total time 326.6369309425354 seconds.
+[Filter] Retained 3052/4978 ROIs (61.3%)
+[Filter] After applying mask: 3052 ROIs retained.
+Processing 2024-11-20_00003
+cutoff_hz: 1.0
+[Filter] Retained 3052/4978 ROIs (61.3%)
+[Filter] After applying mask: 3052 ROIs retained.
+Processing 2024-11-20_00003
+cutoff_hz: 1.0
+Processed cells 0–3051 / 3051 in 336.82 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 693.2406344413757 seconds.
