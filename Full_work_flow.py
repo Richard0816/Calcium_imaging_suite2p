@@ -14,6 +14,63 @@ import io
 import sys
 import contextlib
 
+import sys
+import logging
+from logging.handlers import SMTPHandler
+import traceback
+import smtplib
+
+# --- Email Configuration ---
+# Use environment variables for sensitive info (e.g., passwords) for security
+SMTP_SERVER = "smt.gmail.com"  # e.g., smtp.gmail.com, SMTP.office365.com
+SMTP_PORT = 587  # typically 587 for TLS, 465 for SSL
+SENDER_EMAIL = "richard.script.use@gmail.com"
+RECIPIENT_EMAIL = "richardjiang2004@gmail.com"
+EMAIL_PASSWORD = "wewi0816" # Or an app-specific password
+
+# --- Setup Logging with SMTPHandler ---
+# Create a logger
+error_logger = logging.getLogger(__name__)
+error_logger.setLevel(logging.ERROR)
+
+# Create the SMTP handler
+try:
+    smtp_handler = SMTPHandler(
+        mailhost=(SMTP_SERVER, SMTP_PORT),
+        fromaddr=SENDER_EMAIL,
+        toaddrs=[RECIPIENT_EMAIL],
+        subject="CRITICAL Error in Python Script",
+        credentials=(SENDER_EMAIL, EMAIL_PASSWORD),
+        secure=() # Use secure=() for STARTTLS (port 587)
+    )
+    smtp_handler.setLevel(logging.ERROR)
+    error_logger.addHandler(smtp_handler)
+except smtplib.SMTPException as e:
+    print(f"Failed to set up SMTP handler: {e}")
+
+# --- Global Exception Handler Function ---
+def global_exception_handler(exc_type, exc_value, exc_traceback):
+    """
+    Logs unhandled exceptions and sends an email alert.
+    """
+    # Log the exception with full traceback
+    error_logger.error("An unhandled exception occurred:", 
+                       exc_info=(exc_type, exc_value, exc_traceback))
+    
+    # Optionally, print to console as well (default behavior)
+    sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+# Set the custom handler as the global exception hook
+sys.excepthook = global_exception_handler
+
+# --- Example Usage (will trigger the handler) ---
+if __name__ == "__main__":
+    print("Script starting...")
+    # Simulate an error
+    1 / 0 
+    print("Script finished (this line won't be reached if error occurs)")
+
+
 
 class Tee(io.TextIOBase):
     def __init__(self, *streams):
