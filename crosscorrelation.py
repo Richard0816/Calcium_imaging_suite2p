@@ -1126,6 +1126,10 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                     else:
                         exceed += (r_null >= r_obs_ref)
 
+                    if (s +1) % 50 == 0:
+                        cp.get_default_memory_pool().free_all_blocks()
+                        cp.get_default_pinned_memory_pool().free_all_blocks
+
                 # Monte Carlo p-value per pair (with +1 correction so p never equals 0)
                 p_pair = (exceed.astype(cp.float32) + 1.0) / float(n_surrogates + 1)
 
@@ -1234,7 +1238,11 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                 "seed": int(seed),
                 "used_gpu": bool(gpu_ok),
             })
-
+            if gpu_ok:
+                # Cleaning up VRAM to avoid memory blowup
+                del ZA_gpu, ZB_gpu, iA_gpu, iB_gpu, r_obs_gpu, exceed
+                cp.get_default_memory_pool().free_all_blocks()
+                cp.get_default_pinned_memory_pool().free_all_blocks
             print(
                 f"✔ {cA}×{cB}: pairs_used={P}/{n_pairs_total}, "
                 f"mean(r_obs)={float(np.nanmean(r_obs)):.4f}, "
