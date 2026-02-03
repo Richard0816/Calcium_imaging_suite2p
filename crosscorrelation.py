@@ -182,8 +182,8 @@ def run_cluster_cross_correlations_gpu(root: Path,
     # Loop over cluster pairs
     for cA in clusters:
         for cB in clusters:
-            # Only compute each unordered pair once, skip same-cluster
-            if cA >= cB:
+            # Only compute each unordered pair once, don't skip same-cluster
+            if cA > cB:
                 continue
 
             roisA = clusters[cA]
@@ -1016,6 +1016,10 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
         vals = np.sum(ZA[:, iA] * ZB[:, iB], axis=0) / float(ZA.shape[0])
         return vals.astype(np.float32, copy=False)
 
+    def _corrmat_gpu(ZA_gpu, ZB_gpu):
+        # (nA,nB) = (nA,T) @ (T,nB)
+        return (ZA_gpu.T @ ZB_gpu) / ZA_gpu.shape[0]
+
     def _pairwise_r0_gpu(ZA_gpu, ZB_gpu, iA_gpu, iB_gpu):
         vals = cp.mean(ZA_gpu[:, iA_gpu] * ZB_gpu[:, iB_gpu], axis=0)
         return vals
@@ -1053,7 +1057,7 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
     rows = []
     keys = sorted(clusters.keys())
     for i in range(len(keys)):
-        for j in range(i + 1, len(keys)):
+        for j in range(i, len(keys)):
             cA, cB = keys[i], keys[j]
             roisA = clusters[cA]
             roisB = clusters[cB]
@@ -1101,7 +1105,8 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                 iA_gpu = cp.asarray(iA, dtype=cp.int32)
                 iB_gpu = cp.asarray(iB, dtype=cp.int32)
 
-                r_obs_gpu = _pairwise_r0_gpu(ZA_gpu, ZB_gpu, iA_gpu, iB_gpu)
+                C_obs = _corrmat_gpu(ZA_gpu, ZB_gpu)  # (nA, nB)
+                r_obs_gpu = C_obs[iA_gpu, iB_gpu]  # (P,)
                 r_obs = cp.asnumpy(r_obs_gpu).astype(np.float32)
             else:
                 r_obs = _pairwise_r0_np(ZA, ZB, iA, iB)
@@ -1131,13 +1136,16 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                     )
 
                     # Apply all shifts at once (vectorized)
-                    Zs = _shift_columns_gpu_chunked(Z_shift_base, shifts, chunks=128)
+                    Zs = _shift_columns_gpu(Z_shift_base, shifts)
 
                     # Compute null correlations for the SAME pairs
+                    # after you build Zs (shifted cluster) and have Z_fixed
                     if shift_A:
-                        r_null = _pairwise_r0_gpu(Zs, Z_fixed, iA_gpu, iB_gpu)
+                        C_null = _corrmat_gpu(Zs, Z_fixed)  # (nA, nB)
                     else:
-                        r_null = _pairwise_r0_gpu(Z_fixed, Zs, iA_gpu, iB_gpu)
+                        C_null = _corrmat_gpu(Z_fixed, Zs)  # (nA, nB)
+
+                    r_null = C_null[iA_gpu, iB_gpu]  # (P,)
 
                     # Update exceedance counts (one- or two-sided)
                     if two_sided:
@@ -1608,7 +1616,7 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    root = Path(r"E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = utils.get_fps_from_notes(root)
     #run_or_load_clusterpair_lag_stats(
@@ -1623,16 +1631,16 @@ if __name__ == "__main__":
     #    alpha=0.05,
     #    min_pairs=10
     #)
-    #run_cluster_cross_correlations_gpu(
-    #    root=root,
-    #    prefix="r0p7_filtered_",
-    #    fps=fps,
-    #    cluster_folder="C2_recluster",
-    #    max_lag_seconds=5.0,
-    #    cpu_fallback=True,
-    #    zero_lag=True,
-    #    zero_lag_only=False,
-    #)
+    run_cluster_cross_correlations_gpu(
+        root=root,
+        prefix="r0p7_filtered_",
+        fps=fps,
+        cluster_folder="",
+        max_lag_seconds=5.0,
+        cpu_fallback=True,
+        zero_lag=True,
+        zero_lag_only=False,
+    )
     rows = run_clusterpair_zero_lag_shift_surrogate_stats(
         root=root,
         prefix="r0p7_filtered_",

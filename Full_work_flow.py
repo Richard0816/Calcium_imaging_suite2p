@@ -63,14 +63,6 @@ def global_exception_handler(exc_type, exc_value, exc_traceback):
 # Set the custom handler as the global exception hook
 sys.excepthook = global_exception_handler
 
-# --- Example Usage (will trigger the handler) ---
-if __name__ == "__main__":
-    print("Script starting...")
-    # Simulate an error
-    1 / 0 
-    print("Script finished (this line won't be reached if error occurs)")
-
-
 
 class Tee(io.TextIOBase):
     def __init__(self, *streams):
