@@ -1031,6 +1031,25 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
         idx = (t - shifts_gpu[None, :]) % Z_gpu.shape[0]  # (T,N)
         return cp.take_along_axis(Z_gpu, idx, axis=0)
 
+    def _shift_columns_gpu_chuncked(Z_gpu, shifts_gpu, chunks = 128):
+        """
+        Blocked/chunked column-wise circular shifts to avoid alllocating (T,N) idx all at once.
+        Z_gpu: (T, N) float32
+        shifts_gpu: (N, ) int32
+        Returns Zs_gpu
+        """
+        T, N = Z_gpu.shape
+        Zs_gpu = cp.empty_like(Z_gpu) #initiate CuPy array
+        t = cp.arange(T, dtype=cp.int32)[:, None] # (T,) allocated once per call/reuse T value
+        for j0 in range(0, N, chunks):
+            j1 = min(N, j0 + chunks)
+
+        sh = shifts_gpu[:, j0:j1][None, :] #(1, chunk_size)
+        idx = (t - sh) % T #(T, chunk_size)
+        Zs_gpu[: j0:j1] = cp.take_along_axis(Z_gpu[:,j0:j1], idx, axis = 0)
+
+        return Zs_gpu
+
     rows = []
     keys = sorted(clusters.keys())
     for i in range(len(keys)):
