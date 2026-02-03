@@ -9,3 +9,165 @@ Loaded C4: 2 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p
   ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1\C0xC1_summary.csv
 
 ▶ [GPU] Computing C0 × C2 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2
+Loaded ΔF/F: 15000 frames × 3052 ROIs
+Loaded C0: 992 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy
+Loaded C1: 279 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy
+Loaded C2: 369 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy
+Loaded C3: 330 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy
+Loaded C4: 389 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy
+Loaded C5: 398 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy
+Loaded C6: 347 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C6_rois.npy
+Loaded C7: 315 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C7_rois.npy
+Loaded C8: 353 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C8_rois.npy
+Loaded C9: 272 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C9_rois.npy
+
+▶ [GPU] Computing C0 × C1 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1
+Loaded ΔF/F: 15000 frames × 3052 ROIs
+Loaded C0: 992 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy
+Loaded C1: 279 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy
+Loaded C2: 369 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy
+Loaded C3: 330 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy
+Loaded C4: 389 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy
+Loaded C5: 398 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy
+Loaded C6: 347 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C6_rois.npy
+Loaded C7: 315 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C7_rois.npy
+Loaded C8: 353 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C8_rois.npy
+Loaded C9: 272 ROIs from E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C9_rois.npy
+
+▶ [GPU] Computing C0 × C1 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1\C0xC1_summary.csv
+
+▶ [GPU] Computing C0 × C2 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2\C0xC2_summary.csv
+
+▶ [GPU] Computing C0 × C3 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC3
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC3\C0xC3_summary.csv
+
+▶ [GPU] Computing C0 × C4 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC4
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC4\C0xC4_summary.csv
+
+▶ [GPU] Computing C0 × C5 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC5
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC5\C0xC5_summary.csv
+
+▶ [GPU] Computing C0 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC6\C0xC6_summary.csv
+
+▶ [GPU] Computing C0 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC7\C0xC7_summary.csv
+
+▶ [GPU] Computing C0 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC8\C0xC8_summary.csv
+
+▶ [GPU] Computing C0 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC9\C0xC9_summary.csv
+
+▶ [GPU] Computing C1 × C2 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC2
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC2\C1xC2_summary.csv
+
+▶ [GPU] Computing C1 × C3 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC3
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC3\C1xC3_summary.csv
+
+▶ [GPU] Computing C1 × C4 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC4
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC4\C1xC4_summary.csv
+
+▶ [GPU] Computing C1 × C5 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC5
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC5\C1xC5_summary.csv
+
+▶ [GPU] Computing C1 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC6\C1xC6_summary.csv
+
+▶ [GPU] Computing C1 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC7\C1xC7_summary.csv
+
+▶ [GPU] Computing C1 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC8\C1xC8_summary.csv
+
+▶ [GPU] Computing C1 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC9\C1xC9_summary.csv
+
+▶ [GPU] Computing C2 × C3 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC3
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC3\C2xC3_summary.csv
+
+▶ [GPU] Computing C2 × C4 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC4
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC4\C2xC4_summary.csv
+
+▶ [GPU] Computing C2 × C5 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC5
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC5\C2xC5_summary.csv
+
+▶ [GPU] Computing C2 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC6\C2xC6_summary.csv
+
+▶ [GPU] Computing C2 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC7\C2xC7_summary.csv
+
+▶ [GPU] Computing C2 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC8\C2xC8_summary.csv
+
+▶ [GPU] Computing C2 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC9\C2xC9_summary.csv
+
+▶ [GPU] Computing C3 × C4 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC4
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC4\C3xC4_summary.csv
+
+▶ [GPU] Computing C3 × C5 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC5
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC5\C3xC5_summary.csv
+
+▶ [GPU] Computing C3 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC6\C3xC6_summary.csv
+
+▶ [GPU] Computing C3 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC7\C3xC7_summary.csv
+
+▶ [GPU] Computing C3 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC8\C3xC8_summary.csv
+
+▶ [GPU] Computing C3 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C3xC9\C3xC9_summary.csv
+
+▶ [GPU] Computing C4 × C5 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC5
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC5\C4xC5_summary.csv
+
+▶ [GPU] Computing C4 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC6\C4xC6_summary.csv
+
+▶ [GPU] Computing C4 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC7\C4xC7_summary.csv
+
+▶ [GPU] Computing C4 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC8\C4xC8_summary.csv
+
+▶ [GPU] Computing C4 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C4xC9\C4xC9_summary.csv
+
+▶ [GPU] Computing C5 × C6 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC6
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC6\C5xC6_summary.csv
+
+▶ [GPU] Computing C5 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC7\C5xC7_summary.csv
+
+▶ [GPU] Computing C5 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC8\C5xC8_summary.csv
+
+▶ [GPU] Computing C5 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C5xC9\C5xC9_summary.csv
+
+▶ [GPU] Computing C6 × C7 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC7
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC7\C6xC7_summary.csv
+
+▶ [GPU] Computing C6 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC8\C6xC8_summary.csv
+
+▶ [GPU] Computing C6 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C6xC9\C6xC9_summary.csv
+
+▶ [GPU] Computing C7 × C8 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C7xC8
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C7xC8\C7xC8_summary.csv
+
+▶ [GPU] Computing C7 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C7xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C7xC9\C7xC9_summary.csv
+
+▶ [GPU] Computing C8 × C9 → E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C8xC9
+  ✔ Summary CSV saved to: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C8xC9\C8xC9_summary.csv
+
+✅ GPU cross-correlation computations complete.
+Results saved under: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu

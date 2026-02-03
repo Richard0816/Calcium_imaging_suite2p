@@ -244,22 +244,22 @@ def run_cluster_cross_correlations_gpu(root: Path,
                             out_npz["zero_lag_corr"] = float(zero_lag_corr)
 
                         outfile = pair_dir / f"roi{roiA:04d}_roi{roiB:04d}.npz"
-                        np.savez(outfile, **out_npz)
+                        #np.savez(outfile, **out_npz) #enable this if you want to save
 
                         # Save figure (matplotlib still on CPU, but using small arrays)
-                        corr = zscore_1d(corr)
-                        plt.figure(figsize=(6, 3))
-                        plt.plot(lags_sec, corr)
-                        plt.axvline(best_lag_sec, color="r", ls="--")
-                        plt.title(
-                            f"ROI {roiA} vs ROI {roiB}\n"
-                            f"Peak lag = {best_lag_sec:.3f}s, Max corr = {max_corr:.3f}"
-                        )
-                        plt.xlabel("Lag (s)")
-                        plt.ylabel("Correlation")
-                        plt.tight_layout()
-                        plt.savefig(outfile.with_suffix(".png"))
-                        plt.close()
+                        #corr = zscore_1d(corr)
+                        #plt.figure(figsize=(6, 3))
+                        #plt.plot(lags_sec, corr)
+                        #plt.axvline(best_lag_sec, color="r", ls="--")
+                        #plt.title(
+                        #    f"ROI {roiA} vs ROI {roiB}\n"
+                        #    f"Peak lag = {best_lag_sec:.3f}s, Max corr = {max_corr:.3f}"
+                        #)
+                        #plt.xlabel("Lag (s)")
+                        #plt.ylabel("Correlation")
+                        #plt.tight_layout()
+                        #plt.savefig(outfile.with_suffix(".png"))
+                        #plt.close()
 
                         # CSV row
                         row = [int(roiA), int(roiB)]
