@@ -1031,7 +1031,7 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
         idx = (t - shifts_gpu[None, :]) % Z_gpu.shape[0]  # (T,N)
         return cp.take_along_axis(Z_gpu, idx, axis=0)
 
-    def _shift_columns_gpu_chuncked(Z_gpu, shifts_gpu, chunks = 128):
+    def _shift_columns_gpu_chunked(Z_gpu, shifts_gpu, chunks = 128):
         """
         Blocked/chunked column-wise circular shifts to avoid alllocating (T,N) idx all at once.
         Z_gpu: (T, N) float32
@@ -1131,7 +1131,7 @@ def run_clusterpair_zero_lag_shift_surrogate_stats(
                     )
 
                     # Apply all shifts at once (vectorized)
-                    Zs = _shift_columns_gpu(Z_shift_base, shifts)
+                    Zs = _shift_columns_gpu_chunked(Z_shift_base, shifts, chunks=128)
 
                     # Compute null correlations for the SAME pairs
                     if shift_A:
