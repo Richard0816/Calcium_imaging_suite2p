@@ -803,3 +803,783 @@ Wrote:
  low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
  d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
 Total time 693.2406344413757 seconds.
+[Filter] Retained 3052/4978 ROIs (61.3%)
+[Filter] After applying mask: 3052 ROIs retained.
+Processing 2024-11-20_00003
+cutoff_hz: 1.0
+Processed cells 0–3051 / 3051 in 277.37 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 292.7138090133667 seconds.
+[Filter] Retained 765/3182 ROIs (24.0%)
+[Filter] After applying mask: 765 ROIs retained.
+Processing 2024-11-20_00004
+cutoff_hz: 1.0
+Processed cells 0–764 / 764 in 51.09 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 81.80657410621643 seconds.
+[Filter] Retained 33/186 ROIs (17.7%)
+[Filter] After applying mask: 33 ROIs retained.
+Processing 2024-06-03_00012
+cutoff_hz: 1.0
+Processed cells 0–32 / 32 in 2.10 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 4.204662322998047 seconds.
+[Filter] Retained 608/1452 ROIs (41.9%)
+[Filter] After applying mask: 608 ROIs retained.
+Processing 2024-06-03_00013
+cutoff_hz: 1.0
+Processed cells 0–607 / 607 in 27.14 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 35.14719891548157 seconds.
+[Filter] Retained 877/4668 ROIs (18.8%)
+[Filter] After applying mask: 877 ROIs retained.
+Processing 2024-06-04_00006
+cutoff_hz: 1.0
+Processed cells 0–876 / 876 in 58.32 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 114.55076694488525 seconds.
+[Filter] Retained 206/488 ROIs (42.2%)
+[Filter] After applying mask: 206 ROIs retained.
+Processing 2024-06-05_00001
+cutoff_hz: 1.0
+Processed cells 0–205 / 205 in 13.45 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 16.136725425720215 seconds.
+[Filter] Retained 303/4326 ROIs (7.0%)
+[Filter] After applying mask: 303 ROIs retained.
+Processing 2024-06-05_00002
+cutoff_hz: 1.0
+Processed cells 0–302 / 302 in 13.53 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 42.22180151939392 seconds.
+[Filter] Retained 163/4069 ROIs (4.0%)
+[Filter] After applying mask: 163 ROIs retained.
+Processing 2024-06-05_00006
+cutoff_hz: 1.0
+Processed cells 0–162 / 162 in 10.62 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 29.56257128715515 seconds.
+[Filter] Retained 794/4533 ROIs (17.5%)
+[Filter] After applying mask: 794 ROIs retained.
+Processing 2024-06-05_00007
+cutoff_hz: 1.0
+Processed cells 0–793 / 793 in 35.45 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 73.34866428375244 seconds.
+[Filter] Retained 253/312 ROIs (81.1%)
+[Filter] After applying mask: 253 ROIs retained.
+Processing 2024-07-01_00016
+cutoff_hz: 1.0
+Processed cells 0–252 / 252 in 13.62 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 17.020782709121704 seconds.
+[Filter] Retained 197/203 ROIs (97.0%)
+[Filter] After applying mask: 197 ROIs retained.
+Processing 2024-07-01_00017
+cutoff_hz: 1.0
+Processed cells 0–196 / 196 in 9.54 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 12.572228908538818 seconds.
+[Filter] Retained 650/697 ROIs (93.3%)
+[Filter] After applying mask: 650 ROIs retained.
+Processing 2024-07-01_00018
+cutoff_hz: 1.0
+Processed cells 0–649 / 649 in 41.89 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 46.087602376937866 seconds.
+[Filter] Retained 412/534 ROIs (77.2%)
+[Filter] After applying mask: 412 ROIs retained.
+Processing 2024-07-01_00019
+cutoff_hz: 1.0
+Processed cells 0–411 / 411 in 17.82 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 20.526535749435425 seconds.
+[Filter] Retained 338/391 ROIs (86.4%)
+[Filter] After applying mask: 338 ROIs retained.
+Processing 2024-07-02_00001
+cutoff_hz: 1.0
+Processed cells 0–337 / 337 in 21.59 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 24.877393007278442 seconds.
+[Filter] Retained 255/2870 ROIs (8.9%)
+[Filter] After applying mask: 255 ROIs retained.
+Processing 2024-07-02_00002
+cutoff_hz: 1.0
+Processed cells 0–254 / 254 in 11.15 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 32.1751070022583 seconds.
+[Filter] Retained 496/553 ROIs (89.7%)
+[Filter] After applying mask: 496 ROIs retained.
+Processing 2024-07-02_00005
+cutoff_hz: 1.0
+Processed cells 0–495 / 495 in 31.98 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 36.112653970718384 seconds.
+[Filter] Retained 619/724 ROIs (85.5%)
+[Filter] After applying mask: 619 ROIs retained.
+Processing 2024-07-02_00006
+cutoff_hz: 1.0
+Processed cells 0–618 / 618 in 26.65 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 30.572797298431396 seconds.
+[Filter] Retained 300/1407 ROIs (21.3%)
+[Filter] After applying mask: 300 ROIs retained.
+Processing 2024-07-02_00007
+cutoff_hz: 1.0
+Processed cells 0–299 / 299 in 18.87 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 29.228793621063232 seconds.
+[Filter] Retained 1230/4891 ROIs (25.1%)
+[Filter] After applying mask: 1230 ROIs retained.
+Processing 2024-07-02_00008
+cutoff_hz: 1.0
+Processed cells 0–1229 / 1229 in 55.73 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 91.96040678024292 seconds.
+[Filter] Retained 329/369 ROIs (89.2%)
+[Filter] After applying mask: 329 ROIs retained.
+Processing 2024-07-02_00012
+cutoff_hz: 1.0
+Processed cells 0–328 / 328 in 20.97 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 23.648525953292847 seconds.
+[Filter] Retained 182/191 ROIs (95.3%)
+[Filter] After applying mask: 182 ROIs retained.
+Processing 2024-07-02_00013
+cutoff_hz: 1.0
+Processed cells 0–181 / 181 in 7.64 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 9.248922348022461 seconds.
+[Filter] Retained 98/169 ROIs (58.0%)
+[Filter] After applying mask: 98 ROIs retained.
+Processing 2024-08-20_00001
+cutoff_hz: 1.0
+Processed cells 0–97 / 97 in 6.24 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 8.05465292930603 seconds.
+[Filter] Retained 106/175 ROIs (60.6%)
+[Filter] After applying mask: 106 ROIs retained.
+Processing 2024-08-20_00002
+cutoff_hz: 1.0
+Processed cells 0–105 / 105 in 6.91 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 8.619621515274048 seconds.
+[Filter] Retained 98/153 ROIs (64.1%)
+[Filter] After applying mask: 98 ROIs retained.
+Processing 2024-08-21_00001
+cutoff_hz: 1.0
+Processed cells 0–97 / 97 in 6.44 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 8.094113111495972 seconds.
+[Filter] Retained 232/420 ROIs (55.2%)
+[Filter] After applying mask: 232 ROIs retained.
+Processing 2024-08-21_00002
+cutoff_hz: 1.0
+Processed cells 0–231 / 231 in 15.54 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 18.372491121292114 seconds.
+[Filter] Retained 324/570 ROIs (56.8%)
+[Filter] After applying mask: 324 ROIs retained.
+Processing 2024-08-21_00003
+cutoff_hz: 1.0
+Processed cells 0–323 / 323 in 21.47 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 24.817640781402588 seconds.
+[Filter] Retained 82/114 ROIs (71.9%)
+[Filter] After applying mask: 82 ROIs retained.
+Processing 2024-08-22_00001
+cutoff_hz: 1.0
+Processed cells 0–81 / 81 in 5.16 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 6.799868106842041 seconds.
+[Filter] Retained 33/63 ROIs (52.4%)
+[Filter] After applying mask: 33 ROIs retained.
+Processing 2024-08-22_00002
+cutoff_hz: 1.0
+Processed cells 0–32 / 32 in 2.06 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.315913677215576 seconds.
+[Filter] Retained 104/251 ROIs (41.4%)
+[Filter] After applying mask: 104 ROIs retained.
+Processing 2024-08-22_00003
+cutoff_hz: 1.0
+Processed cells 0–103 / 103 in 4.36 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 6.019001483917236 seconds.
+[Filter] Retained 106/151 ROIs (70.2%)
+[Filter] After applying mask: 106 ROIs retained.
+Processing 2024-08-22_00004
+cutoff_hz: 1.0
+Processed cells 0–105 / 105 in 4.50 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 5.884474039077759 seconds.
+[Filter] Retained 603/966 ROIs (62.4%)
+[Filter] After applying mask: 603 ROIs retained.
+Processing 2024-10-30_00010
+cutoff_hz: 1.0
+Processed cells 0–602 / 602 in 39.69 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 44.674665212631226 seconds.
+[Filter] Retained 885/1473 ROIs (60.1%)
+[Filter] After applying mask: 885 ROIs retained.
+Processing 2024-11-04_00003
+cutoff_hz: 1.0
+Processed cells 0–884 / 884 in 38.98 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 45.903592348098755 seconds.
+[Filter] Retained 276/308 ROIs (89.6%)
+[Filter] After applying mask: 276 ROIs retained.
+Processing 2024-11-04_00004
+cutoff_hz: 1.0
+Processed cells 0–275 / 275 in 18.31 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 20.821929931640625 seconds.
+[Filter] Retained 690/4894 ROIs (14.1%)
+[Filter] After applying mask: 690 ROIs retained.
+Processing 2024-11-04_00005
+cutoff_hz: 1.0
+Processed cells 0–689 / 689 in 15.81 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 30.83974528312683 seconds.
+[Filter] Retained 270/473 ROIs (57.1%)
+[Filter] After applying mask: 270 ROIs retained.
+Processing 2024-11-05_00001
+cutoff_hz: 1.0
+Processed cells 0–269 / 269 in 17.89 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 21.717636823654175 seconds.
+[Filter] Retained 307/378 ROIs (81.2%)
+[Filter] After applying mask: 307 ROIs retained.
+Processing 2024-11-05_00007
+cutoff_hz: 1.0
+Processed cells 0–306 / 306 in 20.08 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 22.77899479866028 seconds.
+[Filter] Retained 2414/4992 ROIs (48.4%)
+[Filter] After applying mask: 2414 ROIs retained.
+Processing 2024-11-18_00001
+cutoff_hz: 1.0
+Processed cells 0–2413 / 2413 in 194.25 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 224.37953877449036 seconds.
+[Filter] Retained 3361/4978 ROIs (67.5%)
+[Filter] After applying mask: 3361 ROIs retained.
+Processing 2024-11-18_00002
+cutoff_hz: 1.0
+Processed cells 0–3360 / 3360 in 276.44 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 335.6857228279114 seconds.
+[Filter] Retained 286/1771 ROIs (16.1%)
+[Filter] After applying mask: 286 ROIs retained.
+Processing 2024-11-18_00003
+cutoff_hz: 1.0
+Processed cells 0–285 / 285 in 19.32 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 36.964136362075806 seconds.
+[Filter] Retained 801/933 ROIs (85.9%)
+[Filter] After applying mask: 801 ROIs retained.
+Processing 2024-11-18_00005
+cutoff_hz: 1.0
+Processed cells 0–800 / 800 in 53.62 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 59.17832803726196 seconds.
+[Filter] Retained 942/1061 ROIs (88.8%)
+[Filter] After applying mask: 942 ROIs retained.
+Processing 2024-11-18_00006
+cutoff_hz: 1.0
+Processed cells 0–941 / 941 in 63.13 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 69.33757734298706 seconds.
+[Filter] Retained 3039/4614 ROIs (65.9%)
+[Filter] After applying mask: 3039 ROIs retained.
+Processing 2024-11-18_00007
+cutoff_hz: 1.0
+Processed cells 0–3038 / 3038 in 187.70 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 218.2643871307373 seconds.
+[Filter] Retained 455/727 ROIs (62.6%)
+[Filter] After applying mask: 455 ROIs retained.
+Processing 2024-11-18_00008
+cutoff_hz: 1.0
+Processed cells 0–454 / 454 in 40.30 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 45.82293486595154 seconds.
+[Filter] Retained 251/367 ROIs (68.4%)
+[Filter] After applying mask: 251 ROIs retained.
+Processing 2024-11-20_00001
+cutoff_hz: 1.0
+Processed cells 0–250 / 250 in 21.47 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 25.12333846092224 seconds.
+[Filter] Retained 233/1365 ROIs (17.1%)
+[Filter] After applying mask: 233 ROIs retained.
+Processing 2024-11-20_00002
+cutoff_hz: 1.0
+Processed cells 0–232 / 232 in 20.01 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 27.030588626861572 seconds.
+[Filter] Retained 89/352 ROIs (25.3%)
+[Filter] After applying mask: 89 ROIs retained.
+Processing 2024-11-05_00004
+cutoff_hz: 1.0
+Processed cells 0–88 / 88 in 7.63 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 10.168452262878418 seconds.
+[Filter] Retained 89/630 ROIs (14.1%)
+[Filter] After applying mask: 89 ROIs retained.
+Processing 2024-06-03_00001
+cutoff_hz: 1.0
+Processed cells 0–88 / 88 in 7.81 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 10.928163528442383 seconds.
+[Filter] Retained 4/346 ROIs (1.2%)
+[Filter] After applying mask: 4 ROIs retained.
+Processing 2024-06-03_00002
+cutoff_hz: 1.0
+Processed cells 0–3 / 3 in 0.32 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 2.2011053562164307 seconds.
+[Filter] Retained 4/346 ROIs (1.2%)
+[Filter] After applying mask: 4 ROIs retained.
+Processing 2024-06-03_00002
+cutoff_hz: 1.0
+Processed cells 0–3 / 3 in 0.29 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 1.1156606674194336 seconds.
+[Filter] Retained 394/4709 ROIs (8.4%)
+[Filter] After applying mask: 394 ROIs retained.
+Processing 2024-06-03_00003
+cutoff_hz: 1.0
+Processed cells 0–393 / 393 in 26.49 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 79.43045091629028 seconds.
+[Filter] Retained 489/4616 ROIs (10.6%)
+[Filter] After applying mask: 489 ROIs retained.
+Processing 2024-06-03_00004
+cutoff_hz: 1.0
+Processed cells 0–488 / 488 in 22.04 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 49.273985862731934 seconds.
+[Filter] Retained 34/197 ROIs (17.3%)
+[Filter] After applying mask: 34 ROIs retained.
+Processing 2024-06-03_00007
+cutoff_hz: 1.0
+Processed cells 0–33 / 33 in 2.13 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.773996114730835 seconds.
+[Filter] Retained 28/275 ROIs (10.2%)
+[Filter] After applying mask: 28 ROIs retained.
+Processing 2024-06-03_00008
+cutoff_hz: 1.0
+Processed cells 0–27 / 27 in 1.20 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 2.7775533199310303 seconds.
+[Filter] Retained 237/4619 ROIs (5.1%)
+[Filter] After applying mask: 237 ROIs retained.
+Processing 2024-06-03_00009
+cutoff_hz: 1.0
+Processed cells 0–236 / 236 in 15.73 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 72.09776425361633 seconds.
+[Filter] Retained 251/4516 ROIs (5.6%)
+[Filter] After applying mask: 251 ROIs retained.
+Processing 2024-06-03_00010
+cutoff_hz: 1.0
+Processed cells 0–250 / 250 in 11.30 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 45.726598024368286 seconds.
+[Filter] Retained 562/4632 ROIs (12.1%)
+[Filter] After applying mask: 562 ROIs retained.
+Processing 2024-06-04_00001
+cutoff_hz: 1.0
+Processed cells 0–561 / 561 in 37.35 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 83.9704372882843 seconds.
+[Filter] Retained 754/4579 ROIs (16.5%)
+[Filter] After applying mask: 754 ROIs retained.
+Processing 2024-06-04_00002
+cutoff_hz: 1.0
+Processed cells 0–753 / 753 in 33.73 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 68.02660322189331 seconds.
+[Filter] Retained 633/4527 ROIs (14.0%)
+[Filter] After applying mask: 633 ROIs retained.
+Processing 2024-06-04_00009
+cutoff_hz: 1.0
+Processed cells 0–632 / 632 in 42.26 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 103.05526828765869 seconds.
+[Filter] Retained 761/4547 ROIs (16.7%)
+[Filter] After applying mask: 761 ROIs retained.
+Processing 2024-06-04_00010
+cutoff_hz: 1.0
+Processed cells 0–760 / 760 in 33.70 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 71.93854689598083 seconds.
+[Filter] Retained 42/57 ROIs (73.7%)
+[Filter] After applying mask: 42 ROIs retained.
+Processing 2024-07-01_00001
+cutoff_hz: 1.0
+Processed cells 0–41 / 41 in 4.48 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 5.655542373657227 seconds.
+[Filter] Retained 31/456 ROIs (6.8%)
+[Filter] After applying mask: 31 ROIs retained.
+Processing 2024-07-01_00002
+cutoff_hz: 1.0
+Processed cells 0–30 / 30 in 1.29 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.225027322769165 seconds.
+[Filter] Retained 28/46 ROIs (60.9%)
+[Filter] After applying mask: 28 ROIs retained.
+Processing 2024-07-01_00005
+cutoff_hz: 1.0
+Processed cells 0–27 / 27 in 2.94 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.9639058113098145 seconds.
+[Filter] Retained 30/32 ROIs (93.8%)
+[Filter] After applying mask: 30 ROIs retained.
+Processing 2024-07-01_00006
+cutoff_hz: 1.0
+Processed cells 0–29 / 29 in 1.28 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 2.1709845066070557 seconds.
+[Filter] Retained 39/56 ROIs (69.6%)
+[Filter] After applying mask: 39 ROIs retained.
+Processing 2024-07-01_00012
+cutoff_hz: 1.0
+Processed cells 0–38 / 38 in 2.48 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.5106894969940186 seconds.
+[Filter] Retained 6/332 ROIs (1.8%)
+[Filter] After applying mask: 6 ROIs retained.
+Processing 2024-07-01_00013
+cutoff_hz: 1.0
+Processed cells 0–5 / 5 in 0.26 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 1.9120757579803467 seconds.
+[Filter] Retained 79/83 ROIs (95.2%)
+[Filter] After applying mask: 79 ROIs retained.
+Processing 2024-10-30_00003
+cutoff_hz: 1.0
+Processed cells 0–78 / 78 in 5.05 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 6.369183540344238 seconds.
+[Filter] Retained 217/4734 ROIs (4.6%)
+[Filter] After applying mask: 217 ROIs retained.
+Processing 2024-10-30_00005
+cutoff_hz: 1.0
+Processed cells 0–216 / 216 in 4.87 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 14.902452230453491 seconds.
+[Filter] Retained 19/23 ROIs (82.6%)
+[Filter] After applying mask: 19 ROIs retained.
+Processing 2024-10-30_00012
+cutoff_hz: 1.0
+Processed cells 0–18 / 18 in 1.21 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 2.2789790630340576 seconds.
+[Filter] Retained 681/4893 ROIs (13.9%)
+[Filter] After applying mask: 681 ROIs retained.
+Processing 2024-10-30_00013
+cutoff_hz: 1.0
+Processed cells 0–680 / 680 in 15.65 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 31.13944673538208 seconds.
+[Filter] Retained 108/218 ROIs (49.5%)
+[Filter] After applying mask: 108 ROIs retained.
+Processing 2024-10-31_00001
+cutoff_hz: 1.0
+Processed cells 0–107 / 107 in 6.73 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 9.88124704360962 seconds.
+[Filter] Retained 342/4610 ROIs (7.4%)
+[Filter] After applying mask: 342 ROIs retained.
+Processing 2024-10-31_00002
+cutoff_hz: 1.0
+Processed cells 0–341 / 341 in 7.76 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 20.95485806465149 seconds.
+[Filter] Retained 8/11 ROIs (72.7%)
+[Filter] After applying mask: 8 ROIs retained.
+Processing 2024-10-31_00003
+cutoff_hz: 1.0
+Processed cells 0–7 / 7 in 0.50 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 1.6521565914154053 seconds.
+[Filter] Retained 3/8 ROIs (37.5%)
+[Filter] After applying mask: 3 ROIs retained.
+Processing 2024-10-31_00004
+cutoff_hz: 1.0
+Processed cells 0–2 / 2 in 0.13 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 1.139228105545044 seconds.
+[Filter] Retained 135/160 ROIs (84.4%)
+[Filter] After applying mask: 135 ROIs retained.
+Processing 2024-10-31_00005
+cutoff_hz: 1.0
+Processed cells 0–134 / 134 in 5.68 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 7.0296032428741455 seconds.
+[Filter] Retained 23/143 ROIs (16.1%)
+[Filter] After applying mask: 23 ROIs retained.
+Processing 2024-11-04_00008
+cutoff_hz: 1.0
+Processed cells 0–22 / 22 in 1.47 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 3.1460165977478027 seconds.
+[Filter] Retained 180/4961 ROIs (3.6%)
+[Filter] After applying mask: 180 ROIs retained.
+Processing 2024-11-04_00009
+cutoff_hz: 1.0
+Processed cells 0–179 / 179 in 5.56 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 34.672659397125244 seconds.
+[Filter] Retained 53/118 ROIs (44.9%)
+[Filter] After applying mask: 53 ROIs retained.
+Processing 2024-11-04_00010
+cutoff_hz: 1.0
+Processed cells 0–52 / 52 in 3.37 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 4.767883539199829 seconds.
+[Filter] Retained 158/4960 ROIs (3.2%)
+[Filter] After applying mask: 158 ROIs retained.
+Processing 2024-11-05_00003
+cutoff_hz: 1.0
+Processed cells 0–157 / 157 in 4.33 seconds.
+Wrote:
+ dF/F       -> E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_dff.memmap.float32
+ low-pass   -> E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_dff_lowpass.memmap.float32
+ d/dt       -> E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_dff_dt.memmap.float32
+Total time 23.108174800872803 seconds.

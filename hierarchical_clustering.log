@@ -80,3 +80,940 @@ Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluste
 Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C8_rois.npy with 353 ROIs.
 Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C9_rois.npy with 272 ROIs.
 Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 3052 ROIs
+[dendrogram] auto color_threshold=0.90 → 9 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 3052 / 4978 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 279 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 369 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 330 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 389 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 398 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C6_rois.npy with 347 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C7_rois.npy with 315 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C8_rois.npy with 353 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\C9_rois.npy with 272 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 765 ROIs
+[dendrogram] auto color_threshold=0.89 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 765 / 3182 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 9 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00004\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 737 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 33 ROIs
+[dendrogram] auto color_threshold=0.66 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 33 / 186 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 18 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 608 ROIs
+[dendrogram] auto color_threshold=0.66 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 608 / 1452 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 599 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-03_00013\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 877 ROIs
+[dendrogram] auto color_threshold=0.50 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 877 / 4668 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 786 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 22 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 21 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 48 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 206 ROIs
+[dendrogram] auto color_threshold=0.36 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 206 / 488 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 165 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 16 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 13 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 12 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 303 ROIs
+[dendrogram] auto color_threshold=0.87 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 303 / 4326 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 297 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 163 ROIs
+[dendrogram] auto color_threshold=0.53 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 163 / 4069 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 92 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 40 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 19 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 794 ROIs
+[dendrogram] auto color_threshold=0.39 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 794 / 4533 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 21 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 26 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 66 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-06-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 681 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 12410 frames × 253 ROIs
+[dendrogram] auto color_threshold=0.54 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 253 / 312 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 30 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 75 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 40 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00016\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 108 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 11808 frames × 197 ROIs
+[dendrogram] auto color_threshold=0.62 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 197 / 203 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 28 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 24 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 51 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00017\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 94 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 650 ROIs
+[dendrogram] auto color_threshold=0.70 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 650 / 697 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 186 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 253 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 34 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 177 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 412 ROIs
+[dendrogram] auto color_threshold=0.49 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 412 / 534 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 131 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 196 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-01_00019\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 68 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 338 ROIs
+[dendrogram] auto color_threshold=0.30 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 338 / 391 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 110 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 65 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 58 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 105 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 255 ROIs
+[dendrogram] auto color_threshold=0.36 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 255 / 2870 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 8 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 6 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 229 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 496 ROIs
+[dendrogram] auto color_threshold=0.37 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 496 / 553 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 72 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 130 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 86 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 208 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 619 ROIs
+[dendrogram] auto color_threshold=0.53 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 619 / 724 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 85 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 156 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 123 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 255 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 300 ROIs
+[dendrogram] auto color_threshold=0.40 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 300 / 1407 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 43 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 47 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 33 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00007\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 177 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 1230 ROIs
+[dendrogram] auto color_threshold=0.26 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 1230 / 4891 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 13 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 36 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 1133 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00008\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 48 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 329 ROIs
+[dendrogram] auto color_threshold=0.57 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 329 / 369 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 61 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 87 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 59 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 122 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 182 ROIs
+[dendrogram] auto color_threshold=0.46 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 182 / 191 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 26 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 41 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-07-02_00013\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 98 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 98 ROIs
+[dendrogram] auto color_threshold=0.41 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 98 / 169 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 52 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 24 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 106 ROIs
+[dendrogram] auto color_threshold=0.44 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 106 / 175 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 38 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 49 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 16 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 98 ROIs
+[dendrogram] auto color_threshold=0.60 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 98 / 153 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 81 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 3 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 232 ROIs
+[dendrogram] auto color_threshold=0.51 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 232 / 420 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 218 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 6 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 4 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 324 ROIs
+[dendrogram] auto color_threshold=0.46 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 324 / 570 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 23 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 9 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-21_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 282 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 82 ROIs
+[dendrogram] auto color_threshold=0.59 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 82 / 114 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 22 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 26 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 22 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 33 ROIs
+[dendrogram] auto color_threshold=0.77 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 33 / 63 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 8 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 18 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 104 ROIs
+[dendrogram] auto color_threshold=0.65 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 104 / 251 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 54 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 18 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 15 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 106 ROIs
+[dendrogram] auto color_threshold=0.56 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 106 / 151 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 33 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 6 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 23 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-08-22_00004\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 44 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 603 ROIs
+[dendrogram] auto color_threshold=0.34 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 603 / 966 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 532 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 20 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 29 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-10-30_00010\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 22 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 885 ROIs
+[dendrogram] auto color_threshold=0.39 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 885 / 1473 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 326 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 413 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 45 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 101 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 276 ROIs
+[dendrogram] auto color_threshold=0.73 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 276 / 308 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 67 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 128 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00004\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 64 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 5000 frames × 690 ROIs
+[dendrogram] auto color_threshold=0.59 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 690 / 4894 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 278 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-04_00005\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 393 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 270 ROIs
+[dendrogram] auto color_threshold=0.57 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 270 / 473 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 35 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 127 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 40 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 68 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 307 ROIs
+[dendrogram] auto color_threshold=0.79 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 307 / 378 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 103 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 130 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 26 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-05_00007\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 48 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 2414 ROIs
+[dendrogram] auto color_threshold=0.90 → 9 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 2414 / 4992 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 263 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 258 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 273 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 272 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 282 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C6_rois.npy with 275 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C7_rois.npy with 264 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C8_rois.npy with 274 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00001\suite2p\plane0\r0p7_filtered_cluster_results\C9_rois.npy with 253 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 3361 ROIs
+[dendrogram] auto color_threshold=0.71 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 3361 / 4978 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 6 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 25 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00002\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 3321 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 286 ROIs
+[dendrogram] auto color_threshold=0.42 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 286 / 1771 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 264 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 801 ROIs
+[dendrogram] auto color_threshold=0.34 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 801 / 933 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 745 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 30 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 14 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 12 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 942 ROIs
+[dendrogram] auto color_threshold=0.37 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 942 / 1061 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 926 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 8 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00006\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 3 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 3039 ROIs
+[dendrogram] auto color_threshold=0.90 → 2 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 3039 / 4614 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00007\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 3034 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 455 ROIs
+[dendrogram] auto color_threshold=0.38 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 455 / 727 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 401 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-18_00008\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 33 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 251 ROIs
+[dendrogram] auto color_threshold=0.40 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 251 / 367 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 168 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 28 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 48 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 233 ROIs
+[dendrogram] auto color_threshold=0.54 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 233 / 1365 ROIs kept.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 11 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 209 ROIs.
+Saved E:\data\2p_shifted\Cx\2024-11-20_00002\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 7 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 89 ROIs
+[dendrogram] auto color_threshold=0.61 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 89 / 352 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 28 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 20 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00004\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 36 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 89 ROIs
+[dendrogram] auto color_threshold=0.77 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 89 / 630 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 53 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 30 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 3 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 4 ROIs
+[dendrogram] auto color_threshold=0.90 → 1 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 4 / 346 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 4 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 4 ROIs
+[dendrogram] auto color_threshold=0.90 → 1 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 4 / 346 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00002\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 4 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 394 ROIs
+[dendrogram] auto color_threshold=0.52 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 394 / 4709 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 22 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 14 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 356 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 489 ROIs
+[dendrogram] auto color_threshold=0.46 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 489 / 4616 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 8 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 22 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 40 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00004\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 419 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 34 ROIs
+[dendrogram] auto color_threshold=0.84 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 34 / 197 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 21 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 1 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 28 ROIs
+[dendrogram] auto color_threshold=0.90 → 2 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 28 / 275 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 9 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00008\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 19 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 237 ROIs
+[dendrogram] auto color_threshold=0.66 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 237 / 4619 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 214 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 16 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 251 ROIs
+[dendrogram] auto color_threshold=0.82 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 251 / 4516 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 11 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-03_00010\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 236 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 562 ROIs
+[dendrogram] auto color_threshold=0.35 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 562 / 4632 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 320 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 164 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 20 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 58 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 754 ROIs
+[dendrogram] auto color_threshold=0.34 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 754 / 4579 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 404 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 66 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 108 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 176 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 633 ROIs
+[dendrogram] auto color_threshold=0.36 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 633 / 4527 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 57 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 305 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 197 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 74 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 761 ROIs
+[dendrogram] auto color_threshold=0.42 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 761 / 4547 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 43 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 64 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 285 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-06-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 369 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 25000 frames × 42 ROIs
+[dendrogram] auto color_threshold=0.70 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 42 / 57 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 7 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 24 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 31 ROIs
+[dendrogram] auto color_threshold=0.79 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 31 / 456 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 5 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 25000 frames × 28 ROIs
+[dendrogram] auto color_threshold=0.87 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 28 / 46 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 9 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 30 ROIs
+[dendrogram] auto color_threshold=0.83 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 30 / 32 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 1 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00006\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 39 ROIs
+[dendrogram] auto color_threshold=0.80 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 39 / 56 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 11 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 12 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 13 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00012\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 3 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 6 ROIs
+[dendrogram] auto color_threshold=0.90 → 1 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 6 / 332 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-07-01_00013\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 6 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 79 ROIs
+[dendrogram] auto color_threshold=0.66 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 79 / 83 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 15 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 10 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 32 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 22 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 5000 frames × 217 ROIs
+[dendrogram] auto color_threshold=0.27 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 217 / 4734 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 161 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 19 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 35 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 19 ROIs
+[dendrogram] auto color_threshold=0.90 → 2 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 19 / 23 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 14 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 5 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 5000 frames × 681 ROIs
+[dendrogram] auto color_threshold=0.71 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 681 / 4893 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 303 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-30_00013\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 371 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 108 ROIs
+[dendrogram] auto color_threshold=0.62 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 108 / 218 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 23 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 55 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 18 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00001\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 12 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 5000 frames × 342 ROIs
+[dendrogram] auto color_threshold=0.33 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 342 / 4610 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 30 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 8 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00002\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 287 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 8 ROIs
+[dendrogram] auto color_threshold=0.73 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 8 / 11 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 1 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 3 ROIs
+[dendrogram] auto color_threshold=0.90 → 1 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 3 / 8 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-31_00004\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 3 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 10000 frames × 135 ROIs
+[dendrogram] auto color_threshold=0.56 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 135 / 160 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 49 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 14 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 35 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-10-31_00005\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 37 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 23 ROIs
+[dendrogram] auto color_threshold=0.67 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 23 / 143 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 3 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00008\suite2p\plane0\r0p7_filtered_cluster_results\C5_rois.npy with 8 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 6755 frames × 180 ROIs
+[dendrogram] auto color_threshold=0.87 → 5 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 180 / 4961 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 172 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00009\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 53 ROIs
+[dendrogram] auto color_threshold=0.58 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 53 / 118 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 20 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 17 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 5 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-04_00010\suite2p\plane0\r0p7_filtered_cluster_results\C4_rois.npy with 11 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 6196 frames × 158 ROIs
+[dendrogram] auto color_threshold=0.89 → 4 groups
+Saved cluster order to E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 158 / 4960 ROIs kept.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 152 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 2 ROIs.
+Saved E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 2 ROIs.
+Saved ROI lists by dendrogram leaf color.
