@@ -322,12 +322,57 @@ def main(folder_name: str):
 
 if __name__ == '__main__':
     #print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
-    """for entry in os.scandir(r'E:\data\2p_shifted\Cx'):
+    for entry in os.scandir(r'E:\data\2p_shifted\Cx'):
         # running in here just to store the output in the logfile
+
         if entry.is_dir():
-            main(entry.path)"""
+            cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
+            n_clusters = count_cluster_roi_files(cluster_dir)
+
+            if n_clusters < 2:
+                run_with_logging("crosscorrelation.log", print,
+                                 f"[SKIP] cross-correlation for {entry.path}: \n "
+                                 f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
+                                 )
+            else:
+                params = dict(
+                    root=Path(entry.path + r'\suite2p\plane0'),
+                    fps=utils.get_fps_from_notes(entry.path),
+                    prefix="r0p7_filtered_",
+                    cluster_folder="",
+                    bin_sec=0.5,
+                    frac_required=0.8,
+                    use_gpu=True,
+                )
+                run_with_logging(
+                    "crosscorrelation.log",
+                    crosscorrelation.run_crosscorr_per_coactivation_bin,
+                    **params,
+                )
     for entry in os.scandir(r'E:\data\2p_shifted\Hip'):
         # running in here just to store the output in the logfile
         if entry.is_dir():
-            main(entry.path)
+            cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
+            n_clusters = count_cluster_roi_files(cluster_dir)
+
+            if n_clusters < 2:
+                run_with_logging("crosscorrelation.log", print,
+                                 f"[SKIP] cross-correlation for {entry.path}: \n "
+                                 f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
+                                 )
+            else:
+                params = dict(
+                    root=Path(entry.path + r'\suite2p\plane0'),
+                    fps=utils.get_fps_from_notes(entry.path),
+                    prefix="r0p7_filtered_",
+                    cluster_folder="",
+                    bin_sec=0.5,
+                    frac_required=0.8,
+                    use_gpu=True,
+                )
+                run_with_logging(
+                    "crosscorrelation.log",
+                    crosscorrelation.run_crosscorr_per_coactivation_bin,
+                    **params,
+                )
     #main(r'E:\data\2p_shifted\Cx\2024-08-20_00001')

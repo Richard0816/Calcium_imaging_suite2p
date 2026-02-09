@@ -4287,3 +4287,8 @@ Results saved under: E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7
 ✔ C2×C3: pairs_used=4/4, mean(r_obs)=0.0060, frac(p<0.05)=0.000, frac(FDR)=0.000, min_p=0.101, gpu=True
 ✔ C3×C3: pairs_used=4/4, mean(r_obs)=0.5504, frac(p<0.05)=1.000, frac(FDR)=1.000, min_p=0.0002, gpu=True
 ✅ Saved: E:\data\2p_shifted\Hip\2024-11-05_00003\suite2p\plane0\r0p7_filtered_cluster_results\zero_lag_shift_surrogate\zero_lag_shift_surrogate_pairwise_stats.csv
+Working on E:\data\2p_shifted\Cx\2024-11-20_00003
+Found 31 coactivation bins: [0, 8, 484, 938, 940, 952, 976, 1532, 1534, 1550, 1556, 1568, 1574, 1580, 1586, 1592, 1594, 1602, 1604, 1606, 1610, 1612, 1626, 1644, 1648, 1668, 1710, 1722, 1744, 1760, 1806]
+Loaded clusters: ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9']
+
+▶ Coactivation bin 0: frames 0–7

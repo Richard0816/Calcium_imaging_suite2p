@@ -1,8 +1,12 @@
 import csv
+import os
+
 from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
+
+import spatial_heatmap
 import utils
 import pandas as pd
 
@@ -308,7 +312,9 @@ def run_crosscorr_per_coactivation_bin(
     bin_sec: float = 0.5,
     frac_required: float = 0.8,
     use_gpu: bool = True,
-    max_lag_seconds: float = 5.0
+    max_lag_seconds: float = 5.0,
+    zero_lag: bool = True,
+    zero_lag_only: bool = False
 ):
     """
     1) Detect coactivation bins using your spatial_heatmap.py logic.
@@ -316,6 +322,10 @@ def run_crosscorr_per_coactivation_bin(
     3) Run cross-correlation (GPU or CPU) on that window.
     4) Save results in per-bin folders: crosscorr_by_coact/binXXXX/
     """
+    # Cell mask parameters:
+    scores = np.load(os.path.join(root.parents[1], 'roi_scores.npy'))
+    cell_mask = spatial_heatmap.soft_cell_mask(scores, score_threshold=0.15, top_k_pct=None)
+    print(f'Working on {root.parents[1]}')
 
     # ----------------------------------------------------------------------
     # 1. LOAD ΔF/F, STAT, AND DETECT COACT BINS (same logic as spatial_heatmap)
@@ -323,12 +333,17 @@ def run_crosscorr_per_coactivation_bin(
     # Load Suite2p data
     ops = np.load(root / "ops.npy", allow_pickle=True).item()
     stat = np.load(root / "stat.npy", allow_pickle=True)
+
+    # Apply filter to stat
+    idx_keep = np.where(cell_mask)[0]
+    stat_filtered = [stat[i] for i in idx_keep]
     Ly, Lx = ops["Ly"], ops["Lx"]
 
     # Load memmaps
     low = np.memmap(root / f"{prefix}dff_lowpass.memmap.float32",
                     dtype="float32", mode="r")
-    N = len(stat)
+
+    N = len(stat_filtered)
     T = low.size // N
     dff = low.reshape(T, N)
 
@@ -343,23 +358,10 @@ def run_crosscorr_per_coactivation_bin(
         idxs = utils.hysteresis_onsets(z, z_hi=3.5, z_lo=1.5, fps=fps)
         onsets.append(np.array(idxs) / fps)
 
-    # binning logic
-    total_sec = T / fps
-    n_bins = int(np.ceil(total_sec / bin_sec))
-    edges = np.linspace(0, n_bins * bin_sec, n_bins + 1)
-
-    # activation matrix
-    A = np.zeros((N, n_bins), dtype=bool)
-    for i, ts in enumerate(onsets):
-        if ts.size == 0:
-            continue
-        bins = np.searchsorted(edges, ts, side='right') - 1
-        bins = bins[(bins >= 0) & (bins < n_bins)]
-        A[i, np.unique(bins)] = True
-
-    # find bins with sufficient coactivation
-    min_count = int(np.ceil(frac_required * N))
-    keep_bins = np.where(A.sum(axis=0) >= min_count)[0]
+    # --- binning and co-activation selection ---
+    edges = spatial_heatmap._bin_edges_and_indexer(T, fps, bin_sec)
+    A, first_time = spatial_heatmap._activation_matrix(onsets, edges)
+    keep_bins, active_counts = spatial_heatmap._select_high_coactivation_bins(A, frac_required=frac_required)
 
     if keep_bins.size == 0:
         print("⚠️ No coactivation bins found.")
@@ -410,7 +412,7 @@ def run_crosscorr_per_coactivation_bin(
         # For each cluster pair
         for cA in clusters:
             for cB in clusters:
-                if cA >= cB:
+                if cA > cB:
                     continue
 
                 roisA = clusters[cA]
@@ -419,11 +421,16 @@ def run_crosscorr_per_coactivation_bin(
                 pair_dir = bin_dir / f"{cA}x{cB}"
                 pair_dir.mkdir(exist_ok=True)
 
-                # summary CSV
-                csv_path = pair_dir / f"{cA}x{cB}_summary.csv"
-                with open(csv_path, "w", newline="") as fcsv:
-                    w = csv.writer(fcsv)
-                    w.writerow(["roiA", "roiB", "best_lag_sec", "max_corr"])
+                # CSV summary
+                summary_path = pair_dir / f"{cA}x{cB}_summary.csv"
+                with open(summary_path, "w", newline="") as csvfile:
+                    writer = csv.writer(csvfile)
+                    header = ["roiA", "roiB"]
+                    if not zero_lag_only:
+                        header += ["best_lag_sec", "max_corr"]
+                    if zero_lag or zero_lag_only:
+                        header += ["zero_lag_corr"]
+                    writer.writerow(header)
 
                     # pairwise computation
                     for roiA in roisA:
@@ -431,27 +438,39 @@ def run_crosscorr_per_coactivation_bin(
                         for roiB in roisB:
                             sigB = cropped[:, roiB]
 
-                            if use_gpu and cp is not None:
-                                lags, corr, lag_best, corr_best = compute_cross_correlation_gpu(
-                                    sigA, sigB, fps, max_lag_seconds
-                                )
-                            else:
-                                lags, corr, lag_best, corr_best = compute_cross_correlation(
-                                    sigA, sigB, fps, max_lag_seconds
-                                )
+                            # -- zero-lag corr
+                            zero_lag_corr = None
+                            if zero_lag_only or zero_lag:
+                                if use_gpu:
+                                    zero_lag_corr = compute_zero_lag_corr_gpu(sigA, sigB)
+                                else:
+                                    zero_lag_corr = compute_zero_lag_corr_cpu(sigA, sigB)
+                            if not zero_lag_only:
+                                if use_gpu and cp is not None:
+                                    lags_sec, corr, best_lag_sec, max_corr = \
+                                        compute_cross_correlation_gpu(sigA, sigB, fps, max_lag_seconds)
+                                else:
+                                    # CPU fallback (reuse your CPU helper if you prefer)
+                                    lags_sec, corr, best_lag_sec, max_corr = \
+                                        compute_cross_correlation(sigA, sigB, fps, max_lag_seconds)
 
                             # save .npz
-                            npz_path = pair_dir / f"roi{roiA:04d}_roi{roiB:04d}.npz"
-                            np.savez(npz_path,
-                                     roiA=roiA,
-                                     roiB=roiB,
-                                     lags_sec=lags,
-                                     corr=corr,
-                                     best_lag_sec=lag_best,
-                                     max_corr=corr_best)
+                            #npz_path = pair_dir / f"roi{roiA:04d}_roi{roiB:04d}.npz"
+                            #np.savez(npz_path,
+                            #         roiA=roiA,
+                            #         roiB=roiB,
+                            #         lags_sec=lags,
+                            #         corr=corr,
+                            #         best_lag_sec=lag_best,
+                            #         max_corr=corr_best)
 
                             # write CSV line
-                            w.writerow([roiA, roiB, lag_best, corr_best])
+                            row = [int(roiA), int(roiB)]
+                            if not zero_lag_only:
+                                row += [float(best_lag_sec), float(max_corr)]
+                            if zero_lag_only or zero_lag:
+                                row += [float(zero_lag_corr)]
+                            writer.writerow(row)
 
                 print(f"  ✔ {cA}×{cB} saved in {pair_dir}")
 
@@ -1716,22 +1735,22 @@ if __name__ == "__main__":
     root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = utils.get_fps_from_notes(root)
-
-    xcorr_root = Path(
-        root / f"{prefix}cluster_results" / "cross_correlation_gpu"
-    )
-
-    pairwise_data = load_pairwise_lags(xcorr_root)
-
-    plot_violin_all_lags(
-        pairwise_data,
-        out_png=xcorr_root / "panelA_violin_all_lags.png"
-    )
-
-    plot_cell_level_box(
-        pairwise_data,
-        out_png=xcorr_root / "panelB_cell_level_box.png"
-    )
+#
+    #xcorr_root = Path(
+    #    root / f"{prefix}cluster_results" / "cross_correlation_gpu"
+    #)
+#
+    #pairwise_data = load_pairwise_lags(xcorr_root)
+#
+    #plot_violin_all_lags(
+    #    pairwise_data,
+    #    out_png=xcorr_root / "panelA_violin_all_lags.png"
+    #)
+#
+    #plot_cell_level_box(
+    #    pairwise_data,
+    #    out_png=xcorr_root / "panelB_cell_level_box.png"
+    #)
 
     #run_or_load_clusterpair_lag_stats(
     #    root=root,
@@ -1782,12 +1801,12 @@ if __name__ == "__main__":
     #    # max_onsets=3,        # only process first 3 synchronous epochs
     #    # min_sep_s=0.3,       # enforce per-ROI event separation
     #)
-    #run_crosscorr_per_coactivation_bin(
-    #    root=Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
-    #    prefix="r0p7_",
-    #    fps=30.0,
-    #    cluster_folder="C1C2C4_recluster",
-    #    bin_sec=0.5,
-    #    frac_required=0.8,
-    #    use_gpu=True
-    #)
+    run_crosscorr_per_coactivation_bin(
+        root=Path(r"E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
+        prefix="r0p7_filtered_",
+        fps=fps,
+        cluster_folder="",
+        bin_sec=0.5,
+        frac_required=0.8,
+        use_gpu=True
+    )
