@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import utils
+import pandas as pd
 
 try:
     import cupy as cp
@@ -13,6 +14,31 @@ except ImportError:
     cp_signal = None
     print("⚠️ CuPy not available; GPU cross-correlation will fall back to CPU.")
 
+def load_pairwise_lags(xcorr_root: Path):
+    """
+    Load all pairwise best_lag_sec values per cluster pair.
+
+    Returns:
+        dict[pair_name] -> DataFrame with columns:
+            roiA, roiB, best_lag_sec
+    """
+    data = {}
+
+    for pair_dir in sorted(xcorr_root.iterdir()):
+        if not pair_dir.is_dir():
+            continue
+
+        csvs = list(pair_dir.glob("*_summary.csv"))
+        if not csvs:
+            continue
+
+        df = pd.read_csv(csvs[0])
+        if "best_lag_sec" not in df.columns:
+            continue
+
+        data[pair_dir.name] = df[["roiA", "roiB", "best_lag_sec"]].dropna()
+
+    return data
 
 def compute_cross_correlation_gpu(sig1_np, sig2_np, fps, max_lag_seconds=5.0):
     """
@@ -717,10 +743,6 @@ def _bh_fdr(pvals, alpha=0.05):
     p_adj = np.empty_like(pvals)
     p_adj[order] = p_adj_ranked
     return reject, p_adj
-
-def _perm_test_with_zero_lag():
-    return None
-
 
 def _perm_test_mean_lag_signflip(lags_sec, n_perm=10_000, seed=0):
     """
@@ -1550,6 +1572,81 @@ def run_clusterpair_zero_lag_shift_surrogate_stats_legacy( # legacy model
     print(f"✅ Saved: {out_csv}")
     return rows
 
+def plot_violin_all_lags(pairwise_data, out_png):
+    pairs = list(pairwise_data.keys())
+    lags = [pairwise_data[p]["best_lag_sec"].values for p in pairs]
+
+    fig, ax = plt.subplots(figsize=(1.6 * len(pairs), 5))
+
+    parts = ax.violinplot(
+        lags,
+        showmedians=True,
+        showextrema=False
+    )
+
+    ax.axhline(0, color="black", linestyle="--", linewidth=1)
+
+    ax.set_xticks(np.arange(1, len(pairs) + 1))
+    ax.set_xticklabels(pairs, rotation=45, ha="right")
+
+    ax.set_ylabel("Lag (s)")
+    ax.set_title("Pairwise cross-correlation lag distributions")
+
+    fig.tight_layout()
+    fig.savefig(out_png, dpi=200)
+    plt.close(fig)
+
+def compute_cell_level_means(df):
+    """
+    For A→B, compute mean lag per ROI in cluster A.
+    """
+    return (
+        df
+        .groupby("roiA")["best_lag_sec"]
+        .mean()
+        .values
+    )
+
+def plot_cell_level_box(pairwise_data, out_png):
+    pairs = []
+    cell_means = []
+
+    for pair, df in pairwise_data.items():
+        means = compute_cell_level_means(df)
+        if len(means) == 0:
+            continue
+        pairs.append(pair)
+        cell_means.append(means)
+
+    fig, ax = plt.subplots(figsize=(1.6 * len(pairs), 5))
+
+    ax.boxplot(
+        cell_means,
+        showfliers=False,
+        widths=0.6
+    )
+
+    # overlay dots
+    for i, vals in enumerate(cell_means, start=1):
+        ax.scatter(
+            np.random.normal(i, 0.04, size=len(vals)),
+            vals,
+            s=20,
+            alpha=0.7
+        )
+
+    ax.axhline(0, color="black", linestyle="--", linewidth=1)
+
+    ax.set_xticks(np.arange(1, len(pairs) + 1))
+    ax.set_xticklabels(pairs, rotation=45, ha="right")
+
+    ax.set_ylabel("Mean lag per cell (s)")
+    ax.set_title("Cell-level mean cross-correlation lags")
+
+    fig.tight_layout()
+    fig.savefig(out_png, dpi=200)
+    plt.close(fig)
+
 # ----------------------------
 # Main wrapper
 # ----------------------------
@@ -1616,9 +1713,26 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0")
+    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = utils.get_fps_from_notes(root)
+
+    xcorr_root = Path(
+        root / f"{prefix}cluster_results" / "cross_correlation_gpu"
+    )
+
+    pairwise_data = load_pairwise_lags(xcorr_root)
+
+    plot_violin_all_lags(
+        pairwise_data,
+        out_png=xcorr_root / "panelA_violin_all_lags.png"
+    )
+
+    plot_cell_level_box(
+        pairwise_data,
+        out_png=xcorr_root / "panelB_cell_level_box.png"
+    )
+
     #run_or_load_clusterpair_lag_stats(
     #    root=root,
     #    prefix="r0p7_",
@@ -1631,30 +1745,30 @@ if __name__ == "__main__":
     #    alpha=0.05,
     #    min_pairs=10
     #)
-    run_cluster_cross_correlations_gpu(
-        root=root,
-        prefix="r0p7_filtered_",
-        fps=fps,
-        cluster_folder="",
-        max_lag_seconds=5.0,
-        cpu_fallback=True,
-        zero_lag=True,
-        zero_lag_only=False,
-    )
-    rows = run_clusterpair_zero_lag_shift_surrogate_stats(
-        root=root,
-        prefix="r0p7_filtered_",
-        fps=fps,
-        n_surrogates=5000,
-        min_shift_s=1,
-        max_shift_s=500,
-        shift_cluster="B",  # shift C2, leave C1 fixed
-        two_sided=False,  # synchrony: usually one-sided
-        seed=0,
-        use_gpu=True,
-        fdr_alpha=0.05,
-        save_pairwise_csv=True
-    )
+    #run_cluster_cross_correlations_gpu(
+    #    root=root,
+    #    prefix="r0p7_filtered_",
+    #    fps=fps,
+    #    cluster_folder="",
+    #    max_lag_seconds=5.0,
+    #    cpu_fallback=True,
+    #    zero_lag=True,
+    #    zero_lag_only=False,
+    #)
+    #rows = run_clusterpair_zero_lag_shift_surrogate_stats(
+    #    root=root,
+    #    prefix="r0p7_filtered_",
+    #    fps=fps,
+    #    n_surrogates=5000,
+    #    min_shift_s=1,
+    #    max_shift_s=500,
+    #    shift_cluster="B",  # shift C2, leave C1 fixed
+    #    two_sided=False,  # synchrony: usually one-sided
+    #    seed=0,
+    #    use_gpu=True,
+    #    fdr_alpha=0.05,
+    #    save_pairwise_csv=True
+    #)
     #run_crosscorr_from_sync_onsets_to_end(
     #    root=root,
     #    prefix="r0p7_",
