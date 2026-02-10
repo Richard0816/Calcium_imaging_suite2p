@@ -1,3 +1,5 @@
+from datetime import datetime
+import re
 from typing import Union, Tuple, Any
 
 import utils
@@ -59,6 +61,29 @@ def global_exception_handler(exc_type, exc_value, exc_traceback):
     
     # Optionally, print to console as well (default behavior)
     sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+# --- Add this helper somewhere near your email config (top of file) ---
+
+def send_email(subject: str, body: str) -> None:
+    """
+    Send a plaintext email via SMTP (STARTTLS).
+    Uses the global SMTP_* / SENDER_EMAIL / RECIPIENT_EMAIL / EMAIL_PASSWORD config.
+    """
+    msg = (
+        f"From: {SENDER_EMAIL}\r\n"
+        f"To: {RECIPIENT_EMAIL}\r\n"
+        f"Subject: {subject}\r\n"
+        f"\r\n"
+        f"{body}\r\n"
+    )
+
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(SENDER_EMAIL, EMAIL_PASSWORD)
+        server.sendmail(SENDER_EMAIL, [RECIPIENT_EMAIL], msg.encode("utf-8", errors="replace"))
+
 
 # Set the custom handler as the global exception hook
 sys.excepthook = global_exception_handler
@@ -319,60 +344,130 @@ def main(folder_name: str):
 
     return None
 
+def entries_to_run_to_list(entries: list) -> list:
+    """
+    :param entries: "entries_to_run"
+    :return: List of lists where each string is broken down into list of ints
+    """
+    final = []
+    for e in entries:
+        final.append(string_to_int_list(e))
+    return final
+
+
+def string_to_int_list(string: str) -> list:
+    temp = []
+    delimiters_pattern = r'-|_'
+    lst = re.split(delimiters_pattern, string)
+    for i in lst:
+        temp.append(int(i))
+    return temp
 
 if __name__ == '__main__':
     #print(need_to_run_analysis_py(r'D:\data\2p_shifted\Hip\2024-06-03_00003'))
+    entries_to_run = [
+        "2024-06-03-00004", "2024-06-03-00007", "2024-06-03-00009", "2024-06-04-00001", "2024-06-04-00002",
+        "2024-06-04-00006", "2024-06-04-00009", "2024-06-04-00010", "2024-06-05-00001", "2024-06-05-00006",
+        "2024-06-05-00007", "2024-07-01-00001", "2024-07-01-00002", "2024-07-01-00005", "2024-07-01-00006",
+        "2024-07-01-00012", "2024-07-01-00016", "2024-07-01-00017", "2024-07-01-00018", "2024-07-01-00019",
+        "2024-07-02-00001", "2024-07-02-00002", "2024-07-02-00005", "2024-07-02-00006", "2024-07-02-00007",
+        "2024-07-02-00008", "2024-07-02-00012", "2024-07-02-00013", "2024-08-21-0003", "2024-08-22-0001",
+        "2024-08-22-0003", "2024-08-22-0004", "2024-10-30-0003", "2024-10-30-0005", "2024-10-30-0010",
+        "2024-10-30-0012", "2024-10-31-0001", "2024-10-31-0005", "2024-11-04-0003", "2024-11-04-0004",
+        "2024-11-04-0010", "2024-11-05-0001", "2024-11-05-0004", "2024-11-05-0007", "2024-11-18-0003",
+        "2024-11-18-0005", "2024-11-18-0008", "2024-11-20-0001"
+    ]
+
+    entries_to_run = entries_to_run_to_list(entries_to_run)
+
     for entry in os.scandir(r'E:\data\2p_shifted\Cx'):
         # running in here just to store the output in the logfile
 
         if entry.is_dir():
-            cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
-            n_clusters = count_cluster_roi_files(cluster_dir)
+            if string_to_int_list(entry.name) in entries_to_run:
+                try:
+                    send_email(
+                        subject="Pipeline entry triggered",
+                        body=entry.path
+                    )
+                except Exception as e:
+                    # Don't crash the pipeline if email fails
+                    run_with_logging("crosscorrelation.log", print, f"[WARN] Email failed for {entry.path}: {e}")
 
-            if n_clusters < 2:
-                run_with_logging("crosscorrelation.log", print,
-                                 f"[SKIP] cross-correlation for {entry.path}: \n "
-                                 f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
-                                 )
-            else:
-                params = dict(
-                    root=Path(entry.path + r'\suite2p\plane0'),
-                    fps=utils.get_fps_from_notes(entry.path),
-                    prefix="r0p7_filtered_",
-                    cluster_folder="",
-                    bin_sec=0.5,
-                    frac_required=0.8,
-                    use_gpu=True,
-                )
-                run_with_logging(
-                    "crosscorrelation.log",
-                    crosscorrelation.run_crosscorr_per_coactivation_bin,
-                    **params,
-                )
+                cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
+                n_clusters = count_cluster_roi_files(cluster_dir)
+
+                if n_clusters < 2:
+                    run_with_logging("crosscorrelation.log", print,
+                                     f"[SKIP] cross-correlation for {entry.path}: \n "
+                                     f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
+                                     )
+                else:
+                    params = dict(
+                        root=Path(entry.path + r'\suite2p\plane0'),
+                        fps=utils.get_fps_from_notes(entry.path),
+                        prefix="r0p7_filtered_",
+                        cluster_folder="",
+                        bin_sec=0.5,
+                        frac_required=0.8,
+                        use_gpu=True,
+                        zero_lag_only=False,
+                        top_k_lag=200,
+                        max_lag_seconds=2,
+                        max_cluster_size=500
+                    )
+                    run_with_logging(
+                        "crosscorrelation.log",
+                        crosscorrelation.run_crosscorr_per_coactivation_bin_fast,
+                        **params,
+                    )
     for entry in os.scandir(r'E:\data\2p_shifted\Hip'):
         # running in here just to store the output in the logfile
         if entry.is_dir():
-            cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
-            n_clusters = count_cluster_roi_files(cluster_dir)
+            if string_to_int_list(entry.name) in entries_to_run:
+                try:
+                    send_email(
+                        subject="Pipeline entry triggered",
+                        body=entry.path
+                    )
+                except Exception as e:
+                    # Don't crash the pipeline if email fails
+                    run_with_logging("crosscorrelation.log", print, f"[WARN] Email failed for {entry.path}: {e}")
 
-            if n_clusters < 2:
-                run_with_logging("crosscorrelation.log", print,
-                                 f"[SKIP] cross-correlation for {entry.path}: \n "
-                                 f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
-                                 )
-            else:
-                params = dict(
-                    root=Path(entry.path + r'\suite2p\plane0'),
-                    fps=utils.get_fps_from_notes(entry.path),
-                    prefix="r0p7_filtered_",
-                    cluster_folder="",
-                    bin_sec=0.5,
-                    frac_required=0.8,
-                    use_gpu=True,
-                )
-                run_with_logging(
-                    "crosscorrelation.log",
-                    crosscorrelation.run_crosscorr_per_coactivation_bin,
-                    **params,
-                )
+                cluster_dir = Path(entry.path) / "suite2p" / "plane0" / "r0p7_filtered_cluster_results"
+                n_clusters = count_cluster_roi_files(cluster_dir)
+
+                if n_clusters < 2:
+                    run_with_logging("crosscorrelation.log", print,
+                                     f"[SKIP] cross-correlation for {entry.path}: \n "
+                                     f"found {n_clusters} '*_rois.npy' files in {cluster_dir} (need >= 2)."
+                                     )
+                else:
+                    params = dict(
+                        root=Path(entry.path + r'\suite2p\plane0'),
+                        fps=utils.get_fps_from_notes(entry.path),
+                        prefix="r0p7_filtered_",
+                        cluster_folder="",
+                        bin_sec=0.5,
+                        frac_required=0.8,
+                        use_gpu=True,
+                        zero_lag_only=False,
+                        top_k_lag=200,
+                        max_lag_seconds=2,
+                        max_cluster_size=500
+                    )
+                    run_with_logging(
+                        "crosscorrelation.log",
+                        crosscorrelation.run_crosscorr_per_coactivation_bin_fast,
+                        **params,
+                    )
+    # ---- Pipeline finished ----
+    try:
+        send_email(
+            subject="Pipeline completed",
+            body=f"Pipeline finished at {datetime.now().isoformat()}"
+        )
+    except Exception as e:
+        print(f"[WARN] Final completion email failed: {e}")
+
     #main(r'E:\data\2p_shifted\Cx\2024-08-20_00001')

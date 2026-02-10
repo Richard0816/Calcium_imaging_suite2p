@@ -4292,3 +4292,1190 @@ Found 31 coactivation bins: [0, 8, 484, 938, 940, 952, 976, 1532, 1534, 1550, 15
 Loaded clusters: ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9']
 
 ▶ Coactivation bin 0: frames 0–7
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C9xC9
+
+▶ Coactivation bin 8: frames 60–67
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0008\C9xC9
+
+▶ Coactivation bin 484: frames 3630–3637
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0484\C9xC9
+
+▶ Coactivation bin 938: frames 7035–7042
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0938\C9xC9
+
+▶ Coactivation bin 940: frames 7050–7057
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0940\C9xC9
+
+▶ Coactivation bin 952: frames 7140–7147
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0952\C9xC9
+
+▶ Coactivation bin 976: frames 7320–7327
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC7
+  ✔ C0×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC8
+  ✔ C0×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C0xC9
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC4
+  ✔ C1×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC5
+  ✔ C1×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC6
+  ✔ C1×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC7
+  ✔ C1×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC8
+  ✔ C1×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C1xC9
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC4
+  ✔ C2×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC5
+  ✔ C2×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC6
+  ✔ C2×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC7
+  ✔ C2×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC8
+  ✔ C2×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C2xC9
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC4
+  ✔ C3×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC5
+  ✔ C3×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC6
+  ✔ C3×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC7
+  ✔ C3×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC8
+  ✔ C3×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C3xC9
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC4
+  ✔ C4×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC5
+  ✔ C4×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC6
+  ✔ C4×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC7
+  ✔ C4×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC8
+  ✔ C4×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C4xC9
+  ✔ C5×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C5xC5
+  ✔ C5×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C5xC6
+  ✔ C5×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C5xC7
+  ✔ C5×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C5xC8
+  ✔ C5×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C5xC9
+  ✔ C6×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C6xC6
+  ✔ C6×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C6xC7
+  ✔ C6×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C6xC8
+  ✔ C6×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C6xC9
+  ✔ C7×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C7xC7
+  ✔ C7×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C7xC8
+  ✔ C7×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C7xC9
+  ✔ C8×C8 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C8xC8
+  ✔ C8×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C8xC9
+  ✔ C9×C9 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0976\C9xC9
+
+▶ Coactivation bin 1532: frames 11490–11497
+  ✔ C0×C0 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC0
+  ✔ C0×C1 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC1
+  ✔ C0×C2 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC2
+  ✔ C0×C3 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC3
+  ✔ C0×C4 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC4
+  ✔ C0×C5 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC5
+  ✔ C0×C6 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC6
+  ✔ C0×C7 saved in E:\data\2p_shifted\Cx\2024-11-20_00003\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin1532\C0xC7
+Working on E:\data\2p_shifted\Cx\2024-06-04_00006
+Found 46 coactivation bins: [0, 354, 355, 982, 993, 1004, 1006, 1016, 1018, 1029, 1030, 1066, 1068, 1069, 1100, 1102, 1116, 1128, 1162, 1164, 1165, 1168, 1246, 1304, 1306, 1308, 1310, 1319, 1322, 1324, 1336, 1337, 1338, 1340, 1344, 1350, 1377, 1380, 1384, 1875, 1882, 1896, 1942, 1966, 1981, 1999]
+Loaded clusters: ['C1', 'C2', 'C3', 'C4']
+
+▶ Coactivation bin 0: frames 0–7
+Working on E:\data\2p_shifted\Cx\2024-06-04_00006
+Found 46 coactivation bins: [0, 354, 355, 982, 993, 1004, 1006, 1016, 1018, 1029, 1030, 1066, 1068, 1069, 1100, 1102, 1116, 1128, 1162, 1164, 1165, 1168, 1246, 1304, 1306, 1308, 1310, 1319, 1322, 1324, 1336, 1337, 1338, 1340, 1344, 1350, 1377, 1380, 1384, 1875, 1882, 1896, 1942, 1966, 1981, 1999]
+Loaded clusters: ['C1', 'C2', 'C3', 'C4']
+
+▶ Coactivation bin 0: frames 0–7
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact\bin0000\C1xC3
+Working on E:\data\2p_shifted\Cx\2024-06-04_00006
+Found 46 coactivation bins: [0, 354, 355, 982, 993, 1004, 1006, 1016, 1018, 1029, 1030, 1066, 1068, 1069, 1100, 1102, 1116, 1128, 1162, 1164, 1165, 1168, 1246, 1304, 1306, 1308, 1310, 1319, 1322, 1324, 1336, 1337, 1338, 1340, 1344, 1350, 1377, 1380, 1384, 1875, 1882, 1896, 1942, 1966, 1981, 1999]
+Loaded clusters: ['C1', 'C2', 'C3', 'C4']
+
+▶ Coactivation bin 354: frames 2655–2662 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0354\C4xC4
+
+▶ Coactivation bin 355: frames 2662–2670 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0355\C4xC4
+
+▶ Coactivation bin 982: frames 7365–7372 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0982\C4xC4
+
+▶ Coactivation bin 993: frames 7447–7455 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin0993\C4xC4
+
+▶ Coactivation bin 1004: frames 7530–7537 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1004\C4xC4
+
+▶ Coactivation bin 1006: frames 7545–7552 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1006\C4xC4
+
+▶ Coactivation bin 1016: frames 7620–7627 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1016\C4xC4
+
+▶ Coactivation bin 1018: frames 7635–7642 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1018\C4xC4
+
+▶ Coactivation bin 1029: frames 7717–7725 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1029\C4xC4
+
+▶ Coactivation bin 1030: frames 7725–7732 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1030\C4xC4
+
+▶ Coactivation bin 1066: frames 7995–8002 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1066\C4xC4
+
+▶ Coactivation bin 1068: frames 8010–8017 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1068\C4xC4
+
+▶ Coactivation bin 1069: frames 8017–8025 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1069\C4xC4
+
+▶ Coactivation bin 1100: frames 8250–8257 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1100\C4xC4
+
+▶ Coactivation bin 1102: frames 8265–8272 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1102\C4xC4
+
+▶ Coactivation bin 1116: frames 8370–8377 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1116\C4xC4
+
+▶ Coactivation bin 1128: frames 8460–8467 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C4xC4
+
+▶ Coactivation bin 1162: frames 8715–8722 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1162\C4xC4
+
+▶ Coactivation bin 1164: frames 8730–8737 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1164\C4xC4
+
+▶ Coactivation bin 1165: frames 8737–8745 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1165\C4xC4
+
+▶ Coactivation bin 1168: frames 8760–8767 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1168\C4xC4
+
+▶ Coactivation bin 1246: frames 9345–9352 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1246\C4xC4
+
+▶ Coactivation bin 1304: frames 9780–9787 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1304\C4xC4
+
+▶ Coactivation bin 1306: frames 9795–9802 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1306\C4xC4
+
+▶ Coactivation bin 1308: frames 9810–9817 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1308\C4xC4
+
+▶ Coactivation bin 1310: frames 9825–9832 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1310\C4xC4
+
+▶ Coactivation bin 1319: frames 9892–9900 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1319\C4xC4
+
+▶ Coactivation bin 1322: frames 9915–9922 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1322\C4xC4
+
+▶ Coactivation bin 1324: frames 9930–9937 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1324\C4xC4
+
+▶ Coactivation bin 1336: frames 10020–10027 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1336\C4xC4
+
+▶ Coactivation bin 1337: frames 10027–10035 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1337\C4xC4
+
+▶ Coactivation bin 1338: frames 10035–10042 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1338\C4xC4
+
+▶ Coactivation bin 1340: frames 10050–10057 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1340\C4xC4
+
+▶ Coactivation bin 1344: frames 10080–10087 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1344\C4xC4
+
+▶ Coactivation bin 1350: frames 10125–10132 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1350\C4xC4
+
+▶ Coactivation bin 1377: frames 10327–10335 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1377\C4xC4
+
+▶ Coactivation bin 1380: frames 10350–10357 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1380\C4xC4
+
+▶ Coactivation bin 1384: frames 10380–10387 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C4xC4
+
+▶ Coactivation bin 1875: frames 14062–14070 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1875\C4xC4
+
+▶ Coactivation bin 1882: frames 14115–14122 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1882\C4xC4
+
+▶ Coactivation bin 1896: frames 14220–14227 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1896\C4xC4
+
+▶ Coactivation bin 1942: frames 14565–14572 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1942\C4xC4
+
+▶ Coactivation bin 1966: frames 14745–14752 (T=7)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1966\C4xC4
+
+▶ Coactivation bin 1981: frames 14857–14865 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1981\C4xC4
+
+▶ Coactivation bin 1999: frames 14992–15000 (T=8)
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C4xC4
+Working on E:\data\2p_shifted\Cx\2024-06-05_00001
+Found 28 coactivation bins: [0, 1176, 1192, 1193, 1288, 1384, 1459, 1462, 1491, 1504, 1593, 1594, 1615, 1617, 1631, 1632, 1634, 1750, 1798, 1799, 1800, 1816, 1830, 1869, 1870, 1994, 1997, 1999]
+Loaded clusters: ['C1', 'C2', 'C3', 'C4']
+
+▶ Coactivation bin 1176: frames 8820–8827 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1176\C4xC4
+
+▶ Coactivation bin 1192: frames 8940–8947 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1192\C4xC4
+
+▶ Coactivation bin 1193: frames 8947–8955 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1193\C4xC4
+
+▶ Coactivation bin 1288: frames 9660–9667 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1288\C4xC4
+
+▶ Coactivation bin 1384: frames 10380–10387 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1384\C4xC4
+
+▶ Coactivation bin 1459: frames 10942–10950 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1459\C4xC4
+
+▶ Coactivation bin 1462: frames 10965–10972 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1462\C4xC4
+
+▶ Coactivation bin 1491: frames 11182–11190 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1491\C4xC4
+
+▶ Coactivation bin 1504: frames 11280–11287 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1504\C4xC4
+
+▶ Coactivation bin 1593: frames 11947–11955 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1593\C4xC4
+
+▶ Coactivation bin 1594: frames 11955–11962 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1594\C4xC4
+
+▶ Coactivation bin 1615: frames 12112–12120 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1615\C4xC4
+
+▶ Coactivation bin 1617: frames 12127–12135 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1617\C4xC4
+
+▶ Coactivation bin 1631: frames 12232–12240 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1631\C4xC4
+
+▶ Coactivation bin 1632: frames 12240–12247 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1632\C4xC4
+
+▶ Coactivation bin 1634: frames 12255–12262 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1634\C4xC4
+
+▶ Coactivation bin 1750: frames 13125–13132 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1750\C4xC4
+
+▶ Coactivation bin 1798: frames 13485–13492 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1798\C4xC4
+
+▶ Coactivation bin 1799: frames 13492–13500 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1799\C4xC4
+
+▶ Coactivation bin 1800: frames 13500–13507 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1800\C4xC4
+
+▶ Coactivation bin 1816: frames 13620–13627 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1816\C4xC4
+
+▶ Coactivation bin 1830: frames 13725–13732 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1830\C4xC4
+
+▶ Coactivation bin 1869: frames 14017–14025 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1869\C4xC4
+
+▶ Coactivation bin 1870: frames 14025–14032 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1870\C4xC4
+
+▶ Coactivation bin 1994: frames 14955–14962 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1994\C4xC4
+
+▶ Coactivation bin 1997: frames 14977–14985 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1997\C4xC4
+
+▶ Coactivation bin 1999: frames 14992–15000 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00001\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1999\C4xC4
+Working on E:\data\2p_shifted\Cx\2024-06-05_00006
+Found 36 coactivation bins: [0, 1126, 1128, 1148, 1149, 1150, 1151, 1152, 1154, 1171, 1174, 1194, 1195, 1211, 1226, 1227, 1560, 1566, 1588, 1590, 1623, 1624, 1626, 1666, 1668, 1704, 1705, 1706, 1736, 1824, 1848, 1850, 1883, 1884, 1889, 1968]
+Loaded clusters: ['C1', 'C2', 'C3', 'C4']
+
+▶ Coactivation bin 1126: frames 8445–8452 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1126\C4xC4
+
+▶ Coactivation bin 1128: frames 8460–8467 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1128\C4xC4
+
+▶ Coactivation bin 1148: frames 8610–8617 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1148\C4xC4
+
+▶ Coactivation bin 1149: frames 8617–8625 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1149\C4xC4
+
+▶ Coactivation bin 1150: frames 8625–8632 (T=7)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1150\C4xC4
+
+▶ Coactivation bin 1151: frames 8632–8640 (T=8)
+  ✔ C1×C1 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C1xC1
+  ✔ C1×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C1xC2
+  ✔ C1×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C1xC3
+  ✔ C1×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C1xC4
+  ✔ C2×C2 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C2xC2
+  ✔ C2×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C2xC3
+  ✔ C2×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C2xC4
+  ✔ C3×C3 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C3xC3
+  ✔ C3×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C3xC4
+  ✔ C4×C4 saved in E:\data\2p_shifted\Cx\2024-06-05_00006\suite2p\plane0\r0p7_filtered_cluster_results\crosscorr_by_coact_fast\bin1151\C4xC4
+
+▶ Coactivation bin 1152: frames 8640–8647 (T=7)

@@ -474,6 +474,255 @@ def run_crosscorr_per_coactivation_bin(
 
                 print(f"  ✔ {cA}×{cB} saved in {pair_dir}")
 
+# -----------------------------------------------------------------------------
+# Fast co-activation-bin cross-correlation (vectorized)
+# -----------------------------------------------------------------------------
+def _map_rois_to_filtered_index_space(rois: np.ndarray, N_filtered: int, idx_keep: np.ndarray) -> np.ndarray:
+    """Ensure ROI indices refer to the filtered (0..N_filtered-1) column space.
+
+    Your clustering is typically run on the filtered ROI set; in that case ROIs are already 0..N_filtered-1.
+    If ROI arrays contain Suite2p-global indices, remap via idx_keep.
+    """
+    rois = np.asarray(rois, dtype=int)
+    if rois.size == 0:
+        return rois
+
+    # If everything is already in-bounds, assume filtered index space.
+    if (rois.min() >= 0) and (rois.max() < N_filtered):
+        return rois
+
+    # Otherwise assume these are global Suite2p indices and remap using idx_keep.
+    # idx_keep[j] gives the global index for filtered column j.
+    global_to_filtered = {int(g): int(j) for j, g in enumerate(np.asarray(idx_keep, dtype=int))}
+    mapped = np.array([global_to_filtered.get(int(r), -1) for r in rois], dtype=int)
+    mapped = mapped[mapped >= 0]
+    return mapped
+
+
+def _zscore_cols_cpu(X: np.ndarray) -> np.ndarray:
+    """Z-score each column of X (T, N). Columns with zero std become NaN."""
+    mu = np.mean(X, axis=0, keepdims=True)
+    sd = np.std(X, axis=0, keepdims=True)
+    sd[sd == 0] = np.nan
+    return (X - mu) / sd
+
+
+def _corrmat_zero_lag_cpu(ZA: np.ndarray, ZB: np.ndarray) -> np.ndarray:
+    """Compute zero-lag correlation matrix (nA, nB) from z-scored inputs (T,nA) and (T,nB)."""
+    T = ZA.shape[0]
+    return (ZA.T @ ZB) / float(T)
+
+
+def _zscore_cols_gpu(X: "cp.ndarray") -> "cp.ndarray":
+    """Z-score each column of X (T, N) on GPU. Columns with zero std become NaN."""
+    mu = cp.mean(X, axis=0, keepdims=True)
+    sd = cp.std(X, axis=0, keepdims=True)
+    sd = cp.where(sd == 0, cp.nan, sd)
+    return (X - mu) / sd
+
+
+def _corrmat_zero_lag_gpu(ZA: "cp.ndarray", ZB: "cp.ndarray") -> "cp.ndarray":
+    """Compute zero-lag correlation matrix (nA, nB) on GPU from z-scored inputs."""
+    T = ZA.shape[0]
+    return (ZA.T @ ZB) / float(T)
+
+def run_crosscorr_per_coactivation_bin_fast(
+    root: Path,
+    prefix: str = "r0p7_",
+    fps: float = 30.0,
+    cluster_folder: str = None,
+    bin_sec: float = 0.5,
+    frac_required: float = 0.8,
+    use_gpu: bool = True,
+    # For speed, default to zero-lag only:
+    zero_lag_only: bool = False,
+    # Optional: compute full cross-correlation (best lag) for only the top-K pairs by |r0|
+    top_k_lag: int = 200,
+    max_lag_seconds: float = 5.0,
+    max_cluster_size: int = 1000,
+):
+    """Much faster version of `run_crosscorr_per_coactivation_bin`.
+
+    Key speedups:
+      - Computes *all* zero-lag pairwise correlations per cluster-pair using a single matrix multiply
+        (GPU matmul when available).
+      - Avoids per-pair CPU↔GPU transfers and per-pair Python loops.
+      - Optionally computes best-lag cross-correlation for only the top-K pairs by |zero-lag corr|.
+
+    Output:
+      cluster_dir / crosscorr_by_coact_fast / binXXXX / CAxCB / CAxCB_summary.csv
+    """
+    # --- Cell mask / filtering (same as original) ---
+    scores = np.load(os.path.join(root.parents[1], 'roi_scores.npy'))
+    cell_mask = spatial_heatmap.soft_cell_mask(scores, score_threshold=0.15, top_k_pct=None)
+    print(f'Working on {root.parents[1]}')
+
+    ops = np.load(root / "ops.npy", allow_pickle=True).item()
+    stat = np.load(root / "stat.npy", allow_pickle=True)
+
+    idx_keep = np.where(cell_mask)[0]
+    stat_filtered = [stat[i] for i in idx_keep]  # kept for parity / future use
+
+    low = np.memmap(root / f"{prefix}dff_lowpass.memmap.float32", dtype="float32", mode="r")
+    N = len(stat_filtered)
+    T = low.size // N
+    dff = low.reshape(T, N)
+
+    dt = np.memmap(root / f"{prefix}dff_dt.memmap.float32", dtype="float32", mode="r").reshape(T, N)
+
+    # --- detect events & coactivation bins ---
+    onsets = []
+    for i in range(N):
+        z, _, _ = utils.mad_z(dt[:, i])
+        idxs = utils.hysteresis_onsets(z, z_hi=3.5, z_lo=1.5, fps=fps)
+        onsets.append(np.array(idxs) / fps)
+
+    edges = spatial_heatmap._bin_edges_and_indexer(T, fps, bin_sec)
+    A, first_time = spatial_heatmap._activation_matrix(onsets, edges)
+    keep_bins, active_counts = spatial_heatmap._select_high_coactivation_bins(A, frac_required=frac_required)
+
+    if keep_bins.size == 0:
+        print("⚠️ No coactivation bins found.")
+        return
+
+    print(f"Found {len(keep_bins)} coactivation bins: {keep_bins.tolist()}")
+
+    # --- clusters ---
+    cluster_dir = root / f"{prefix}cluster_results"
+    if cluster_folder is not None:
+        cluster_dir = cluster_dir / cluster_folder
+
+    roi_files = [f for f in sorted(cluster_dir.glob("*_rois.npy")) if "manual_combined" not in f.stem.lower()]
+    clusters_raw = {f.stem.replace("_rois", ""): np.load(f) for f in roi_files}
+    print(f"Loaded clusters: {list(clusters_raw.keys())}")
+
+    # Remap ROIs into filtered index space if needed
+    clusters = {}
+    for name, rois in clusters_raw.items():
+        rois_m = _map_rois_to_filtered_index_space(rois, N_filtered=N, idx_keep=idx_keep)
+        if rois_m.size:
+            clusters[name] = rois_m
+        else:
+            print(f"  ⚠️ Cluster {name} is empty after mapping; skipping.")
+
+    if len(clusters) < 1:
+        print("⚠️ No usable clusters after mapping.")
+        return
+
+    out_root = cluster_dir / "crosscorr_by_coact_fast"
+    out_root.mkdir(exist_ok=True)
+
+    # GPU availability
+    gpu_ok = bool(use_gpu and (cp is not None))
+
+    for b in keep_bins:
+        t0 = int(edges[b] * fps)
+        t1 = int(edges[b + 1] * fps)
+        if t1 <= t0 + 1:
+            continue
+        min_start_frame = int(2 * 60 * fps)
+        if t0 < min_start_frame:
+            continue
+        print(f"\n▶ Coactivation bin {b}: frames {t0}–{t1} (T={t1 - t0})")
+        cropped = dff[t0:t1, :].astype(np.float32, copy=False)
+
+        if gpu_ok:
+            cropped_gpu = cp.asarray(cropped, dtype=cp.float32)  # one transfer per bin
+
+        bin_dir = out_root / f"bin{b:04d}"
+        bin_dir.mkdir(exist_ok=True)
+
+        cluster_names = sorted(clusters.keys())
+
+        for iA, cA in enumerate(cluster_names):
+            for iB, cB in enumerate(cluster_names):
+                if cA > cB:
+                    continue
+
+                roisA = clusters[cA]
+                roisB = clusters[cB]
+                if roisA.size == 0 or roisB.size == 0 or roisA.size > max_cluster_size or roisB.size > max_cluster_size:
+                    continue
+
+                pair_dir = bin_dir / f"{cA}x{cB}"
+                pair_dir.mkdir(exist_ok=True)
+                summary_path = pair_dir / f"{cA}x{cB}_summary.csv"
+
+                # --- compute r0 matrix ---
+                if gpu_ok:
+                    XA = cropped_gpu[:, roisA]
+                    XB = cropped_gpu[:, roisB]
+                    ZA = _zscore_cols_gpu(XA)
+                    ZB = _zscore_cols_gpu(XB)
+                    C = _corrmat_zero_lag_gpu(ZA, ZB)  # (nA,nB)
+                    C_cpu = cp.asnumpy(C)
+                else:
+                    XA = cropped[:, roisA]
+                    XB = cropped[:, roisB]
+                    ZA = _zscore_cols_cpu(XA)
+                    ZB = _zscore_cols_cpu(XB)
+                    C_cpu = _corrmat_zero_lag_cpu(ZA, ZB)
+
+                # flatten + build roi pairs without python loops
+                r0 = C_cpu.reshape(-1)
+                roiA_rep = np.repeat(roisA.astype(int), roisB.size)
+                roiB_tile = np.tile(roisB.astype(int), roisA.size)
+
+                if zero_lag_only and top_k_lag <= 0:
+                    # fast write: roiA, roiB, zero_lag_corr
+                    out = np.column_stack([roiA_rep, roiB_tile, r0]).astype(object)
+                    header = "roiA,roiB,zero_lag_corr"
+                    np.savetxt(summary_path, out, delimiter=",", header=header, comments="", fmt=["%d", "%d", "%.8g"])
+                    print(f"  ✔ {cA}×{cB} saved (zero-lag only) in {pair_dir}")
+                    continue
+
+                # If you want more columns later, build a DataFrame-like array
+                best_lag = None
+                max_corr = None
+
+                if top_k_lag and top_k_lag > 0:
+                    # choose top-K pairs by absolute r0 (ignoring NaNs)
+                    r0_abs = np.abs(r0)
+                    r0_abs[np.isnan(r0_abs)] = -np.inf
+                    K = r0_abs.size #int(min(top_k_lag, r0_abs.size)) #deleted in favor for all
+                    if K > 0:
+                        top_idx = np.argpartition(r0_abs, -K)[-K:]
+                        best_lag = np.full(r0.shape, np.nan, dtype=float)
+                        max_corr = np.full(r0.shape, np.nan, dtype=float)
+
+                        # compute lag for just those K pairs
+                        for idx in top_idx:
+                            a = int(roiA_rep[idx])
+                            b_ = int(roiB_tile[idx])
+                            sigA = cropped[:, a]
+                            sigB = cropped[:, b_]
+                            if gpu_ok and cp is not None:
+                                _, _, lag_s, mc = compute_cross_correlation_gpu(sigA, sigB, fps, max_lag_seconds)
+                            else:
+                                _, _, lag_s, mc = compute_cross_correlation(sigA, sigB, fps, max_lag_seconds)
+                            best_lag[idx] = float(lag_s)
+                            max_corr[idx] = float(mc)
+
+                # Write with extra columns (best_lag/max_corr may be NaN for most pairs)
+                cols = [roiA_rep, roiB_tile]
+                header_cols = ["roiA", "roiB"]
+                if top_k_lag and top_k_lag > 0:
+                    cols += [best_lag, max_corr]
+                    header_cols += ["best_lag_sec", "max_corr"]
+                cols += [r0]
+                header_cols += ["zero_lag_corr"]
+
+                out = np.column_stack(cols).astype(object)
+                np.savetxt(
+                    summary_path,
+                    out,
+                    delimiter=",",
+                    header=",".join(header_cols),
+                    comments="",
+                    fmt=["%d", "%d"] + (["%.8g", "%.8g"] if (top_k_lag and top_k_lag > 0) else []) + ["%.8g"],
+                )
+                print(f"  ✔ {cA}×{cB} saved in {pair_dir}")
+
 def detect_synchronous_bin_onsets(
     dt: np.ndarray,
     fps: float,
@@ -1801,12 +2050,16 @@ if __name__ == "__main__":
     #    # max_onsets=3,        # only process first 3 synchronous epochs
     #    # min_sep_s=0.3,       # enforce per-ROI event separation
     #)
-    run_crosscorr_per_coactivation_bin(
-        root=Path(r"E:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
+    run_crosscorr_per_coactivation_bin_fast(
+        root=Path(r"E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0"),
         prefix="r0p7_filtered_",
         fps=fps,
         cluster_folder="",
         bin_sec=0.5,
         frac_required=0.8,
-        use_gpu=True
+        use_gpu=True,
+        zero_lag_only=False,
+        top_k_lag=200,
+        max_lag_seconds=2,
+        max_cluster_size=500
     )
