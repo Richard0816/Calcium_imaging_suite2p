@@ -620,7 +620,7 @@ def run_crosscorr_per_coactivation_bin_fast(
         t1 = int(edges[b + 1] * fps)
         if t1 <= t0 + 1:
             continue
-        min_start_frame = int(2 * 60 * fps)
+        min_start_frame = 0 #int(2 * 60 * fps) #todo commented out to include whole window
         if t0 < min_start_frame:
             continue
         print(f"\n▶ Coactivation bin {b}: frames {t0}–{t1} (T={t1 - t0})")
