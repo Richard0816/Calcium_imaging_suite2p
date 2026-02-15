@@ -531,6 +531,67 @@ def get_fps_from_notes(
     except Exception:
         return default_fps
 
+def get_zoom_from_notes(
+    path: str,
+    notes_root: str = r"F:\notes_recordings",
+    default_zoom: float = 1.0,
+) -> float:
+    """
+    Resolve zoom for a recording, given ANY path inside that recording.
+    Safe fallback to default_zoom if metadata is missing.
+    """
+    try:
+        path = Path(path)
+
+        rec_root = _find_recording_root(path)
+        if rec_root is None:
+            return default_zoom
+
+        date_str, rec_str = rec_root.name.split("_", 1)
+        target = f"{date_str}-{rec_str}"
+
+        notes_root = Path(notes_root)
+        notes_path = notes_root / f"{date_str}.xlsx"
+
+        if not notes_path.exists():
+            candidates = sorted(notes_root.glob(f"*{date_str}*.xlsx"))
+            if not candidates:
+                return default_zoom
+            notes_path = candidates[0]
+
+        df = pd.read_excel(notes_path, sheet_name="2P settings")
+        df.columns = [str(c).strip() for c in df.columns]
+        cols = {c.lower(): c for c in df.columns}
+
+        # IMPORTANT: use .lower() match for "zoom"
+        if "filename" not in cols or "zoom" not in cols:
+            return default_zoom
+
+        fn_col = cols["filename"]
+        zoom_col = cols["zoom"]
+
+        fn = df[fn_col].astype(str).str.strip()
+        hits = df.loc[fn == target]
+
+        if hits.empty:
+            hits = df.loc[
+                fn.str.endswith(f"-{rec_str}", na=False) |
+                (fn == rec_str)
+            ]
+
+        if hits.empty:
+            return default_zoom
+
+        zval = hits.iloc[0][zoom_col]
+        if pd.isna(zval):
+            return default_zoom
+
+        return float(zval)
+
+    except Exception:
+        return default_zoom
+
+
 # k nearest neighbor
 # umap
 # PCA

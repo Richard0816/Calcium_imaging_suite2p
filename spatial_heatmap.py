@@ -1,3 +1,4 @@
+import csv
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -252,6 +253,13 @@ def coactivation_order_heatmaps(
                                   min_sep_s=min_sep_s, bin_seconds=None)
     data = _load_suite2p_data(config)
 
+    # --- FOV in µm from zoom ---
+    zoom = utils.get_zoom_from_notes(folder_name)  # same pattern as Hz; uses .lower() columns
+    zoom = float(zoom) if zoom else 1.0
+
+    fov_um_x = 3080.90169 / zoom
+    fov_um_y = 3560.14057 / zoom
+
     # --- filter to "cells" via scores ---
     if os.path.exists(os.path.join(folder_name, 'roi_scores.npy')):
         scores = np.load(os.path.join(folder_name, 'roi_scores.npy'))
@@ -289,14 +297,141 @@ def coactivation_order_heatmaps(
     idx_keep = np.where(cell_mask)[0]
 
     # --- For each selected bin: create order map and save ---
-    # --- For each selected bin: create order map and save ---
     stat_filtered = [data['stat'][i] for i in idx_keep]  # only cell ROIs
+    # ---- Save coactivation per-ROI timing summary ----
+    summary_csv = os.path.join(config.root, f"{config.prefix}coactivation_summary.csv")
+
+    with open(summary_csv, "w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "roi_index_filtered",
+                "roi_index_original",
+                "bin_index",
+                "bin_start_s",
+                "bin_end_s",
+                "first_onset_s",
+                "relative_lag_s",
+                "order_rank",
+            ],
+        )
+        writer.writeheader()
+
+        for b in keep_bins:
+            # ranks within this bin (1=earliest)
+            order_rank = _order_map_for_bin(first_time[:, b], A[:, b])
+
+            # earliest onset among active ROIs in this bin
+            active_times = first_time[A[:, b] & ~np.isnan(first_time[:, b]), b]
+            if active_times.size == 0:
+                continue
+            earliest_time = float(np.min(active_times))
+
+            t0 = float(edges[b])
+            t1 = float(edges[b + 1])
+
+            # write one row per active ROI
+            active_rois = np.where(A[:, b])[0]
+            for roi_local_idx in active_rois:
+                ft = first_time[roi_local_idx, b]
+                if np.isnan(ft):
+                    continue
+
+                writer.writerow(
+                    {
+                        "roi_index_filtered": int(roi_local_idx),
+                        "roi_index_original": int(idx_keep[roi_local_idx]),
+                        "bin_index": int(b),
+                        "bin_start_s": t0,
+                        "bin_end_s": t1,
+                        "first_onset_s": float(ft),
+                        "relative_lag_s": float(ft) - earliest_time,
+                        "order_rank": float(order_rank[roi_local_idx]),
+                    }
+                )
+
+    print(f"[CoAct] Saved coactivation summary CSV → {summary_csv}")
+
+    # ---- propagation vector outputs ----
+    prop_dir = os.path.join(config.root, f"{config.prefix}coact_propagation_vectors")
+    if not os.path.exists(prop_dir):
+        os.makedirs(prop_dir)
+
+    prop_csv = os.path.join(config.root, f"{config.prefix}coactivation_propagation.csv")
+    prop_rows = []
 
     for b in keep_bins:
         order_rank_filtered = _order_map_for_bin(first_time[:, b], A[:, b])
 
         # Only keep the filtered cells (no NaN overlay for non-cells)
         spatial_order = _paint_order_map(order_rank_filtered, stat_filtered, Ly, Lx)
+        # ---- propagation vector (start/end from earliest/latest onset frame ROIs) ----
+        prop = _compute_propagation_vector_for_bin(first_time[:, b], A[:, b], stat_filtered, fps=config.fps)
+
+        if prop is not None:
+            start_px, end_px, dt_sec, n_first, n_last = prop
+
+            # convert px -> µm (anisotropic)
+            um_per_px_x = float(fov_um_x) / float(Lx)
+            um_per_px_y = float(fov_um_y) / float(Ly)
+
+            start_um = np.array([start_px[0] * um_per_px_x, start_px[1] * um_per_px_y], dtype=float)
+            end_um   = np.array([end_px[0]   * um_per_px_x, end_px[1]   * um_per_px_y], dtype=float)
+
+            # Arrow was reversed
+            tmp = start_um
+            start_um = end_um
+            end_um = tmp
+
+            vec_um   = end_um - start_um
+
+            dist_um = float(np.hypot(vec_um[0], vec_um[1]))
+            speed = dist_um / dt_sec if (dt_sec is not None and dt_sec > 0) else 0.0
+            angle_deg = float(np.degrees(np.arctan2(vec_um[1], vec_um[0]))) if dist_um > 0 else 0.0
+
+            # Save arrow overlay image (separate folder)
+            out_arrow = os.path.join(prop_dir, f"{config.prefix}coact_propagation_bin{b:04d}.png")
+            title_arrow = (
+                f"Propagation vector (bin {b}: {t0:.2f}–{t1:.2f}s)\n"
+                f"speed={speed:.1f} µm/s, angle={angle_deg:.1f}°, dt={dt_sec:.3f}s "
+                f"(firstROIs={n_first}, lastROIs={n_last})"
+            )
+
+            _show_spatial_with_arrow_um(
+                spatial_order,
+                title_arrow,
+                fov_um_x=fov_um_x,
+                fov_um_y=fov_um_y,
+                arrow_start_um=start_um,
+                arrow_vec_um=vec_um,
+                stat_filtered=stat_filtered,
+                outpath=out_arrow,
+                cmap=CYAN_TO_RED,
+            )
+
+            # record CSV row
+            prop_rows.append(
+                {
+                    "bin_index": int(b),
+                    "bin_start_s": float(t0),
+                    "bin_end_s": float(t1),
+                    "zoom": float(zoom),
+                    "fov_um_x": float(fov_um_x),
+                    "fov_um_y": float(fov_um_y),
+                    "start_x_um": float(start_um[0]),
+                    "start_y_um": float(start_um[1]),
+                    "end_x_um": float(end_um[0]),
+                    "end_y_um": float(end_um[1]),
+                    "dx_um": float(vec_um[0]),
+                    "dy_um": float(vec_um[1]),
+                    "dt_s": float(dt_sec),
+                    "distance_um": float(dist_um),
+                    "speed_um_per_s": float(speed),
+                    "angle_deg": float(angle_deg),
+                    "n_first_frame_rois": int(n_first),
+                    "n_last_frame_rois": int(n_last),
+                }
+            )
 
         t0 = edges[b]
         t1 = edges[b + 1]
@@ -312,6 +447,77 @@ def coactivation_order_heatmaps(
                      pix_to_um=data['pix_to_um'], cmap=CYAN_TO_RED, outpath=out)
 
     print(f"[CoAct] Saved {keep_bins.size} co-activation order maps.")
+    # ---- write propagation CSV ----
+    if len(prop_rows) > 0:
+        import csv as _csv
+        with open(prop_csv, "w", newline="") as f:
+            w = _csv.DictWriter(f, fieldnames=list(prop_rows[0].keys()))
+            w.writeheader()
+            w.writerows(prop_rows)
+        print(f"[CoAct] Saved propagation CSV → {prop_csv}")
+    else:
+        print("[CoAct] No propagation vectors computed (no valid bins/ROIs).")
+
+
+
+    # ---- collect relative lags per ROI ----
+    roi_rel_lags = [[] for _ in range(A.shape[0])]  # filtered ROI indexing
+
+    for b in keep_bins:
+        sel = A[:, b] & ~np.isnan(first_time[:, b])
+        if not np.any(sel):
+            continue
+        earliest = float(np.min(first_time[sel, b]))
+        for i in np.where(sel)[0]:
+            roi_rel_lags[i].append(float(first_time[i, b]) - earliest)
+
+    # Keep only ROIs that have at least a few events
+    min_events = 5
+    valid = [(i, np.asarray(lags, float)) for i, lags in enumerate(roi_rel_lags) if len(lags) >= min_events]
+    if len(valid) == 0:
+        print("[CoAct] No ROIs have enough events for violin plot.")
+    else:
+        # Sort by median lag (initiators left)
+        valid.sort(key=lambda t: np.median(t[1]))
+
+        # Optional: limit number of ROIs shown (otherwise x-axis becomes unreadable)
+        top_n = 60  # adjust; 40–80 is usually sane
+        valid = valid[:top_n]
+
+        roi_idx = [i for i, _ in valid]
+        data = [lags for _, lags in valid]
+        medians = np.array([np.median(l) for l in data])
+        n_events = np.array([len(l) for l in data])
+
+        # Labels = original ROI indices (so you can map back)
+        labels = [str(int(idx_keep[i])) for i in roi_idx]
+
+        # ---- plot ----
+        plt.figure(figsize=(max(12, 0.22 * len(data)), 6))
+
+        parts = plt.violinplot(
+            data,
+            showmeans=False,
+            showmedians=True,
+            showextrema=False,
+            widths=0.9,
+        )
+
+        # Overlay median points (helps readability)
+        x = np.arange(1, len(data) + 1)
+        plt.scatter(x, medians, s=10)
+
+        plt.xticks(x, labels, rotation=90)
+        plt.ylabel("Relative lag (s) = ROI first onset - earliest onset in bin")
+        plt.xlabel("ROI (original index), sorted by median relative lag")
+        plt.title(f"Per-ROI relative lag distributions (top {len(data)} ROIs, min_events={min_events})")
+        plt.ylim(0, float(bin_sec))  # relative lag should live in [0, bin_sec] typically
+        plt.tight_layout()
+
+        out_png = os.path.join(config.root, f"{config.prefix}coactivation_roi_relative_lag_violin.png")
+        plt.savefig(out_png, dpi=200)
+        plt.close()
+        print(f"[CoAct] Saved violin plot → {out_png}")
 
 
 # ---- Cell masking ----
@@ -437,6 +643,104 @@ def soft_cell_mask(scores, score_threshold=0.5, top_k_pct=None):
     return mask
 
 # ---- Helpers ----
+def _roi_centroids_xy(stat_list):
+    """Return centroid (x, y) in pixel coordinates for each ROI in stat_list."""
+    xs = np.array([float(np.median(s["xpix"])) for s in stat_list], dtype=float)
+    ys = np.array([float(np.median(s["ypix"])) for s in stat_list], dtype=float)
+    return xs, ys
+
+def _compute_propagation_vector_for_bin(first_time_col, active_mask_col, stat_filtered, fps):
+    """
+    Compute a single propagation vector for a bin:
+      - start = mean centroid of ROIs active on the earliest onset frame
+      - end   = mean centroid of ROIs active on the latest onset frame
+      - velocity = distance(start->end) / (t_last - t_first)
+
+    Returns:
+      start_xy_px (2,), end_xy_px (2,), dt_sec, n_first, n_last
+    """
+    sel = active_mask_col & ~np.isnan(first_time_col)
+    if not np.any(sel):
+        return None
+
+    times = first_time_col[sel].astype(float)
+    roi_idx = np.where(sel)[0]
+
+    t_first = float(np.min(times))
+    t_last  = float(np.max(times))
+
+    # define "same frame" tolerance as ±0.5 frame
+    tol = 0.5 / float(fps)
+
+    first_rois = roi_idx[np.abs(first_time_col[roi_idx] - t_first) <= tol]
+    last_rois  = roi_idx[np.abs(first_time_col[roi_idx] - t_last)  <= tol]
+
+    xs, ys = _roi_centroids_xy(stat_filtered)
+
+    # Fallbacks (in case tolerance yields none, though it usually won’t)
+    if first_rois.size == 0:
+        first_rois = np.array([roi_idx[np.argmin(first_time_col[roi_idx])]], dtype=int)
+    if last_rois.size == 0:
+        last_rois = np.array([roi_idx[np.argmax(first_time_col[roi_idx])]], dtype=int)
+
+    start = np.array([xs[first_rois].mean(), ys[first_rois].mean()], dtype=float)
+    end   = np.array([xs[last_rois].mean(),  ys[last_rois].mean()],  dtype=float)
+
+    return start, end, (t_last - t_first), int(first_rois.size), int(last_rois.size)
+
+def _show_spatial_with_arrow_um(
+    img,
+    title,
+    fov_um_x,
+    fov_um_y,
+    arrow_start_um,
+    arrow_vec_um,
+    stat_filtered,
+    outpath,
+    cmap=CYAN_TO_RED,
+):
+    """
+    Save spatial image with an arrow overlay in µm coordinates.
+    """
+    extent = [0, float(fov_um_x), 0, float(fov_um_y)]
+
+    plt.figure(figsize=(8, 7))
+    im = plt.imshow(img, origin="lower", cmap=cmap, extent=extent, aspect="equal")
+
+    # ROI centroid overlay in µm
+    xs_px, ys_px = _roi_centroids_xy(stat_filtered)
+    # convert px -> µm using fov / dims inferred from image shape
+    Ly, Lx = img.shape[0], img.shape[1]
+    um_per_px_x = float(fov_um_x) / float(Lx)
+    um_per_px_y = float(fov_um_y) / float(Ly)
+    xs_um = xs_px * um_per_px_x
+    ys_um = ys_px * um_per_px_y
+    plt.scatter(xs_um, ys_um, s=4, c="white", alpha=0.35, linewidths=0)
+
+    # Arrow
+    sx, sy = float(arrow_start_um[0]), float(arrow_start_um[1])
+    vx, vy = float(arrow_vec_um[0]), float(arrow_vec_um[1])
+
+    # Draw arrow only if non-trivial
+    if np.isfinite(vx) and np.isfinite(vy) and (abs(vx) + abs(vy)) > 1e-6:
+        plt.arrow(
+            sx, sy, vx, vy,
+            length_includes_head=True,
+            head_width=0.03 * max(fov_um_x, fov_um_y),
+            head_length=0.04 * max(fov_um_x, fov_um_y),
+            linewidth=2.0,
+            color="white",
+        )
+
+    plt.colorbar(im, label=title)
+    plt.title(title)
+    plt.xlabel("X (µm)")
+    plt.ylabel("Y (µm)")
+    plt.tight_layout()
+    plt.savefig(outpath, dpi=200)
+    plt.close()
+    print("Saved", outpath)
+
 def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath=None, ):
     """
     Display/save a spatial scalar map with optional µm axes and ROI centroid overlay.
@@ -687,14 +991,14 @@ if __name__ == "__main__":
     weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
     sd_mu = [4.079, 11.24, 41.178]
     sd_sd = [1.146, 4.214, 37.065]
-    thres = 0.68
+    thres = 0.15
     bias = float(
         weights[0]
         - (weights[1] * sd_mu[0] / sd_sd[0])
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    root = r'F:\data\2p_shifted\Hip\2024-06-03_00009'
+    root = r'F:\data\2p_shifted\Cx\2024-07-01_00018'
     run(root)
     fps = utils.get_fps_from_notes(root)
     coactivation_order_heatmaps(
