@@ -985,8 +985,131 @@ def run(file_name):
         score_threshold=thres,  # classify as cell if P>=0.5
         top_k_pct=None  # or set e.g. 25 for top-25% only
     )
+def plot_leadlag_split_spatial_from_csv(
+    folder_name: str,
+    csv_path: str = None,
+    prefix: str = "r0p7_",
+    summary: str = "median",     # "median" or "mean"
+    min_events: int = 5,
+    percentile: float = 50.0
+):
+    """
+    Read a coactivation CSV (assumed to have columns: roi_index_original, relative_lag_s),
+    compute per-ROI summary lag, split by percentile (default 50th), and plot spatial map:
+      early = blue, late = red.
+
+    Saves a PNG into suite2p/plane0/ under a coact_leadlag folder.
+    """
+    import numpy as np
+    import os
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import ListedColormap
+
+    # Load suite2p metadata (stat, Ly/Lx, pix_to_um) using existing config/loader
+    config = SpatialHeatmapConfig(folder_name, metric="event_rate", prefix=prefix)
+    data = _load_suite2p_data(config)
+    stat = data["stat"]
+    Ly, Lx = data["Ly"], data["Lx"]
+
+    # CSV path default
+    if csv_path is None:
+        csv_path = os.path.join(config.root, f"{prefix}coactivation_summary.csv")
+
+    if not os.path.exists(csv_path):
+        raise FileNotFoundError(f"CSV not found: {csv_path}")
+
+    # Read CSV (no pandas required)
+    # Expect at least: roi_index_original, relative_lag_s
+    roi_to_lags = {}
+    with open(csv_path, "r", newline="") as f:
+        header = f.readline().strip().split(",")
+        col = {name: i for i, name in enumerate(header)}
+
+        if "roi_index_original" not in col or "relative_lag_s" not in col:
+            raise ValueError(
+                "CSV must contain columns: roi_index_original, relative_lag_s "
+                f"(found: {list(col.keys())})"
+            )
+
+        for line in f:
+            parts = line.strip().split(",")
+            if len(parts) <= max(col["roi_index_original"], col["relative_lag_s"]):
+                continue
+            try:
+                roi = int(float(parts[col["roi_index_original"]]))
+                lag = float(parts[col["relative_lag_s"]])
+            except ValueError:
+                continue
+            if np.isnan(lag):
+                continue
+            roi_to_lags.setdefault(roi, []).append(lag)
+
+    # Compute per-ROI summary lag
+    roi_ids = []
+    roi_summ = []
+    roi_n = []
+    for roi, lags in roi_to_lags.items():
+        if len(lags) < int(min_events):
+            continue
+        lags = np.asarray(lags, dtype=float)
+        if summary == "mean":
+            s = float(np.mean(lags))
+        else:
+            s = float(np.median(lags))
+        roi_ids.append(int(roi))
+        roi_summ.append(s)
+        roi_n.append(int(len(lags)))
+
+    if len(roi_ids) == 0:
+        print("[LeadLag] No ROIs met min_events; nothing to plot.")
+        return
+
+    roi_summ = np.asarray(roi_summ, dtype=float)
+    split = float(np.percentile(roi_summ, percentile))
+
+    # Build per-ROI class array over ALL ROIs (length N_all)
+    # class: 0=early (blue), 1=late (red), NaN = no data/background
+    N_all = data["N"]
+    classes = np.full(N_all, np.nan, dtype=float)
+
+    for roi, s in zip(roi_ids, roi_summ):
+        if 0 <= roi < N_all:
+            classes[roi] = 0.0 if s <= split else 1.0
+
+    # Paint to spatial image
+    img = utils.paint_spatial(classes, stat, Ly, Lx)
+    coverage = utils.paint_spatial(np.ones(len(stat), dtype=float), stat, Ly, Lx)
+    img[coverage == 0] = np.nan
+
+    # Colormap: 0->blue, 1->red
+    cmap = ListedColormap(["blue", "red"])
+    cmap.set_bad(color=(0.15, 0.15, 0.15, 1.0))  # background (NaN)
+
+    # Save
+    out_dir = os.path.join(config.root, f"{prefix}coact_leadlag")
+    os.makedirs(out_dir, exist_ok=True)
+
+    out_png = os.path.join(
+        out_dir,
+        f"{prefix}coact_leadlag_{summary}_p{int(percentile)}_min{int(min_events)}.png"
+    )
+
+    title = (
+        f"Lead/Lag split by {summary} relative lag (p{percentile:.0f}={split:.3f}s)\n"
+        f"blue=early (≤ split), red=late (> split), min_events={min_events}"
+    )
+
+    show_spatial(img, title, Lx, Ly, stat, pix_to_um=data["pix_to_um"], cmap=cmap, outpath=out_png)
 
 if __name__ == "__main__":
+    plot_leadlag_split_spatial_from_csv(
+        folder_name=r"F:\data\2p_shifted\Cx\2024-07-01_00018",
+        prefix="r0p7_",
+        summary="mean",
+        min_events=5,
+        percentile=25.0
+    )
+"""
     # Co-activation with your current scoring params
     weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
     sd_mu = [4.079, 11.24, 41.178]
@@ -1023,3 +1146,4 @@ if __name__ == "__main__":
     #    utils.run_on_folders(r'F:\data\2p_shifted',run)
     #)
 #
+"""
