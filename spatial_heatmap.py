@@ -759,7 +759,7 @@ def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath
     if pix_to_um is not None:
         xs = np.array(xs) * pix_to_um
         ys = np.array(ys) * pix_to_um
-    plt.scatter(xs, ys, s=4, c='white', alpha=0.35, linewidths=0)
+    #plt.scatter(xs, ys, s=4, c='white', alpha=0.35, linewidths=0)
     plt.colorbar(im, label=title)
     plt.title(title)
     plt.xlabel(xlabel)
@@ -1102,14 +1102,6 @@ def plot_leadlag_split_spatial_from_csv(
     show_spatial(img, title, Lx, Ly, stat, pix_to_um=data["pix_to_um"], cmap=cmap, outpath=out_png)
 
 if __name__ == "__main__":
-    plot_leadlag_split_spatial_from_csv(
-        folder_name=r"F:\data\2p_shifted\Cx\2024-07-01_00018",
-        prefix="r0p7_",
-        summary="mean",
-        min_events=5,
-        percentile=25.0
-    )
-"""
     # Co-activation with your current scoring params
     weights = [2.3662, 1.0454, 1.1252, 0.2987]  # (bias, er, pz, area)
     sd_mu = [4.079, 11.24, 41.178]
@@ -1121,8 +1113,8 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    root = r'F:\data\2p_shifted\Cx\2024-07-01_00018'
-    run(root)
+    root = r'F:\data\2p_shifted\Hip\2024-06-04_00001'
+    #run(root)
     fps = utils.get_fps_from_notes(root)
     coactivation_order_heatmaps(
         folder_name=root,
@@ -1141,9 +1133,16 @@ if __name__ == "__main__":
         cmap='viridis'  # any matplotlib cmap
     )
 
+    plot_leadlag_split_spatial_from_csv(
+        folder_name=root,
+        prefix="r0p7_",
+        summary="mean",
+        min_events=5,
+        percentile=25.0
+    )
+
     #utils.log(
     #    "cell_detection.log",
     #    utils.run_on_folders(r'F:\data\2p_shifted',run)
     #)
 #
-"""
