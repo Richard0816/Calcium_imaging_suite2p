@@ -106,7 +106,7 @@ def plot_all(
     """
     idx = utils.build_time_mask(time, t_max)
     fig = plt.figure(figsize=(12, 9))
-    testing.plot_fft(dff_trace[idx],30)
+    #testing.plot_fft(dff_trace[idx],30)
     # Panel 1: Raw + neuropil fluorescence
     ax1 = fig.add_subplot(4, 1, 1)
     ax1.plot(time[idx], raw_trace[idx], label="F raw")
@@ -220,13 +220,15 @@ def parse_args() -> Config:
 
 # todo fast ROI loop and different batch z_entre/z_exit
 if __name__ == "__main__":
-    cfg = Config(
-    root=Path(r'F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0'),
-    roi=52,
-    fps=30.0,
-    z_enter=3.5,
-    z_exit=2.0,
-    t_max=None,
-    save_path=None
-    )
-    run(cfg)
+    root = Path(r"F:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0")
+    for i in range(100):
+        cfg = Config(
+        root=root,
+        roi=i,
+        fps=utils.get_fps_from_notes(root),
+        z_enter=3.5,
+        z_exit=2.0,
+        t_max=None,
+        save_path=None
+        )
+        run(cfg)
