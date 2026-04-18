@@ -196,16 +196,16 @@ if __name__ == "__main__":
     cfg = Figure6Config(
         recordings=[
             Figure6Recording(
-                root=Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
-                label="Recording 1"
+                root=Path(r"F:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0"),
+                label="Patient 42 Hip"
             ),
             Figure6Recording(
                 root=Path(r"F:\data\2p_shifted\Hip\2024-07-01_00001\suite2p\plane0"),
-                label="Recording 2"
+                label="Patient 37 Hip"
             ),
             Figure6Recording(
                 root=Path(r"F:\data\2p_shifted\Cx\2024-07-02_00012\suite2p\plane0"),
-                label="Recording 3"
+                label="Patient 37 Cx"
             ),
         ],
         prefix="r0p7_",

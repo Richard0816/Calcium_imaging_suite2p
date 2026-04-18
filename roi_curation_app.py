@@ -111,8 +111,9 @@ def load_recording(root: Path):
 
 def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float]]:
     """
-    Return list of (rec_idx, roi_idx, score) sorted by score descending,
-    skipping any (recording_id, roi_idx) already labeled in `done`.
+    Return list of (rec_idx, roi_idx, score) grouped by recording (in the order
+    given in ROOTS), and within each recording sorted by score descending.
+    Skips any (recording_id, roi_idx) already labeled in `done`.
     """
     entries = []
     for ri, root in enumerate(roots):
@@ -121,12 +122,15 @@ def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float
         if not scores_path.exists():
             scores_path = root / "suite2p" / "plane0" / "roi_scores.npy"
         scores = np.load(scores_path, allow_pickle=False)
+
+        per_rec = []
         for roi_idx, s in enumerate(scores):
             if (rec_id, int(roi_idx)) in done:
                 continue
-            entries.append((ri, int(roi_idx), float(s)))
-    # sort descending by score
-    entries.sort(key=lambda x: x[2], reverse=True)
+            per_rec.append((ri, int(roi_idx), float(s)))
+        # sort this recording's ROIs by score descending
+        per_rec.sort(key=lambda x: x[2], reverse=True)
+        entries.extend(per_rec)
     return entries
 
 
@@ -290,10 +294,21 @@ class CurationApp:
         for ax in self.axes:
             ax.clear()
 
-        # -- Panel 0: mean image (no overlay) --
+        # -- Panel 0: mean image (locator box only, no pixel overlay) --
         ax0 = self.axes[0]
         vmin, vmax = np.percentile(mean_img, [1, 99])
         ax0.imshow(mean_img, cmap="gray", vmin=vmin, vmax=vmax)
+        x0, x1 = int(xpix.min()), int(xpix.max())
+        y0, y1 = int(ypix.min()), int(ypix.max())
+        pad = 8
+        ax0.add_patch(
+            plt.Rectangle(
+                (x0 - pad, y0 - pad),
+                (x1 - x0) + 2 * pad,
+                (y1 - y0) + 2 * pad,
+                fill=False, edgecolor="yellow", linewidth=1.2,
+            )
+        )
         ax0.set_title(f"Mean image  ({rec_id})")
         ax0.set_xticks([]); ax0.set_yticks([])
 
@@ -302,9 +317,6 @@ class CurationApp:
         vmin_m, vmax_m = np.percentile(max_img, [1, 99])
         ax1.imshow(max_img, cmap="gray", vmin=vmin_m, vmax=vmax_m)
         ax1.scatter(xpix, ypix, s=2, c="red", alpha=0.6, edgecolors="none")
-        x0, x1 = int(xpix.min()), int(xpix.max())
-        y0, y1 = int(ypix.min()), int(ypix.max())
-        pad = 8
         ax1.add_patch(
             plt.Rectangle(
                 (x0 - pad, y0 - pad),

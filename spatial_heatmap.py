@@ -687,7 +687,41 @@ def _compute_propagation_vector_for_bin(first_time_col, active_mask_col, stat_fi
     end   = np.array([xs[last_rois].mean(),  ys[last_rois].mean()],  dtype=float)
 
     return start, end, (t_last - t_first), int(first_rois.size), int(last_rois.size)
+def add_scale_bar_um(
+    ax,
+    fov_um_x,
+    fov_um_y,
+    bar_um=200.0,
+    pad_frac=0.05,
+    lw=3.5,
+    color="white",
+    fontsize=10,
+):
+    """
+    Draw a horizontal scale bar in µm coordinates.
+    Assumes the image extent is [0, fov_um_x, 0, fov_um_y].
+    """
+    x_start = fov_um_x * (1.0 - pad_frac) - bar_um
+    x_end = x_start + bar_um
+    y_bar = fov_um_y * pad_frac
+    y_text = y_bar + fov_um_y * 0.03
 
+    ax.plot(
+        [x_start, x_end],
+        [y_bar, y_bar],
+        color=color,
+        lw=lw,
+        solid_capstyle="butt",
+    )
+    ax.text(
+        (x_start + x_end) / 2.0,
+        y_text,
+        f"{int(bar_um)} µm",
+        color=color,
+        fontsize=fontsize,
+        ha="center",
+        va="bottom",
+    )
 def _show_spatial_with_arrow_um(
     img,
     title,
@@ -704,26 +738,24 @@ def _show_spatial_with_arrow_um(
     """
     extent = [0, float(fov_um_x), 0, float(fov_um_y)]
 
-    plt.figure(figsize=(8, 7))
-    im = plt.imshow(img, origin="lower", cmap=cmap, extent=extent, aspect="equal")
+    fig, ax = plt.subplots(figsize=(8, 7))
+    im = ax.imshow(img, origin="lower", cmap=cmap, extent=extent, aspect="equal")
 
     # ROI centroid overlay in µm
     xs_px, ys_px = _roi_centroids_xy(stat_filtered)
-    # convert px -> µm using fov / dims inferred from image shape
     Ly, Lx = img.shape[0], img.shape[1]
     um_per_px_x = float(fov_um_x) / float(Lx)
     um_per_px_y = float(fov_um_y) / float(Ly)
     xs_um = xs_px * um_per_px_x
     ys_um = ys_px * um_per_px_y
-    plt.scatter(xs_um, ys_um, s=4, c="white", alpha=0.35, linewidths=0)
+    ax.scatter(xs_um, ys_um, s=4, c="white", alpha=0.35, linewidths=0)
 
     # Arrow
     sx, sy = float(arrow_start_um[0]), float(arrow_start_um[1])
     vx, vy = float(arrow_vec_um[0]), float(arrow_vec_um[1])
 
-    # Draw arrow only if non-trivial
     if np.isfinite(vx) and np.isfinite(vy) and (abs(vx) + abs(vy)) > 1e-6:
-        plt.arrow(
+        ax.arrow(
             sx, sy, vx, vy,
             length_includes_head=True,
             head_width=0.03 * max(fov_um_x, fov_um_y),
@@ -732,15 +764,26 @@ def _show_spatial_with_arrow_um(
             color="white",
         )
 
-    plt.colorbar(im, label=title)
-    plt.title(title)
-    plt.xlabel("X (µm)")
-    plt.ylabel("Y (µm)")
+    # Add 200 µm scale bar
+    add_scale_bar_um(
+        ax,
+        fov_um_x=fov_um_x,
+        fov_um_y=fov_um_y,
+        bar_um=200.0,
+        pad_frac=0.05,
+        lw=4.0,
+        color="white",
+        fontsize=10,
+    )
+
+    plt.colorbar(im, ax=ax, label=title)
+    ax.set_title(title)
+    ax.set_xlabel("X (µm)")
+    ax.set_ylabel("Y (µm)")
     plt.tight_layout()
     plt.savefig(outpath, dpi=200)
-    plt.close()
+    plt.close(fig)
     print("Saved", outpath)
-
 def show_spatial(img, title, Lx, Ly, stat, pix_to_um=None, cmap='magma', outpath=None, ):
     """
     Display/save a spatial scalar map with optional µm axes and ROI centroid overlay.
@@ -1113,7 +1156,7 @@ if __name__ == "__main__":
         - (weights[2] * sd_mu[1] / sd_sd[1])
         - (weights[3] * sd_mu[2] / sd_sd[2])
     )
-    root = r'F:\data\2p_shifted\Hip\2024-06-04_00001'
+    root = r'F:\data\2p_shifted\Cx\2024-07-01_00018'
     #run(root)
     fps = utils.get_fps_from_notes(root)
     coactivation_order_heatmaps(
@@ -1133,13 +1176,13 @@ if __name__ == "__main__":
         cmap='viridis'  # any matplotlib cmap
     )
 
-    plot_leadlag_split_spatial_from_csv(
-        folder_name=root,
-        prefix="r0p7_",
-        summary="mean",
-        min_events=5,
-        percentile=25.0
-    )
+    #plot_leadlag_split_spatial_from_csv(
+    #    folder_name=root,
+    #    prefix="r0p7_",
+    #    summary="mean",
+    #    min_events=5,
+    #    percentile=25.0
+    #)
 
     #utils.log(
     #    "cell_detection.log",

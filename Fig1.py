@@ -2,12 +2,12 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Tuple, List
-
+import utils
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
-
+from Fig2 import plot_top_full_trace, ExampleROI
 
 @dataclass(frozen=True)
 class Figure1Config:
@@ -39,7 +39,73 @@ def load_mean_image(root: Path) -> np.ndarray:
 
     raise FileNotFoundError("Could not find meanImg.npy or meanImg inside ops.npy")
 
+def load_ops(root: Path) -> dict:
+    ops_path = root / "ops.npy"
+    if not ops_path.exists():
+        raise FileNotFoundError(f"Missing ops.npy at {ops_path}")
+    return np.load(ops_path, allow_pickle=True).item()
 
+
+def get_pix_to_um_from_zoom(root: Path, mean_img: np.ndarray) -> float:
+    """
+    Match the zoom -> FOV conversion used in spatial_heatmap.py.
+    Returns an isotropic µm per pixel value for plotting a scale bar.
+    """
+    folder_for_notes = str(root.parent.parent.parent)  # recording folder above suite2p/plane0
+    zoom = utils.get_zoom_from_notes(folder_for_notes)
+    zoom = float(zoom) if zoom else 1.0
+
+    fov_um_x = 3080.90169 / zoom
+    # spatial_heatmap.py also defines fov_um_y, but for a horizontal scale bar
+    # we only need the x scaling
+    Lx = mean_img.shape[1]
+
+    return float(fov_um_x) / float(Lx)
+
+
+def add_scale_bar(
+    ax,
+    pix_to_um: float,
+    bar_um: float = 100.0,
+    pad_frac: float = 0.05,
+    lw: float = 4.0,
+    color: str = "white",
+    fontsize: int = 10,
+):
+    """
+    Draw a horizontal scale bar in the lower right of an image axis.
+    """
+    x0, x1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
+
+    width = abs(x1 - x0)
+    height = abs(y1 - y0)
+
+    bar_px = bar_um / pix_to_um
+
+    x_start = min(x0, x1) + width * (1 - pad_frac) - bar_px
+    x_end = x_start + bar_px
+
+    if y1 < y0:
+        # image coordinates after imshow usually have inverted y
+        y_bar = y0 - height * pad_frac
+        y_text = y_bar - height * 0.03
+        y_bar = y_bar + 10
+        print(y_bar, y_text)
+    else:
+        y_bar = y0 + height * pad_frac
+        y_text = y_bar + height * 0.03
+
+    ax.plot([x_start, x_end], [y_bar, y_bar], color=color, lw=lw, solid_capstyle="butt")
+    ax.text(
+        (x_start + x_end) / 2,
+        y_text,
+        f"{int(bar_um)} µm",
+        color=color,
+        fontsize=fontsize,
+        ha="center",
+        va="top" if y1 < y0 else "bottom",
+    )
 def load_stat(root: Path) -> List[dict]:
     stat_path = root / "stat.npy"
     if not stat_path.exists():
@@ -126,8 +192,13 @@ def add_roi_centroid_labels(ax, stat: List[dict], mask: Optional[np.ndarray] = N
 
 def make_figure_1(cfg: Figure1Config):
     mean_img = load_mean_image(cfg.root)
+    ops = load_ops(cfg.root)
     stat = load_stat(cfg.root)
     keep_mask = load_filtered_mask(cfg.root, cfg.filtered_mask_path)
+
+    pix_to_um = ops.get("pix_to_um", None)
+    if pix_to_um is None:
+        pix_to_um = get_pix_to_um_from_zoom(cfg.root, mean_img)
 
     if len(keep_mask) != len(stat):
         raise ValueError(f"Filtered mask length {len(keep_mask)} does not match number of ROIs {len(stat)}")
@@ -136,11 +207,18 @@ def make_figure_1(cfg: Figure1Config):
     n_keep = int(np.sum(keep_mask))
     n_removed = n_all - n_keep
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6), constrained_layout=True)
+    fig, axes = plt.subplots(
+        1,
+        3,
+        figsize=(18, 6),
+        gridspec_kw={"width_ratios": [15, 15, 70]},
+        constrained_layout=True
+    )
 
     # Panel A
     ax = axes[0]
     ax.imshow(mean_img, cmap="gray")
+    add_scale_bar(ax, pix_to_um=pix_to_um, bar_um=200, pad_frac=0.1, lw=1.5, color="white", fontsize=8)
     ax.set_title("A. Raw mean image")
     ax.set_xticks([])
     ax.set_yticks([])
@@ -166,6 +244,25 @@ def make_figure_1(cfg: Figure1Config):
 
     # Panel C
     ax = axes[2]
+
+    example = ExampleROI(
+            root=Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
+            roi=21,
+            nth_spike=0,
+            crop_start_s=0,
+            crop_end_s=0,
+        )
+
+    plot_top_full_trace(
+        ax=ax,
+        example=example,
+        fps=15.0,
+        memmap_prefix="r0p7_",
+    )
+
+    ax.set_title("C. Example fluorescence trace")
+    """# Panel C
+    ax = axes[2]
     ax.imshow(mean_img, cmap="gray")
     patches_keep = build_roi_patches(stat, keep_mask)
     pc_keep = PatchCollection(
@@ -181,10 +278,10 @@ def make_figure_1(cfg: Figure1Config):
         add_roi_centroid_labels(ax, stat, mask=keep_mask, color="white")
     ax.set_title(f"C. Filtered ROIs after cell scoring\nkept = {n_keep}, removed = {n_removed}")
     ax.set_xticks([])
-    ax.set_yticks([])
+    ax.set_yticks([])"""
 
-    if cfg.title:
-        fig.suptitle(cfg.title, fontsize=14)
+    #if cfg.title:
+    #    fig.suptitle(cfg.title, fontsize=14)
 
     return fig
 

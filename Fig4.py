@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Polygon
 import utils
 
 
@@ -67,7 +70,7 @@ def compute_event_rate_and_peak_dz(
 
 
 def main():
-    recording_root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018")
+    recording_root = Path(r"F:\data\2p_shifted\Hip\2024-06-04_00010")
     plane0 = recording_root / "suite2p" / "plane0"
 
     score_path = recording_root / "roi_scores.npy"
@@ -119,8 +122,8 @@ def main():
     # -------------------------------------------------
     # Figure
     # -------------------------------------------------
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    axA, axB, axC, axD = axes.ravel()
+    fig, axes = plt.subplots(2, 3, figsize=(16, 10))
+    axA, axB, axC, axD, axE, axF = axes.ravel()
 
     # A. Event rate vs peak derivative z score
     sc1 = axA.scatter(
@@ -175,11 +178,61 @@ def main():
 
     kept = int(np.sum(keep_mask))
     total = len(keep_mask)
-    fig.suptitle(
-        f"Figure 4. Cell scoring and filtering, kept {kept} of {total} ROIs",
-        fontsize=14
-    )
+    #fig.suptitle(
+    #    f"Cell scoring and filtering, kept {kept} of {total} ROIs",
+    #    fontsize=14
+    #)
+    # --------------------------------
+    # Load Suite2p data for ROI panels
+    # --------------------------------
+    plane0 = recording_root / "suite2p" / "plane0"
 
+
+    ops_path = plane0 / "ops.npy"
+
+
+    mean_img = np.load(ops_path, allow_pickle=True).item()["meanImg"]
+    stat = np.load(plane0 / "stat.npy", allow_pickle=True)
+    keep_mask = np.load(plane0 / "r0p7_cell_mask_bool.npy").astype(bool)
+
+    # helper to draw ROI outlines
+    def draw_rois(ax, stat, mask=None, color="deepskyblue", lw=0.35, alpha=0.5):
+        patches = []
+        for i, s in enumerate(stat):
+            if mask is not None and not mask[i]:
+                continue
+
+            ypix = np.asarray(s["ypix"])
+            xpix = np.asarray(s["xpix"])
+
+            if len(xpix) < 3:
+                continue
+
+            pts = np.column_stack([xpix, ypix])
+            patches.append(Polygon(pts, closed=False, fill=False))
+
+        pc = PatchCollection(
+            patches,
+            match_original=False,
+            facecolor="none",
+            edgecolor=color,
+            linewidth=lw,
+            alpha=alpha
+        )
+        ax.add_collection(pc)
+
+    axE.imshow(mean_img, cmap="gray")
+    draw_rois(axE, stat, mask=None, color="deepskyblue", lw=0.35, alpha=0.45)
+
+    axE.set_title("E. All Suite2p ROIs")
+    axE.set_xticks([])
+    axE.set_yticks([])
+    axF.imshow(mean_img, cmap="gray")
+    draw_rois(axF, stat, mask=keep_mask, color="crimson", lw=0.5, alpha=0.75)
+
+    axF.set_title(f"F. Filtered ROIs kept: {kept} of {total} ROIs")
+    axF.set_xticks([])
+    axF.set_yticks([])
     plt.tight_layout()
 
     plt.show()

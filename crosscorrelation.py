@@ -1839,7 +1839,167 @@ def run_clusterpair_zero_lag_shift_surrogate_stats_legacy( # legacy model
 
     print(f"✅ Saved: {out_csv}")
     return rows
+def _p_to_stars(p):
+    if p < 0.001:
+        return "***"
+    if p < 0.01:
+        return "**"
+    if p < 0.05:
+        return "*"
+    return "n.s."
 
+
+def plot_violin_all_lags_with_significance(
+    pairwise_data,
+    out_png,
+    n_perm=10000,
+    seed=0,
+    alpha=0.05,
+    show_ns=False,
+):
+    """
+    Violin plot of best_lag_sec distributions for each cluster pair.
+
+    Stats:
+      For each pair, run a two-sided sign-flip permutation test against 0.
+      Null: mean lag == 0.
+      Then apply BH-FDR across all cluster pairs.
+
+    Annotation:
+      A significance bracket and stars are drawn above each violin.
+      Positive mean lag = first cluster leads second cluster.
+      Negative mean lag = first cluster lags second cluster.
+    """
+    pairs = []
+    lags_list = []
+    stats_rows = []
+
+    for pair, df in pairwise_data.items():
+        if "best_lag_sec" not in df.columns:
+            continue
+
+        lags = df["best_lag_sec"].values
+        lags = np.asarray(lags, dtype=float)
+        lags = lags[np.isfinite(lags)]
+
+        if lags.size == 0:
+            continue
+
+        mean_lag, p_perm = _perm_test_mean_lag_signflip(
+            lags_sec=lags,
+            n_perm=n_perm,
+            seed=seed
+        )
+
+        pairs.append(pair)
+        lags_list.append(lags)
+        stats_rows.append({
+            "pair": pair,
+            "n": int(lags.size),
+            "mean_lag_sec": float(mean_lag),
+            "median_lag_sec": float(np.median(lags)),
+            "p_perm": float(p_perm),
+        })
+
+    if len(lags_list) == 0:
+        print("No lag data found to plot.")
+        return []
+
+    # FDR across cluster pairs
+    pvals = np.array([r["p_perm"] for r in stats_rows], dtype=float)
+    reject, p_fdr = _bh_fdr(pvals, alpha=alpha)
+
+    for r, rej, pf in zip(stats_rows, reject, p_fdr):
+        r["p_fdr"] = float(pf)
+        r["reject_fdr"] = bool(rej)
+        if r["mean_lag_sec"] > 0:
+            r["direction"] = "lead"
+        elif r["mean_lag_sec"] < 0:
+            r["direction"] = "lag"
+        else:
+            r["direction"] = "no shift"
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(1.6 * len(pairs), 5))
+
+    parts = ax.violinplot(
+        lags_list,
+        showmedians=True,
+        showextrema=False
+    )
+
+    ax.axhline(0, color="black", linestyle="--", linewidth=1)
+
+    ax.set_xticks(np.arange(1, len(pairs) + 1))
+    ax.set_xticklabels(pairs, rotation=45, ha="right")
+    ax.set_ylabel("Lag (s)")
+    ax.set_title("Pairwise cross-correlation lag distributions")
+
+    # Determine y positions for significance brackets
+    all_lags = np.concatenate(lags_list)
+    y_min = -2#float(np.nanmin(all_lags))
+    y_max = 2#float(np.nanmax(all_lags))
+    y_range = y_max - y_min
+    if y_range == 0:
+        y_range = 1.0
+
+    ax.set_ylim(y_min - 0.08 * y_range, y_max + 0.20 * y_range)
+
+    bracket_y = y_max + 0.06 * y_range
+    text_y = y_max + 0.10 * y_range
+    bracket_h = 0.025 * y_range
+    half_width = 0.22
+
+    for i, row in enumerate(stats_rows, start=1):
+        star_text = _p_to_stars(row["p_fdr"])
+
+        if (star_text == "n.s.") and (not show_ns):
+            continue
+
+        # small bracket above each violin
+        x1 = i - half_width
+        x2 = i + half_width
+        y = bracket_y
+
+        ax.plot([x1, x1, x2, x2],
+                [y, y + bracket_h, y + bracket_h, y],
+                linewidth=1.2,
+                color="black")
+
+        # stars
+        ax.text(
+            i,
+            text_y,
+            star_text,
+            ha="center",
+            va="bottom",
+            fontsize=10
+        )
+
+        # optional direction label under stars
+        dir_label = "lead" if row["mean_lag_sec"] > 0 else "lag" if row["mean_lag_sec"] < 0 else "0"
+        ax.text(
+            i,
+            y + bracket_h + 0.01 * y_range,
+            dir_label,
+            ha="center",
+            va="bottom",
+            fontsize=8
+        )
+
+    fig.tight_layout()
+    fig.savefig(out_png, dpi=200)
+    plt.close(fig)
+
+    # Save stats table beside the figure
+    stats_df = pd.DataFrame(stats_rows)
+    stats_csv = Path(out_png).with_name(Path(out_png).stem + "_stats.csv")
+    stats_df.to_csv(stats_csv, index=False)
+
+    print(f"Saved violin plot: {out_png}")
+    print(f"Saved stats table: {stats_csv}")
+
+    return stats_rows
 def plot_violin_all_lags(pairwise_data, out_png):
     pairs = list(pairwise_data.keys())
     lags = [pairwise_data[p]["best_lag_sec"].values for p in pairs]
@@ -1981,10 +2141,20 @@ def run_or_load_clusterpair_lag_stats(
 
 
 if __name__ == "__main__":
-    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    root = Path(r"F:\data\2p_shifted\Hip\2024-06-04_00009\suite2p\plane0")
     prefix = "r0p7_filtered_"
     fps = utils.get_fps_from_notes(root)
-#
+    xcorr_root = Path(root / f"{prefix}cluster_results" / "cross_correlation_gpu")
+    pairwise_data = load_pairwise_lags(xcorr_root)
+
+    plot_violin_all_lags_with_significance(
+        pairwise_data,
+        out_png=xcorr_root / "panelA_violin_all_lags_significance.png",
+        n_perm=10000,
+        seed=0,
+        alpha=0.05,
+        show_ns=False,
+    )
     #xcorr_root = Path(
     #    root / f"{prefix}cluster_results" / "cross_correlation_gpu"
     #)
@@ -2050,16 +2220,16 @@ if __name__ == "__main__":
     #    # max_onsets=3,        # only process first 3 synchronous epochs
     #    # min_sep_s=0.3,       # enforce per-ROI event separation
     #)
-    run_crosscorr_per_coactivation_bin_fast(
-        root=Path(r"E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0"),
-        prefix="r0p7_filtered_",
-        fps=fps,
-        cluster_folder="",
-        bin_sec=0.5,
-        frac_required=0.8,
-        use_gpu=True,
-        zero_lag_only=False,
-        top_k_lag=200,
-        max_lag_seconds=2,
-        max_cluster_size=500
-    )
+    #run_crosscorr_per_coactivation_bin_fast(
+    #    root=Path(r"E:\data\2p_shifted\Cx\2024-06-04_00006\suite2p\plane0"),
+    #    prefix="r0p7_filtered_",
+    #    fps=fps,
+    #    cluster_folder="",
+    #    bin_sec=0.5,
+    #    frac_required=0.8,
+    #    use_gpu=True,
+    #    zero_lag_only=False,
+    #    top_k_lag=200,
+    #    max_lag_seconds=2,
+    #    max_cluster_size=500
+    #)

@@ -390,7 +390,7 @@ def _compute_and_save_spatial_map(data, config, t_slice=None, bin_index=None,
 
 # 1) Load data as usual
 config = SpatialHeatmapConfig(
-    folder_name=r'D:\data\2p_shifted\2024-06-03_00007',
+    folder_name=r'F:\data\2p_shifted\Hip\2024-06-03_00007',
     metric='event_rate', fps=30.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3
 )
 data = _load_suite2p_data(config)
@@ -398,7 +398,7 @@ data = _load_suite2p_data(config)
 # 2) Fit on existing labels
 fit = fit_cell_scoring_from_labels(
     data, config,
-    label_source=r'D:\data\2p_shifted\2024-06-03_00007\suite2p\plane0\criteria.csv',   # or provide CSV path e.g. r'D:\labels.csv'
+    label_source=r'F:\data\2p_shifted\Hip\2024-06-03_00007\suite2p\plane0\criteria.csv',   # or provide CSV path e.g. r'D:\labels.csv'
     t_slice=None,             # or a slice to train on a time window
     reg=1e-3, strategy='f1'   # L2 strength, threshold strategy
 )
@@ -414,3 +414,73 @@ _compute_and_save_spatial_map(
     score_threshold=fit['threshold'],   # threshold chosen on training labels
     top_k_pct=None
 )
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, auc, confusion_matrix
+
+# ---- inputs from your existing fit ----
+scores = fit["scores"]
+y_true = fit["y"]
+threshold = fit["threshold"]
+
+# predicted labels
+y_pred = (scores >= threshold).astype(int)
+
+# ---- ROC curve ----
+fpr, tpr, _ = roc_curve(y_true, scores)
+roc_auc = auc(fpr, tpr)
+
+# ---- confusion matrix ----
+cm = confusion_matrix(y_true, y_pred)
+
+# ---- feature distributions ----
+X = build_feature_matrix(data, config)
+
+er = X[:,0]
+pz = X[:,1]
+area = X[:,2]
+
+# ---- figure ----
+fig = plt.figure(figsize=(12,8))
+
+# Panel A: ROC
+ax1 = plt.subplot(2,2,1)
+ax1.plot(fpr, tpr)
+ax1.plot([0,1],[0,1],'--')
+ax1.set_xlabel("False positive rate")
+ax1.set_ylabel("True positive rate")
+ax1.set_title(f"ROC curve (AUC = {roc_auc:.2f})")
+
+# Panel B: confusion matrix
+ax2 = plt.subplot(2,2,2)
+im = ax2.imshow(cm)
+for i in range(2):
+    for j in range(2):
+        ax2.text(j,i,cm[i,j],ha="center",va="center")
+ax2.set_xticks([0,1])
+ax2.set_yticks([0,1])
+ax2.set_xticklabels(["Non-cell","Cell"])
+ax2.set_yticklabels(["Non-cell","Cell"])
+ax2.set_title("Confusion matrix")
+
+# Panel C: event rate distribution
+ax3 = plt.subplot(2,2,3)
+ax3.hist(er[y_true==1], bins=40, alpha=0.6, label="cells")
+ax3.hist(er[y_true==0], bins=40, alpha=0.6, label="non-cells")
+ax3.set_xlabel("Event rate")
+ax3.set_ylabel("Count")
+ax3.set_title("Event rate distribution")
+ax3.legend()
+
+# Panel D: peak derivative distribution
+ax4 = plt.subplot(2,2,4)
+ax4.hist(pz[y_true==1], bins=40, alpha=0.6, label="cells")
+ax4.hist(pz[y_true==0], bins=40, alpha=0.6, label="non-cells")
+ax4.set_xlabel("Peak derivative z")
+ax4.set_ylabel("Count")
+ax4.set_title("Peak derivative distribution")
+ax4.legend()
+
+plt.tight_layout()
+plt.savefig("supplementary_figure_2_classifier_validation.png", dpi=300)
+plt.show()

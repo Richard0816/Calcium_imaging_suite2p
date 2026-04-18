@@ -1,3 +1,5 @@
+
+
 """import torch
 
 if torch.cuda.is_available():
@@ -106,8 +108,77 @@ import matplotlib.pyplot as plt
 
 """
 
-
 import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+import utils
+def add_corner_scalebar(ax, x_len, y_len, x_label="1 s", y_label="0.02 ΔF/F"):
+    """
+    Draws an L-shaped scalebar in bottom-left corner.
+    x_len, y_len are in data units.
+    """
 
-rois = np.load(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy")
-print(len(rois))
+    # get limits
+    x0, x1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
+
+    # anchor in bottom-left
+    x_start = x0 + 0.1 * (x1 - x0)
+    y_start = y0 + 0.5 * (y1 - y0)
+
+    # horizontal bar
+    ax.plot([x_start, x_start + x_len], [y_start, y_start],
+            color="black", lw=2)
+
+    # vertical bar
+    ax.plot([x_start, x_start], [y_start, y_start + y_len],
+            color="black", lw=2)
+
+    # labels
+    ax.text(x_start + x_len / 2, y_start - 0.05 * (y1 - y0),
+            x_label, ha="center", va="top", fontsize=10)
+
+    ax.text(x_start - 0.02 * (x1 - x0), y_start + y_len / 2,
+            y_label, ha="right", va="center", fontsize=10, rotation=90)
+
+def plot_F_and_Fneu(root: Path, roi: int, fps=15.0):
+    # --- Load raw signals ---
+    F, Fneu, T, N, time_major = utils.s2p_load_raw(root)
+
+    # --- Extract trace ---
+    if time_major:
+        f_trace = F[:, roi]
+        fneu_trace = Fneu[:, roi]
+    else:
+        f_trace = F[roi, :]
+        fneu_trace = Fneu[roi, :]
+
+    # --- Time axis ---
+    time = np.arange(len(f_trace)) / fps
+
+    # --- Plot ---
+    plt.figure(figsize=(4, 3))
+    ax = plt.gca()
+
+    ax.plot(time, f_trace, lw=1)
+    ax.plot(time, fneu_trace, lw=1, alpha=0.7)
+
+    # remove all axes
+    ax.axis("off")
+
+    # add scalebar
+    add_corner_scalebar(
+        ax,
+        x_len=60.0,  # 1 second
+        y_len=1000,  # 0.02 ΔF/F (adjust to your data scale)
+        x_label="30 s",
+        y_label="100 FU"
+    )
+
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
+    plot_F_and_Fneu(root, roi=21)

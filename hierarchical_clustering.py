@@ -261,7 +261,24 @@ def main_from_existing_clustering(root: Path,
 
     # --- Run clustering ---
     Z = run_clustering(dff_subset, method=method, metric=metric)
-    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps, color_threshold=0.9)
+    # --- Automatically choose a color_threshold that yields ~4–5 groups ---
+    target_counts = {3}
+    start = 0.90
+    stop = 0.05
+    step = 0.01
+
+    chosen = start
+    chosen_n = count_leaf_color_groups(Z, chosen)
+
+    for ct in np.arange(start, stop - 1e-9, -step):
+        n_groups = count_leaf_color_groups(Z, float(ct))
+        if n_groups in target_counts:
+            chosen = float(ct)
+            chosen_n = n_groups
+            break
+
+    color_threshold = chosen
+    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps, color_threshold=color_threshold)
 
     np.save(save_dir / "manual_combined_rois.npy", combined_rois)
     np.save(save_dir / "manual_order.npy", np.array(order, dtype=int))
@@ -270,7 +287,7 @@ def main_from_existing_clustering(root: Path,
 
     # --- Generate dendrogram colors and spatial map ---
 
-    r = dendrogram(Z, no_plot=True, color_threshold=0.9 * max(Z[:, 2]))
+    r = dendrogram(Z, no_plot=True, color_threshold=color_threshold * max(Z[:, 2]))
     link_colors = r["leaves_color_list"]
 
     plot_spatial_from_labels(root, order, link_colors,
@@ -298,7 +315,7 @@ def main_from_existing_clustering(root: Path,
 
 
 if __name__ == "__main__":
-    root = Path(r'F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0')
+    root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
     fps = utils.get_fps_from_notes(root)
     prefix = 'r0p7_filtered_'
     method = 'ward'
@@ -307,14 +324,16 @@ if __name__ == "__main__":
 
     # Manually selected ROI subsets — these can be in parent or subfolders
     roi_files = [
-        r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy"
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy",
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy",
+        r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy"
     ]
 
     # Optional: specify a target folder name for new clustering outputs
-    cluster_folder = r"C1_recluster"
+    cluster_folder = r"C1C2C3_recluster"
 
     # Run manual re-clustering on these selected ROI sets
-    #main_from_existing_clustering(root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=30.0, prefix=prefix, method=method, metric=metric)
+    main_from_existing_clustering(root=root, roi_files=roi_files, cluster_folder=cluster_folder, fps=fps, prefix=prefix, method=method, metric=metric)
 
-    main(root, fps, prefix, method, metric)
+    #main(root, fps, prefix, method, metric)
 
