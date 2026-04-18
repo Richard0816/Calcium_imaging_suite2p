@@ -40,9 +40,54 @@ import utils  # noqa: E402
 # ---------------------------- CONFIG ----------------------------
 
 ROOTS: List[str] = [
+    r"F:\data\2p_shifted\Hip\2024-06-03_00004",
+    r"F:\data\2p_shifted\Hip\2024-06-03_00007",
+    r"F:\data\2p_shifted\Hip\2024-06-03_00009",
+    r"F:\data\2p_shifted\Hip\2024-06-04_00001",
+    r"F:\data\2p_shifted\Hip\2024-06-04_00002",
+    r"F:\data\2p_shifted\Cx\2024-06-04_00006",
+    r"F:\data\2p_shifted\Hip\2024-06-04_00009",
+    r"F:\data\2p_shifted\Hip\2024-06-04_00010",
+    r"F:\data\2p_shifted\Cx\2024-06-05_00001",
+    r"F:\data\2p_shifted\Cx\2024-06-05_00006",
+    r"F:\data\2p_shifted\Cx\2024-06-05_00007",
+    r"F:\data\2p_shifted\Hip\2024-07-01_00001",
+    r"F:\data\2p_shifted\Hip\2024-07-01_00002",
+    r"F:\data\2p_shifted\Hip\2024-07-01_00005",
+    r"F:\data\2p_shifted\Hip\2024-07-01_00006",
+    r"F:\data\2p_shifted\Hip\2024-07-01_00012",
+    r"F:\data\2p_shifted\Cx\2024-07-01_00016",
+    r"F:\data\2p_shifted\Cx\2024-07-01_00017",
     r"F:\data\2p_shifted\Cx\2024-07-01_00018",
-    # r"F:\data\2p_shifted\Hip\YYYY-MM-DD_NNNNN",
-    # ...add more here
+    r"F:\data\2p_shifted\Cx\2024-07-01_00019",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00001",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00002",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00005",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00006",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00007",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00008",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00012",
+    r"F:\data\2p_shifted\Cx\2024-07-02_00013",
+    r"F:\data\2p_shifted\Cx\2024-08-21_0003",
+    r"F:\data\2p_shifted\Cx\2024-08-22_0001",
+    r"F:\data\2p_shifted\Cx\2024-08-22_0003",
+    r"F:\data\2p_shifted\Cx\2024-08-22_0004",
+    r"F:\data\2p_shifted\Hip\2024-10-30_0003",
+    r"F:\data\2p_shifted\Hip\2024-10-30_0005",
+    r"F:\data\2p_shifted\Cx\2024-10-30_0010",
+    r"F:\data\2p_shifted\Hip\2024-10-30_0012",
+    r"F:\data\2p_shifted\Hip\2024-10-31_0001",
+    r"F:\data\2p_shifted\Hip\2024-10-31_0005",
+    r"F:\data\2p_shifted\Cx\2024-11-04_0003",
+    r"F:\data\2p_shifted\Cx\2024-11-04_0004",
+    r"F:\data\2p_shifted\Hip\2024-11-04_0010",
+    r"F:\data\2p_shifted\Cx\2024-11-05_0001",
+    r"F:\data\2p_shifted\Hip\2024-11-05_0004",
+    r"F:\data\2p_shifted\Cx\2024-11-05_0007",
+    r"F:\data\2p_shifted\Cx\2024-11-18_0003",
+    r"F:\data\2p_shifted\Cx\2024-11-18_0005",
+    r"F:\data\2p_shifted\Cx\2024-11-18_0008",
+    r"F:\data\2p_shifted\Cx\2024-11-20_0001",
 ]
 
 OUTPUT_CSV = Path(r"F:\roi_curation.csv")
@@ -114,14 +159,25 @@ def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float
     Return list of (rec_idx, roi_idx, score) grouped by recording (in the order
     given in ROOTS), and within each recording sorted by score descending.
     Skips any (recording_id, roi_idx) already labeled in `done`.
+    Missing recordings / missing roi_scores.npy are warned and skipped.
     """
     entries = []
     for ri, root in enumerate(roots):
         rec_id = root.name
+        if not root.exists():
+            print(f"[skip] root missing: {root}")
+            continue
         scores_path = root / "roi_scores.npy"
         if not scores_path.exists():
             scores_path = root / "suite2p" / "plane0" / "roi_scores.npy"
-        scores = np.load(scores_path, allow_pickle=False)
+        if not scores_path.exists():
+            print(f"[skip] no roi_scores.npy for {rec_id}")
+            continue
+        try:
+            scores = np.load(scores_path, allow_pickle=False)
+        except Exception as ex:
+            print(f"[skip] failed to load scores for {rec_id}: {ex}")
+            continue
 
         per_rec = []
         for roi_idx, s in enumerate(scores):
@@ -199,14 +255,20 @@ class CurationApp:
         self.done = load_done_set(csv_path)
         self.queue = build_work_queue(roots, self.done)
 
-        self.total_all = sum(
-            len(np.load(
-                (r / "roi_scores.npy") if (r / "roi_scores.npy").exists()
-                else (r / "suite2p" / "plane0" / "roi_scores.npy"),
-                allow_pickle=False,
-            ))
-            for r in roots
-        )
+        def _count(r: Path) -> int:
+            if not r.exists():
+                return 0
+            p = r / "roi_scores.npy"
+            if not p.exists():
+                p = r / "suite2p" / "plane0" / "roi_scores.npy"
+            if not p.exists():
+                return 0
+            try:
+                return len(np.load(p, allow_pickle=False))
+            except Exception:
+                return 0
+
+        self.total_all = sum(_count(r) for r in roots)
 
         if not self.queue:
             print("Nothing to curate. All ROIs already labeled.")
