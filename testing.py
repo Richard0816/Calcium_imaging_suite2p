@@ -108,7 +108,7 @@ import matplotlib.pyplot as plt
 
 """
 
-import numpy as np
+'''import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import utils
@@ -181,4 +181,19 @@ def plot_F_and_Fneu(root: Path, roi: int, fps=15.0):
 
 if __name__ == "__main__":
     root = Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0")
-    plot_F_and_Fneu(root, roi=21)
+    plot_F_and_Fneu(root, roi=21)'''
+
+from adaptive_detection import visualize_audit, AdaptiveConfig
+
+config = AdaptiveConfig(
+    soma_diameter_px=24.0,       # tune to your typical soma size
+    blob_min_contrast=0.1,
+    blob_min_area_px=25,
+    blob_max_area_px=400,
+)
+result = visualize_audit(
+    r'F:\data\2p_shifted\Cx\2024-08-21_00002\suite2p\plane0',
+    config,
+    outpath='audit.png',
+)
+print(f"Detected {result['n_rois']} ROIs, found {result['n_residual_blobs']} missed candidates")
