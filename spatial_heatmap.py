@@ -274,7 +274,7 @@ def coactivation_order_heatmaps(
     cell_mask = soft_cell_mask(scores, score_threshold=score_threshold, top_k_pct=top_k_pct)
     print(f"[CoAct] Using {cell_mask.sum()} / {len(cell_mask)} ROIs after filter.")
 
-    # --- event onsets per ROI (whole recording) ---
+    """# --- event onsets per ROI (whole recording) ---
     onsets = _event_onsets_by_roi(data, config, t_slice=None)
 
     # keep only filtered ROIs
@@ -287,7 +287,21 @@ def coactivation_order_heatmaps(
 
     if keep_bins.size == 0:
         print("[CoAct] No bins met the co-activation threshold.")
-        return
+        return"""
+
+    onsets = _event_onsets_by_roi(data, config, t_slice=None)
+    onsets = [onsets[i] for i in np.where(cell_mask)[0]]
+
+    ev_params = utils.EventDetectionParams(
+        bin_sec=bin_sec, smooth_sigma_bins=2.0,
+        min_prominence=0.007, min_width_bins=2.0, min_distance_bins=3.0,
+    )
+    event_windows_arr, A, first_time, ev_diag = utils.detect_event_windows(
+        onsets_by_roi=onsets, T=data['T'], fps=config.fps,
+        params=ev_params, return_diagnostics=True,
+    )
+    keep_bins = np.arange(event_windows_arr.shape[0])  # every event is "kept"
+    active_counts = A.sum(axis=0)  # still used for titling
 
     Ly, Lx = data['Ly'], data['Lx']
     stat_all = data['stat']
@@ -327,8 +341,11 @@ def coactivation_order_heatmaps(
                 continue
             earliest_time = float(np.min(active_times))
 
-            t0 = float(edges[b])
-            t1 = float(edges[b + 1])
+            """t0 = float(edges[b])
+            t1 = float(edges[b + 1])"""
+
+            t0 = float(event_windows_arr[b, 0])
+            t1 = float(event_windows_arr[b, 1])
 
             # write one row per active ROI
             active_rois = np.where(A[:, b])[0]
@@ -433,8 +450,12 @@ def coactivation_order_heatmaps(
                 }
             )
 
-        t0 = edges[b]
-        t1 = edges[b + 1]
+        """t0 = edges[b]
+        t1 = edges[b + 1]"""
+
+        t0 = event_windows_arr[b, 0]
+        t1 = event_windows_arr[b, 1]
+
         frac = active_counts[b] / A.shape[0]
         title = (f"Activation order in bin {b} ({t0:.2f}–{t1:.2f}s)\n"
                  f"active={active_counts[b]}/{A.shape[0]} ({100 * frac:.1f}%)")
@@ -511,7 +532,8 @@ def coactivation_order_heatmaps(
         plt.ylabel("Relative lag (s) = ROI first onset - earliest onset in bin")
         plt.xlabel("ROI (original index), sorted by median relative lag")
         plt.title(f"Per-ROI relative lag distributions (top {len(data)} ROIs, min_events={min_events})")
-        plt.ylim(0, float(bin_sec))  # relative lag should live in [0, bin_sec] typically
+        #plt.ylim(0, float(bin_sec))  # relative lag should live in [0, bin_sec] typically
+        plt.ylim(0, float(np.max(event_windows_arr[:, 1] - event_windows_arr[:, 0])))
         plt.tight_layout()
 
         out_png = os.path.join(config.root, f"{config.prefix}coactivation_roi_relative_lag_violin.png")
