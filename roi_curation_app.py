@@ -2,9 +2,16 @@
 ROI Manual Curation GUI
 -----------------------
 Displays, for each ROI across a list of recordings:
-    [ mean image with ROI highlighted ] [ ROI footprint ] [ dF/F trace ]
+    [ mean image ] [ max proj + ROI ] [ ROI footprint ] [ dF/F trace ]
 
-ROIs are shown in descending order of roi_scores.npy (pooled across all recordings).
+ROIs are ranked by the trained cell filter's predicted_cell_prob.npy.
+
+Three ordering modes (SORT_MODE):
+    "uncertainty"  - lowest |p - 0.5| first (ambiguous cases first; best for
+                     active learning / finding model disagreements)
+    "pooled"       - highest p across the whole dataset first
+    "per_recording" - finish one recording at a time, highest p first
+
 User presses '1' = cell, '0' = not a cell. Results saved to F:\\roi_curation.csv
 as: recording_ID, ROI_number, user_defined_cell
 
@@ -68,31 +75,40 @@ ROOTS: List[str] = [
     r"F:\data\2p_shifted\Cx\2024-07-02_00008",
     r"F:\data\2p_shifted\Cx\2024-07-02_00012",
     r"F:\data\2p_shifted\Cx\2024-07-02_00013",
-    r"F:\data\2p_shifted\Cx\2024-08-21_0003",
-    r"F:\data\2p_shifted\Cx\2024-08-22_0001",
-    r"F:\data\2p_shifted\Cx\2024-08-22_0003",
-    r"F:\data\2p_shifted\Cx\2024-08-22_0004",
-    r"F:\data\2p_shifted\Hip\2024-10-30_0003",
-    r"F:\data\2p_shifted\Hip\2024-10-30_0005",
-    r"F:\data\2p_shifted\Cx\2024-10-30_0010",
-    r"F:\data\2p_shifted\Hip\2024-10-30_0012",
-    r"F:\data\2p_shifted\Hip\2024-10-31_0001",
-    r"F:\data\2p_shifted\Hip\2024-10-31_0005",
-    r"F:\data\2p_shifted\Cx\2024-11-04_0003",
-    r"F:\data\2p_shifted\Cx\2024-11-04_0004",
-    r"F:\data\2p_shifted\Hip\2024-11-04_0010",
-    r"F:\data\2p_shifted\Cx\2024-11-05_0001",
-    r"F:\data\2p_shifted\Hip\2024-11-05_0004",
-    r"F:\data\2p_shifted\Cx\2024-11-05_0007",
-    r"F:\data\2p_shifted\Cx\2024-11-18_0003",
-    r"F:\data\2p_shifted\Cx\2024-11-18_0005",
-    r"F:\data\2p_shifted\Cx\2024-11-18_0008",
-    r"F:\data\2p_shifted\Cx\2024-11-20_0001",
+    r"F:\data\2p_shifted\Cx\2024-08-21_00003",
+    r"F:\data\2p_shifted\Cx\2024-08-22_00001",
+    r"F:\data\2p_shifted\Cx\2024-08-22_00003",
+    r"F:\data\2p_shifted\Cx\2024-08-22_00004",
+    r"F:\data\2p_shifted\Hip\2024-10-30_00003",
+    r"F:\data\2p_shifted\Hip\2024-10-30_00005",
+    r"F:\data\2p_shifted\Cx\2024-10-30_00010",
+    r"F:\data\2p_shifted\Hip\2024-10-30_00012",
+    r"F:\data\2p_shifted\Hip\2024-10-31_00001",
+    r"F:\data\2p_shifted\Hip\2024-10-31_00005",
+    r"F:\data\2p_shifted\Cx\2024-11-04_00003",
+    r"F:\data\2p_shifted\Cx\2024-11-04_00004",
+    r"F:\data\2p_shifted\Hip\2024-11-04_00010",
+    r"F:\data\2p_shifted\Cx\2024-11-05_00001",
+    r"F:\data\2p_shifted\Hip\2024-11-05_00004",
+    r"F:\data\2p_shifted\Cx\2024-11-05_00007",
+    r"F:\data\2p_shifted\Cx\2024-11-18_00003",
+    r"F:\data\2p_shifted\Cx\2024-11-18_00005",
+    r"F:\data\2p_shifted\Cx\2024-11-18_00008",
+    r"F:\data\2p_shifted\Cx\2024-11-20_00001",
 ]
 
 OUTPUT_CSV = Path(r"F:\roi_curation.csv")
 DFF_PREFIX = "r0p7_"
 FPS_FALLBACK = 15.0
+
+# The trained cell filter writes these to each suite2p/plane0/ folder.
+SCORES_FILENAME = "predicted_cell_prob.npy"
+
+# "uncertainty"   = rank by |p - 0.5| ascending (most ambiguous first).
+#                   Best for active learning against the trained model.
+# "pooled"        = rank by p descending across all recordings.
+# "per_recording" = finish one recording at a time, p descending within each.
+SORT_MODE = "uncertainty"
 
 # ---------------------------------------------------------------
 
@@ -121,16 +137,23 @@ def load_recording(root: Path):
     # dF/F memmap
     dff, _, _, T, N = utils.s2p_open_memmaps(plane0, prefix=DFF_PREFIX)
 
-    # ROI scores (live at the recording root, NOT in suite2p/plane0)
-    scores_path = root / "roi_scores.npy"
+    # Cell filter probabilities live in suite2p/plane0/predicted_cell_prob.npy
+    scores_path = plane0 / SCORES_FILENAME
     if not scores_path.exists():
-        # fall back to plane0 just in case
-        scores_path = plane0 / "roi_scores.npy"
+        # legacy fallback: roi_scores.npy at the recording root
+        legacy = root / "roi_scores.npy"
+        if legacy.exists():
+            scores_path = legacy
+        else:
+            raise FileNotFoundError(
+                f"No {SCORES_FILENAME} in {plane0} (and no roi_scores.npy at {root}). "
+                "Run cellfilter.predict first."
+            )
     scores = np.load(scores_path, allow_pickle=False)
 
     if len(scores) != len(stat):
         raise ValueError(
-            f"{root}: roi_scores has {len(scores)} entries but stat has {len(stat)}"
+            f"{root}: scores has {len(scores)} entries but stat has {len(stat)}"
         )
 
     # fps
@@ -154,12 +177,30 @@ def load_recording(root: Path):
     }
 
 
+def _find_scores_path(root: Path) -> Path | None:
+    """Return path to the score file for a recording, or None if missing."""
+    p = root / "suite2p" / "plane0" / SCORES_FILENAME
+    if p.exists():
+        return p
+    # legacy fallback
+    legacy = root / "roi_scores.npy"
+    if legacy.exists():
+        return legacy
+    legacy2 = root / "suite2p" / "plane0" / "roi_scores.npy"
+    if legacy2.exists():
+        return legacy2
+    return None
+
+
 def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float]]:
     """
-    Return list of (rec_idx, roi_idx, score) grouped by recording (in the order
-    given in ROOTS), and within each recording sorted by score descending.
+    Return list of (rec_idx, roi_idx, score) ordered by SORT_MODE.
     Skips any (recording_id, roi_idx) already labeled in `done`.
-    Missing recordings / missing roi_scores.npy are warned and skipped.
+    Missing recordings / missing score files are warned and skipped.
+
+    `score` is the predicted_cell_prob value as-is (not transformed to
+    uncertainty); the uncertainty sort applies an |p-0.5| key only for
+    ordering, so the status bar still shows the actual probability.
     """
     entries = []
     for ri, root in enumerate(roots):
@@ -167,11 +208,9 @@ def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float
         if not root.exists():
             print(f"[skip] root missing: {root}")
             continue
-        scores_path = root / "roi_scores.npy"
-        if not scores_path.exists():
-            scores_path = root / "suite2p" / "plane0" / "roi_scores.npy"
-        if not scores_path.exists():
-            print(f"[skip] no roi_scores.npy for {rec_id}")
+        scores_path = _find_scores_path(root)
+        if scores_path is None:
+            print(f"[skip] no {SCORES_FILENAME} (or legacy roi_scores.npy) for {rec_id}")
             continue
         try:
             scores = np.load(scores_path, allow_pickle=False)
@@ -184,9 +223,19 @@ def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float
             if (rec_id, int(roi_idx)) in done:
                 continue
             per_rec.append((ri, int(roi_idx), float(s)))
-        # sort this recording's ROIs by score descending
-        per_rec.sort(key=lambda x: x[2], reverse=True)
+
+        if SORT_MODE == "per_recording":
+            per_rec.sort(key=lambda x: x[2], reverse=True)
+        elif SORT_MODE == "uncertainty":
+            # most ambiguous first, within each recording's contribution to
+            # the list (pooled uncertainty sort happens at the end)
+            pass
         entries.extend(per_rec)
+
+    if SORT_MODE == "pooled":
+        entries.sort(key=lambda x: x[2], reverse=True)
+    elif SORT_MODE == "uncertainty":
+        entries.sort(key=lambda x: abs(x[2] - 0.5))
     return entries
 
 
@@ -256,12 +305,8 @@ class CurationApp:
         self.queue = build_work_queue(roots, self.done)
 
         def _count(r: Path) -> int:
-            if not r.exists():
-                return 0
-            p = r / "roi_scores.npy"
-            if not p.exists():
-                p = r / "suite2p" / "plane0" / "roi_scores.npy"
-            if not p.exists():
+            p = _find_scores_path(r)
+            if p is None:
                 return 0
             try:
                 return len(np.load(p, allow_pickle=False))
@@ -286,10 +331,14 @@ class CurationApp:
         # --- Tk setup ---
         self.root = tk.Tk()
         self.root.title("ROI Curation")
-        self.root.geometry("1700x500")
+        self.root.geometry("1700x800")
 
-        # Figure
-        self.fig, self.axes = plt.subplots(1, 4, figsize=(17, 4))
+        # Figure: 2 rows, 4 cols. Top row = 4 image panels.
+        # Bottom row = ΔF/F trace spanning all 4 columns.
+        self.fig = plt.figure(figsize=(17, 7.5))
+        gs = self.fig.add_gridspec(2, 4, height_ratios=[3, 1.5])
+        self.img_axes = [self.fig.add_subplot(gs[0, c]) for c in range(4)]
+        self.trace_ax = self.fig.add_subplot(gs[1, :])
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.root)
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
@@ -334,8 +383,9 @@ class CurationApp:
     def show_current(self):
         if self.cursor >= len(self.queue):
             self.status_var.set("All done.")
-            for ax in self.axes:
+            for ax in self.img_axes:
                 ax.clear()
+            self.trace_ax.clear()
             self.canvas.draw_idle()
             return
 
@@ -353,58 +403,63 @@ class CurationApp:
         xpix = roi_stat["xpix"]
         ypix = roi_stat["ypix"]
 
-        for ax in self.axes:
+        for ax in self.img_axes:
             ax.clear()
+        self.trace_ax.clear()
 
-        # -- Panel 0: mean image (locator box only, no pixel overlay) --
-        ax0 = self.axes[0]
-        vmin, vmax = np.percentile(mean_img, [1, 99])
-        ax0.imshow(mean_img, cmap="gray", vmin=vmin, vmax=vmax)
         x0, x1 = int(xpix.min()), int(xpix.max())
         y0, y1 = int(ypix.min()), int(ypix.max())
         pad = 8
-        ax0.add_patch(
-            plt.Rectangle(
-                (x0 - pad, y0 - pad),
-                (x1 - x0) + 2 * pad,
-                (y1 - y0) + 2 * pad,
-                fill=False, edgecolor="yellow", linewidth=1.2,
+
+        def _locator_box(ax):
+            ax.add_patch(
+                plt.Rectangle(
+                    (x0 - pad, y0 - pad),
+                    (x1 - x0) + 2 * pad,
+                    (y1 - y0) + 2 * pad,
+                    fill=False, edgecolor="yellow", linewidth=1.2,
+                )
             )
-        )
+
+        # -- Panel 0: mean image (locator box only) --
+        ax0 = self.img_axes[0]
+        vmin, vmax = np.percentile(mean_img, [1, 99])
+        ax0.imshow(mean_img, cmap="gray", vmin=vmin, vmax=vmax)
+        _locator_box(ax0)
         ax0.set_title(f"Mean image  ({rec_id})")
         ax0.set_xticks([]); ax0.set_yticks([])
 
-        # -- Panel 1: max projection with ROI overlay --
-        ax1 = self.axes[1]
+        # -- Panel 1: max projection (locator box only, no ROI overlay) --
+        ax1 = self.img_axes[1]
         vmin_m, vmax_m = np.percentile(max_img, [1, 99])
         ax1.imshow(max_img, cmap="gray", vmin=vmin_m, vmax=vmax_m)
-        ax1.scatter(xpix, ypix, s=2, c="red", alpha=0.6, edgecolors="none")
-        ax1.add_patch(
-            plt.Rectangle(
-                (x0 - pad, y0 - pad),
-                (x1 - x0) + 2 * pad,
-                (y1 - y0) + 2 * pad,
-                fill=False, edgecolor="yellow", linewidth=1.2,
-            )
-        )
-        ax1.set_title("Max projection + ROI")
+        _locator_box(ax1)
+        ax1.set_title("Max projection")
         ax1.set_xticks([]); ax1.set_yticks([])
 
-        # -- Panel 2: ROI footprint --
-        ax2 = self.axes[2]
-        ax2.scatter(xpix, ypix, s=4, c="black")
-        ax2.invert_yaxis()
-        ax2.set_aspect("equal")
-        ax2.set_title(f"ROI footprint  (#{roi_idx})")
+        # -- Panel 2: max projection with ROI overlay --
+        ax2 = self.img_axes[2]
+        ax2.imshow(max_img, cmap="gray", vmin=vmin_m, vmax=vmax_m)
+        ax2.scatter(xpix, ypix, s=2, c="red", alpha=0.6, edgecolors="none")
+        _locator_box(ax2)
+        ax2.set_title("Max projection + ROI")
         ax2.set_xticks([]); ax2.set_yticks([])
 
-        # -- Panel 3: dF/F trace --
-        ax3 = self.axes[3]
+        # -- Panel 3: ROI footprint --
+        ax3 = self.img_axes[3]
+        ax3.scatter(xpix, ypix, s=4, c="black")
+        ax3.invert_yaxis()
+        ax3.set_aspect("equal")
+        ax3.set_title(f"ROI footprint  (#{roi_idx})")
+        ax3.set_xticks([]); ax3.set_yticks([])
+
+        # -- Trace panel (spans bottom row) --
         trace = np.asarray(dff[:, roi_idx])
         time = np.arange(T) / fps
-        ax3.plot(time, trace, lw=0.8)
-        ax3.set_title(f"ΔF/F   score={score:.3f}")
-        ax3.set_xlabel("Time (s)")
+        self.trace_ax.plot(time, trace, lw=0.8)
+        self.trace_ax.set_title(f"ΔF/F   p(cell)={score:.3f}")
+        self.trace_ax.set_xlabel("Time (s)")
+        self.trace_ax.margins(x=0)
 
         self.fig.tight_layout()
         self.canvas.draw_idle()
@@ -414,7 +469,7 @@ class CurationApp:
         self.status_var.set(
             f"Labeled: {labeled} / {self.total_all}    "
             f"Remaining in queue: {remaining}    "
-            f"Current: {rec_id}  ROI {roi_idx}  score={score:.3f}    "
+            f"Current: {rec_id}  ROI {roi_idx}  p(cell)={score:.3f}    "
             f"[1]=cell  [0]=not a cell  [←]=undo  [Esc]=quit"
         )
 

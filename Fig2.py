@@ -1,403 +1,371 @@
-"""
-ROI Manual Curation GUI
------------------------
-Displays, for each ROI across a list of recordings:
-    [ mean image with ROI highlighted ] [ ROI footprint ] [ dF/F trace ]
-
-ROIs are shown in descending order of roi_scores.npy (pooled across all recordings).
-User presses '1' = cell, '0' = not a cell. Results saved to F:\\roi_curation.csv
-as: recording_ID, ROI_number, user_defined_cell
-
-Keybinds:
-    1          : label as cell
-    0          : label as not a cell
-    Left arrow : undo last label (removes last row from CSV)
-    Esc / q    : quit (progress is already saved)
-
-Resume-safe: re-running skips any (recording_ID, ROI_number) pairs already in
-the output CSV.
-"""
-
-from __future__ import annotations
-
-import csv
-import sys
-import tkinter as tk
-from pathlib import Path
-from typing import List, Tuple
-
 import numpy as np
-import matplotlib
-matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Make utils importable. Adjust if utils.py lives elsewhere.
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import utils  # noqa: E402
+from pathlib import Path
+from dataclasses import dataclass
+from typing import Optional, Sequence
 
-
-# ---------------------------- CONFIG ----------------------------
-
-ROOTS: List[str] = [
-    r"F:\data\2p_shifted\Cx\2024-07-01_00018",
-    # r"F:\data\2p_shifted\Hip\YYYY-MM-DD_NNNNN",
-    # ...add more here
-]
-
-OUTPUT_CSV = Path(r"F:\roi_curation.csv")
-DFF_PREFIX = "r0p7_"
-FPS_FALLBACK = 15.0
-
-# ---------------------------------------------------------------
+import utils
 
 
-def load_recording(root: Path):
-    """Load everything needed for one recording."""
-    plane0 = root / "suite2p" / "plane0"
+@dataclass(frozen=True)
+class ExampleROI:
+    root: Path
+    roi: int
+    nth_spike: int
+    crop_start_s: float
+    crop_end_s: float
 
-    stat = np.load(plane0 / "stat.npy", allow_pickle=True)
-    ops = np.load(plane0 / "ops.npy", allow_pickle=True).item()
 
-    # Prefer enhanced mean image if available
-    mean_img = ops.get("meanImgE", None)
-    if mean_img is None:
-        mean_img = ops["meanImg"]
-    mean_img = np.asarray(mean_img)
+@dataclass(frozen=True)
+class MultiPanelConfig:
+    examples: list[ExampleROI]
+    fps: float = 15.0
+    z_enter: float = 3.5
+    z_exit: float = 2.0
+    zoom_window_s: float = 12.0
+    t_max: Optional[float] = None
+    memmap_prefix: str = "r0p7_"
+    save_path: Optional[Path] = None
 
-    # Max projection (falls back to mean if not present)
-    max_img = ops.get("max_proj", None)
-    if max_img is None:
-        max_img = ops.get("maxImg", None)
-    if max_img is None:
-        max_img = mean_img
-    max_img = np.asarray(max_img)
 
-    # dF/F memmap
-    dff, _, _, T, N = utils.s2p_open_memmaps(plane0, prefix=DFF_PREFIX)
+def load_suite2p_raw(root: Path, roi: int):
+    F, Fneu, num_frames, num_rois, time_major = utils.s2p_load_raw(root)
 
-    # ROI scores (live at the recording root, NOT in suite2p/plane0)
-    scores_path = root / "roi_scores.npy"
-    if not scores_path.exists():
-        # fall back to plane0 just in case
-        scores_path = plane0 / "roi_scores.npy"
-    scores = np.load(scores_path, allow_pickle=False)
+    if F.shape != Fneu.shape:
+        raise ValueError(f"F and Fneu shapes differ: {F.shape} vs {Fneu.shape}")
 
-    if len(scores) != len(stat):
-        raise ValueError(
-            f"{root}: roi_scores has {len(scores)} entries but stat has {len(stat)}"
+    if roi < 0 or roi >= num_rois:
+        raise IndexError(f"ROI index {roi} out of bounds for N={num_rois}")
+
+    if time_major:
+        raw_trace = np.asarray(F[:, roi])
+        neu_trace = np.asarray(Fneu[:, roi])
+    else:
+        raw_trace = np.asarray(F[roi, :])
+        neu_trace = np.asarray(Fneu[roi, :])
+
+    raw_trace = raw_trace.reshape(-1)
+    neu_trace = neu_trace.reshape(-1)
+
+    return raw_trace, neu_trace, num_frames, num_rois
+
+
+def load_processed_traces(root: Path, roi: int, prefix: str = "r0p7_"):
+    dff, low, dt, T, N = utils.s2p_open_memmaps(root, prefix=prefix)
+    dff_trace = np.asarray(dff[:, roi]).reshape(-1)
+    low_trace = np.asarray(low[:, roi]).reshape(-1)
+    dt_trace = np.asarray(dt[:, roi]).reshape(-1)
+    return dff_trace, low_trace, dt_trace, T, N
+
+
+def robust_z_scores(x: np.ndarray):
+    z, med, mad = utils.mad_z(x)
+    return np.asarray(z), float(med), float(mad)
+
+
+def detect_onsets_hysteresis(z: np.ndarray, z_enter: float, z_exit: float, fps: float):
+    onsets_idx: Sequence[int] = utils.hysteresis_onsets(z, z_enter, z_exit, fps)
+    return np.asarray(onsets_idx, dtype=np.int64)
+
+
+def load_stat_and_ops(root: Path):
+    stat = np.load(root / "stat.npy", allow_pickle=True)
+    ops = np.load(root / "ops.npy", allow_pickle=True).item()
+    return stat, ops
+
+
+def build_roi_overlay_image(root: Path, roi: int):
+    stat, ops = load_stat_and_ops(root)
+
+    # Prefer Suite2p max projection if available
+    if "max_proj" in ops:
+        img = ops["max_proj"]
+    elif "meanImgE" in ops:
+        img = ops["meanImgE"]
+    elif "meanImg" in ops:
+        img = ops["meanImg"]
+    else:
+        raise KeyError(f"No max_proj, meanImgE or meanImg found in ops.npy for {root}")
+
+    roi_stat = stat[roi]
+    ypix = roi_stat["ypix"]
+    xpix = roi_stat["xpix"]
+
+    return img, xpix, ypix
+
+
+def get_zoom_window(trace: np.ndarray, event_idx: int, fps: float, window_s: float):
+    half_w = int((window_s * fps) / 2)
+    start = max(0, event_idx - half_w)
+    end = min(len(trace), event_idx + half_w)
+    return start, end
+
+
+def add_roi_overlay(ax, img, xpix, ypix, label):
+    ax.imshow(img, cmap="gray")
+    ax.scatter(xpix, ypix, s=2, c="red", alpha=0.05)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(label, fontsize=10)
+
+
+def make_crop_mask(time: np.ndarray, start_s: float, end_s: float, t_max: Optional[float] = None):
+    if end_s <= start_s:
+        raise ValueError(f"crop_end_s must be greater than crop_start_s. Got {start_s} to {end_s}")
+
+    mask = (time >= start_s) & (time <= end_s)
+
+    if t_max is not None:
+        mask &= (time <= t_max)
+
+    return mask
+
+
+def plot_top_full_trace(ax, example: ExampleROI, fps: float, memmap_prefix: str):
+    raw_trace, neu_trace, num_frames, _ = load_suite2p_raw(example.root, example.roi)
+
+    time = np.arange(num_frames) / fps
+
+    ax.plot(time, raw_trace, lw=1.0, color="tab:blue", label="Raw fluorescence")
+    ax.plot(time, neu_trace, lw=1.0, color="tab:orange", alpha=0.7, label="Neuropil")
+
+    ax.axvspan(
+        example.crop_start_s,
+        example.crop_end_s,
+        color="tab:blue",
+        alpha=0.15,
+    )
+
+    ax.set_ylabel("Fluorescence")
+    ax.set_xlabel("Time (s)")
+    ax.legend(frameon=False, fontsize=8)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+
+def plot_example_row(
+    axes_row,
+    root: Path,
+    roi: int,
+    nth_spike: int,
+    crop_start_s: float,
+    crop_end_s: float,
+    fps: float,
+    z_enter: float,
+    z_exit: float,
+    zoom_window_s: float,
+    t_max: Optional[float],
+    memmap_prefix: str,
+):
+    raw_trace, neu_trace, num_frames, _ = load_suite2p_raw(root, roi)
+    dff_trace, low_trace, dt_trace, _, _ = load_processed_traces(root, roi, prefix=memmap_prefix)
+
+    z, med, mad = robust_z_scores(dt_trace)
+    onset_frames = detect_onsets_hysteresis(z, z_enter, z_exit, fps)
+
+    time = np.arange(num_frames) / fps
+    idx = make_crop_mask(time, crop_start_s, crop_end_s, t_max=t_max)
+
+    img, xpix, ypix = build_roi_overlay_image(root, roi)
+
+    ax0, ax1, ax2, ax3, ax4, ax5 = axes_row
+
+    # Column 1: FOV
+    add_roi_overlay(
+        ax0,
+        img,
+        xpix,
+        ypix,
+        f"{root.parent.parent.name}\nROI {roi}"
+    )
+
+    # Column 2: raw, cropped
+    ax1.plot(time[idx], raw_trace[idx], lw=1.0, color="tab:blue", label="F raw")
+    ax1.plot(time[idx], neu_trace[idx], lw=1.0, color="tab:orange", alpha=0.8, label="F neuropil")
+    ax1.set_xlim(crop_start_s, crop_end_s)
+
+    # Column 3: dF/F, cropped
+    ax2.plot(time[idx], dff_trace[idx], lw=1.0, color="black", label="ΔF/F")
+    ax2.set_xlim(crop_start_s, crop_end_s)
+
+    # Column 4: filtered, cropped
+    ax3.plot(time[idx], low_trace[idx], lw=1.0, color="green", label="Low pass ΔF/F")
+    ax3.set_xlim(crop_start_s, crop_end_s)
+
+    # Column 5: zoomed filtered at nth event
+    if len(onset_frames) > nth_spike:
+        center = onset_frames[nth_spike]
+        start, end = get_zoom_window(low_trace, center, fps, zoom_window_s)
+        tz = np.arange(start, end) / fps
+        ax4.plot(tz, low_trace[start:end], lw=1.2, color="green")
+        ax4.axvline(center / fps, color="tab:blue", lw=1.0, alpha=0.8)
+        ax4.set_title(f"Zoomed event", fontsize=10)
+    else:
+        ax4.text(
+            0.5,
+            0.5,
+            f"Event {nth_spike + 1}\nnot available",
+            ha="center",
+            va="center",
+            transform=ax4.transAxes,
+            fontsize=9
         )
 
-    # fps
-    try:
-        fps = utils.get_fps_from_notes(str(plane0), default_fps=FPS_FALLBACK)
-    except Exception:
-        fps = FPS_FALLBACK
+    # Column 6: derivative, cropped
+    thr_enter_val = med + (1.4826 * mad) * z_enter
+    thr_exit_val = med + (1.4826 * mad) * z_exit
 
-    return {
-        "root": root,
-        "recording_id": root.name,
-        "plane0": plane0,
-        "stat": stat,
-        "mean_img": mean_img,
-        "max_img": max_img,
-        "dff": dff,
-        "T": T,
-        "N": N,
-        "scores": scores,
-        "fps": fps,
-    }
+    ax5.plot(time[idx], dt_trace[idx], lw=1.0, color="red", label="Derivative")
+    ax5.axhline(thr_enter_val, linestyle="--", linewidth=1, color="tab:blue", label=f"Enter z={z_enter:.1f}")
+    ax5.axhline(thr_exit_val, linestyle=":", linewidth=1, color="tab:blue", label=f"Exit z={z_exit:.1f}")
+    ax5.set_xlim(crop_start_s, crop_end_s)
 
+    for f in onset_frames:
+        t0 = f / fps
+        if crop_start_s <= t0 <= crop_end_s:
+            ax5.axvline(t0, linestyle="-", linewidth=0.7, alpha=0.5, color="tab:blue")
 
-def build_work_queue(roots: List[Path], done: set) -> List[Tuple[int, int, float]]:
-    """
-    Return list of (rec_idx, roi_idx, score) sorted by score descending,
-    skipping any (recording_id, roi_idx) already labeled in `done`.
-    """
-    entries = []
-    for ri, root in enumerate(roots):
-        rec_id = root.name
-        scores_path = root / "roi_scores.npy"
-        if not scores_path.exists():
-            scores_path = root / "suite2p" / "plane0" / "roi_scores.npy"
-        scores = np.load(scores_path, allow_pickle=False)
-        for roi_idx, s in enumerate(scores):
-            if (rec_id, int(roi_idx)) in done:
-                continue
-            entries.append((ri, int(roi_idx), float(s)))
-    # sort descending by score
-    entries.sort(key=lambda x: x[2], reverse=True)
-    return entries
+    # Formatting
+    for ax in (ax1, ax2, ax3, ax4, ax5):
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    return len(onset_frames)
 
 
-def load_done_set(csv_path: Path) -> set:
-    done = set()
-    if not csv_path.exists():
-        return done
-    with open(csv_path, "r", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            try:
-                done.add((row["recording_ID"], int(row["ROI_number"])))
-            except (KeyError, ValueError):
-                continue
-    return done
+def make_multipanel_figure(cfg: MultiPanelConfig):
+    n_rows = len(cfg.examples)
 
+    fig = plt.figure(figsize=(24, 3.4 + 4.2 * n_rows))
+    gs = fig.add_gridspec(
+        nrows=n_rows + 1,
+        ncols=6,
+        height_ratios=[1.2] + [4.0] * n_rows
+    )
 
-def ensure_csv_header(csv_path: Path):
-    csv_path.parent.mkdir(parents=True, exist_ok=True)
-    if not csv_path.exists():
-        with open(csv_path, "w", newline="") as f:
-            w = csv.writer(f)
-            w.writerow(["recording_ID", "ROI_number", "user_defined_cell"])
+    # Top full trace panel spanning columns 2 to 6
+    ax_top = fig.add_subplot(gs[0, 1:6])
+    plot_top_full_trace(
+        ax=ax_top,
+        example=cfg.examples[0],
+        fps=cfg.fps,
+        memmap_prefix=cfg.memmap_prefix,
+    )
+    ax_top.set_xlabel("Time (s)")
 
+    # Empty top-left cell for alignment
+    ax_empty = fig.add_subplot(gs[0, 0])
+    ax_empty.axis("off")
 
-def append_label(csv_path: Path, rec_id: str, roi: int, label: int):
-    with open(csv_path, "a", newline="") as f:
-        w = csv.writer(f)
-        w.writerow([rec_id, roi, label])
+    # Build row axes
+    axes = []
+    for r in range(n_rows):
+        row_axes = [fig.add_subplot(gs[r + 1, c]) for c in range(6)]
+        axes.append(row_axes)
+    axes = np.array(axes, dtype=object)
 
+    col_titles = [
+        "Field of view",
+        "Raw fluorescence",
+        "ΔF/F",
+        "Low pass filtered",
+        "Zoomed filtered event",
+        "Derivative and event detection",
+    ]
 
-def remove_last_row(csv_path: Path) -> Tuple[str, int, int] | None:
-    """Remove the last data row from the CSV. Returns the removed row or None."""
-    if not csv_path.exists():
-        return None
-    with open(csv_path, "r", newline="") as f:
-        lines = f.readlines()
-    if len(lines) <= 1:
-        return None  # only header, nothing to undo
-    last = lines[-1].strip()
-    if not last:
-        # skip trailing empty line
-        lines = lines[:-1]
-        if len(lines) <= 1:
-            return None
-        last = lines[-1].strip()
-    parts = next(csv.reader([last]))
-    try:
-        removed = (parts[0], int(parts[1]), int(parts[2]))
-    except (IndexError, ValueError):
-        return None
-    with open(csv_path, "w", newline="") as f:
-        f.writelines(lines[:-1])
-    return removed
+    for c, title in enumerate(col_titles):
+        axes[0, c].set_title(title, fontsize=12)
 
+    onset_counts = []
 
-# ---------------------------- GUI ----------------------------
-
-
-class CurationApp:
-    def __init__(self, roots: List[Path], csv_path: Path):
-        self.csv_path = csv_path
-        ensure_csv_header(csv_path)
-
-        self.roots = roots
-        self.done = load_done_set(csv_path)
-        self.queue = build_work_queue(roots, self.done)
-
-        self.total_all = sum(
-            len(np.load(
-                (r / "roi_scores.npy") if (r / "roi_scores.npy").exists()
-                else (r / "suite2p" / "plane0" / "roi_scores.npy"),
-                allow_pickle=False,
-            ))
-            for r in roots
+    for r, ex in enumerate(cfg.examples):
+        n_onsets = plot_example_row(
+            axes_row=axes[r],
+            root=ex.root,
+            roi=ex.roi,
+            nth_spike=ex.nth_spike,
+            crop_start_s=ex.crop_start_s,
+            crop_end_s=ex.crop_end_s,
+            fps=cfg.fps,
+            z_enter=cfg.z_enter,
+            z_exit=cfg.z_exit,
+            zoom_window_s=cfg.zoom_window_s,
+            t_max=cfg.t_max,
+            memmap_prefix=cfg.memmap_prefix,
         )
+        onset_counts.append(n_onsets)
 
-        if not self.queue:
-            print("Nothing to curate. All ROIs already labeled.")
-            sys.exit(0)
+        axes[r, 0].set_ylabel(f"Example {r + 1}", fontsize=11)
 
-        # Cache loaded recordings lazily
-        self._cache = {}
+        if r == 0:
+            axes[r, 1].legend(frameon=False, fontsize=8, loc="upper right")
+            axes[r, 5].legend(frameon=False, fontsize=8, loc="upper right")
 
-        # Track the most recently labeled entry so Undo can put it back at the
-        # front of the queue
-        self.last_labeled: Tuple[int, int, float] | None = None
+    # Shared axis labeling
+    for r in range(n_rows):
+        axes[r, 1].set_ylabel("Fluorescence")
+        axes[r, 2].set_ylabel("ΔF/F")
+        axes[r, 3].set_ylabel("Filtered")
+        axes[r, 4].set_ylabel("Filtered")
+        axes[r, 5].set_ylabel("d/dt")
 
-        self.cursor = 0  # index into self.queue
+    for c in range(1, 6):
+        axes[-1, c].set_xlabel("Time (s)")
 
-        # --- Tk setup ---
-        self.root = tk.Tk()
-        self.root.title("ROI Curation")
-        self.root.geometry("1700x500")
+    fig.suptitle("ROI preprocessing and event detection workflow", fontsize=16, y=0.995)
+    fig.tight_layout(rect=[0, 0, 1, 0.985])
 
-        # Figure
-        self.fig, self.axes = plt.subplots(1, 4, figsize=(17, 4))
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.root)
-        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+    if cfg.save_path is not None:
+        cfg.save_path.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(cfg.save_path, dpi=300, bbox_inches="tight")
+        print(f"Saved figure to: {cfg.save_path}")
 
-        # Status bar
-        self.status_var = tk.StringVar()
-        status = tk.Label(
-            self.root, textvariable=self.status_var, anchor="w",
-            font=("Arial", 11),
-        )
-        status.pack(side=tk.BOTTOM, fill=tk.X)
-
-        # Buttons
-        btn_frame = tk.Frame(self.root)
-        btn_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=4)
-        tk.Button(btn_frame, text="Not a cell (0)", width=15,
-                  command=lambda: self.label(0)).pack(side=tk.LEFT, padx=4)
-        tk.Button(btn_frame, text="Cell (1)", width=15,
-                  command=lambda: self.label(1)).pack(side=tk.LEFT, padx=4)
-        tk.Button(btn_frame, text="Undo (←)", width=10,
-                  command=self.undo).pack(side=tk.LEFT, padx=4)
-        tk.Button(btn_frame, text="Quit (Esc)", width=10,
-                  command=self.quit).pack(side=tk.RIGHT, padx=4)
-
-        # Keybinds
-        self.root.bind("1", lambda e: self.label(1))
-        self.root.bind("0", lambda e: self.label(0))
-        self.root.bind("<Left>", lambda e: self.undo())
-        self.root.bind("<Escape>", lambda e: self.quit())
-        self.root.bind("q", lambda e: self.quit())
-
-        self.show_current()
-
-    # ------------- data access -------------
-
-    def get_recording(self, rec_idx: int):
-        if rec_idx not in self._cache:
-            self._cache[rec_idx] = load_recording(self.roots[rec_idx])
-        return self._cache[rec_idx]
-
-    # ------------- display -------------
-
-    def show_current(self):
-        if self.cursor >= len(self.queue):
-            self.status_var.set("All done.")
-            for ax in self.axes:
-                ax.clear()
-            self.canvas.draw_idle()
-            return
-
-        rec_idx, roi_idx, score = self.queue[self.cursor]
-        rec = self.get_recording(rec_idx)
-        rec_id = rec["recording_id"]
-        stat = rec["stat"]
-        mean_img = rec["mean_img"]
-        max_img = rec["max_img"]
-        dff = rec["dff"]
-        T = rec["T"]
-        fps = rec["fps"]
-
-        roi_stat = stat[roi_idx]
-        xpix = roi_stat["xpix"]
-        ypix = roi_stat["ypix"]
-
-        for ax in self.axes:
-            ax.clear()
-
-        # -- Panel 0: mean image (no overlay) --
-        ax0 = self.axes[0]
-        vmin, vmax = np.percentile(mean_img, [1, 99])
-        ax0.imshow(mean_img, cmap="gray", vmin=vmin, vmax=vmax)
-        ax0.set_title(f"Mean image  ({rec_id})")
-        ax0.set_xticks([]); ax0.set_yticks([])
-
-        # -- Panel 1: max projection with ROI overlay --
-        ax1 = self.axes[1]
-        vmin_m, vmax_m = np.percentile(max_img, [1, 99])
-        ax1.imshow(max_img, cmap="gray", vmin=vmin_m, vmax=vmax_m)
-        ax1.scatter(xpix, ypix, s=2, c="red", alpha=0.6, edgecolors="none")
-        x0, x1 = int(xpix.min()), int(xpix.max())
-        y0, y1 = int(ypix.min()), int(ypix.max())
-        pad = 8
-        ax1.add_patch(
-            plt.Rectangle(
-                (x0 - pad, y0 - pad),
-                (x1 - x0) + 2 * pad,
-                (y1 - y0) + 2 * pad,
-                fill=False, edgecolor="yellow", linewidth=1.2,
-            )
-        )
-        ax1.set_title("Max projection + ROI")
-        ax1.set_xticks([]); ax1.set_yticks([])
-
-        # -- Panel 2: ROI footprint --
-        ax2 = self.axes[2]
-        ax2.scatter(xpix, ypix, s=4, c="black")
-        ax2.invert_yaxis()
-        ax2.set_aspect("equal")
-        ax2.set_title(f"ROI footprint  (#{roi_idx})")
-        ax2.set_xticks([]); ax2.set_yticks([])
-
-        # -- Panel 3: dF/F trace --
-        ax3 = self.axes[3]
-        trace = np.asarray(dff[:, roi_idx])
-        time = np.arange(T) / fps
-        ax3.plot(time, trace, lw=0.8)
-        ax3.set_title(f"ΔF/F   score={score:.3f}")
-        ax3.set_xlabel("Time (s)")
-
-        self.fig.tight_layout()
-        self.canvas.draw_idle()
-
-        labeled = len(self.done)
-        remaining = len(self.queue) - self.cursor
-        self.status_var.set(
-            f"Labeled: {labeled} / {self.total_all}    "
-            f"Remaining in queue: {remaining}    "
-            f"Current: {rec_id}  ROI {roi_idx}  score={score:.3f}    "
-            f"[1]=cell  [0]=not a cell  [←]=undo  [Esc]=quit"
-        )
-
-    # ------------- actions -------------
-
-    def label(self, value: int):
-        if self.cursor >= len(self.queue):
-            return
-        rec_idx, roi_idx, score = self.queue[self.cursor]
-        rec_id = self.roots[rec_idx].name
-        append_label(self.csv_path, rec_id, roi_idx, value)
-        self.done.add((rec_id, roi_idx))
-        self.last_labeled = (rec_idx, roi_idx, score)
-        self.cursor += 1
-        self.show_current()
-
-    def undo(self):
-        removed = remove_last_row(self.csv_path)
-        if removed is None:
-            self.status_var.set("Nothing to undo.")
-            return
-        rec_id, roi_idx, _label = removed
-        self.done.discard((rec_id, roi_idx))
-
-        # Step cursor back and verify the current entry matches what we removed.
-        if self.cursor > 0:
-            self.cursor -= 1
-        # If the current queue entry doesn't match (e.g. user restarted since),
-        # fall back to requeuing the removed item at the current position.
-        if self.cursor < len(self.queue):
-            ri, roi, _ = self.queue[self.cursor]
-            if self.roots[ri].name != rec_id or roi != roi_idx:
-                # Find rec_idx for removed recording
-                rec_idx = next(
-                    (i for i, r in enumerate(self.roots) if r.name == rec_id),
-                    None,
-                )
-                if rec_idx is not None:
-                    self.queue.insert(self.cursor, (rec_idx, roi_idx, 0.0))
-        self.show_current()
-
-    def quit(self):
-        self.root.quit()
-        self.root.destroy()
-
-    def run(self):
-        self.root.mainloop()
-
-
-def main():
-    roots = [Path(r) for r in ROOTS]
-    for r in roots:
-        if not r.exists():
-            print(f"WARNING: root does not exist: {r}")
-    app = CurationApp(roots, OUTPUT_CSV)
-    app.run()
+    return fig, onset_counts
 
 
 if __name__ == "__main__":
-    main()
+    examples = [
+        ExampleROI(
+            root=Path(r"F:\data\2p_shifted\Cx\2024-07-01_00018\suite2p\plane0"),
+            roi=21,
+            nth_spike=0,
+            crop_start_s=200.0,
+            crop_end_s=450.0,
+        ),
+        ExampleROI(
+            root=Path(r"F:\data\2p_shifted\Hip\2024-10-30_00003\suite2p\plane0"),
+            roi=2,
+            nth_spike=1,
+            crop_start_s=350.0,
+            crop_end_s=650.0,
+        ),
+        ExampleROI(
+            root=Path(r"F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0"),
+            roi=2,
+            nth_spike=3,
+            crop_start_s=700.0,
+            crop_end_s=900.0,
+        ),
+    ]
+
+    cfg = MultiPanelConfig(
+        examples=examples,
+        fps=15.0,
+        z_enter=3.5,
+        z_exit=2.0,
+        zoom_window_s=12.0,
+        t_max=None,
+        memmap_prefix="r0p7_",
+        save_path=None,
+    )
+
+    fig, onset_counts = make_multipanel_figure(cfg)
+    plt.show()
+
+    for ex, n in zip(cfg.examples, onset_counts):
+        print(
+            f"{ex.root.parent.parent.name} | ROI {ex.roi} | "
+            f"detected onsets = {n} | crop = [{ex.crop_start_s}, {ex.crop_end_s}] s"
+        )
