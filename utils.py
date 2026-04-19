@@ -14,15 +14,36 @@ from pathlib import Path
 from typing import Tuple, Optional, Sequence, Union
 
 
-# ----------- Mass function deployment + logging functionality -----------
+# ----------- Logging / output multiplexing -----------
 class Tee(io.TextIOBase):
+    """Write to multiple streams simultaneously, with Unicode fallback."""
     def __init__(self, *streams):
         self.streams = streams
+
     def write(self, data):
         for s in self.streams:
-            s.write(data)
-            s.flush()
+            try:
+                s.write(data)
+                s.flush()
+            except UnicodeEncodeError:
+                enc = getattr(s, "encoding", None) or "utf-8"
+                if hasattr(s, "buffer"):
+                    s.buffer.write(data.encode(enc, errors="replace"))
+                    s.flush()
+                else:
+                    s.write(data.encode(enc, errors="replace").decode(enc, errors="replace"))
+                    s.flush()
         return len(data)
+
+
+def run_with_logging(logfile_name: str, func, *args, **kwargs) -> None:
+    """
+    Call *func* while mirroring stdout/stderr to *logfile_name* (append, UTF-8).
+    """
+    with open(logfile_name, "a", encoding="utf-8", errors="replace") as logfile:
+        tee = Tee(sys.__stdout__, logfile)
+        with contextlib.redirect_stdout(tee), contextlib.redirect_stderr(tee):
+            func(*args, **kwargs)
 
 def change_batch_according_to_free_ram() -> int:
     """

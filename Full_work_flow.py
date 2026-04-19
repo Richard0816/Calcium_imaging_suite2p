@@ -26,9 +26,9 @@ import smtplib
 # Use environment variables for sensitive info (e.g., passwords) for security
 SMTP_SERVER = "smtp.gmail.com"  # e.g., smtp.gmail.com, SMTP.office365.com
 SMTP_PORT = 587  # typically 587 for TLS, 465 for SSL
-SENDER_EMAIL = "richard.script.use@gmail.com"
-RECIPIENT_EMAIL = "richardjiang2004@gmail.com"
-EMAIL_PASSWORD = "uhau dvea emsk bair" # Or an app-specific password
+SENDER_EMAIL = os.environ.get("PIPELINE_SENDER_EMAIL", "richard.script.use@gmail.com")
+RECIPIENT_EMAIL = os.environ.get("PIPELINE_RECIPIENT_EMAIL", "richardjiang2004@gmail.com")
+EMAIL_PASSWORD = os.environ.get("PIPELINE_EMAIL_PASSWORD", "")
 
 # --- Setup Logging with SMTPHandler ---
 # Create a logger
