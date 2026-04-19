@@ -515,7 +515,7 @@ class CurationApp:
         self.root.quit()
         self.root.destroy()
 
-    def run(self):
+    def un(self):
         self.root.mainloop()
 
 
