@@ -1,0 +1,33 @@
+Loaded ΔF/F: 15000 frames × 4099 ROIs
+Loaded C1: 4033 ROIs from F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy
+Loaded C2: 66 ROIs from F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy
+
+▶ [GPU] Computing C1 × C2 → F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC2
+C:\Users\Richa\anaconda3\envs\cembrowski\lib\site-packages\numpy\_core\_methods.py:188: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+Loaded ΔF/F: 15000 frames × 12 ROIs
+Loaded C0: 1 ROIs from F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy
+Loaded C1: 2 ROIs from F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy
+Loaded C2: 5 ROIs from F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy
+Loaded C3: 4 ROIs from F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy
+
+▶ [GPU] Computing C0 × C1 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC1\C0xC1_summary.csv
+
+▶ [GPU] Computing C0 × C2 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC2\C0xC2_summary.csv
+
+▶ [GPU] Computing C0 × C3 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC3
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C0xC3\C0xC3_summary.csv
+
+▶ [GPU] Computing C1 × C2 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC2
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC2\C1xC2_summary.csv
+
+▶ [GPU] Computing C1 × C3 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC3
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C1xC3\C1xC3_summary.csv
+
+▶ [GPU] Computing C2 × C3 → F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC3
+  ✔ Summary CSV saved to: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu\C2xC3\C2xC3_summary.csv
+
+✅ GPU cross-correlation computations complete.
+Results saved under: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cross_correlation_gpu

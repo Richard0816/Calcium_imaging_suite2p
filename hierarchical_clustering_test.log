@@ -1,0 +1,21 @@
+Loaded ΔF/F: 15000 frames × 4099 ROIs
+Saved cluster order to F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 4099 / 4619 ROIs kept.
+Saved F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 4033 ROIs.
+Saved F:\data\2p_shifted\Hip\2024-06-03_00009\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 66 ROIs.
+Saved ROI lists by dendrogram leaf color.
+Loaded ΔF/F: 15000 frames × 12 ROIs
+[dendrogram] auto color_threshold=0.86 → 4 groups
+Saved cluster order to F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\cluster_order.npy
+Applied cell mask: 12 / 186 ROIs kept.
+Saved F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved: F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved spatial map colored by dendrogram ROI colors to F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\spatial_dendrogram_colored_rois.png
+Saved F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C0_rois.npy with 1 ROIs.
+Saved F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C1_rois.npy with 2 ROIs.
+Saved F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C2_rois.npy with 5 ROIs.
+Saved F:\data\2p_shifted\Cx\2024-06-03_00012\suite2p\plane0\r0p7_filtered_cluster_results\C3_rois.npy with 4 ROIs.
+Saved ROI lists by dendrogram leaf color.
