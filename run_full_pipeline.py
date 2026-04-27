@@ -43,12 +43,12 @@ sys.path.insert(0, str(WORKTREE))
 # ---------------------------------------------------------------------------
 # Defaults (override via CLI)
 # ---------------------------------------------------------------------------
-DEFAULT_SHIFTED_ROOT   = Path(r"G:\data\2p_shifted")
-DEFAULT_DETECTION_ROOT = Path(r"G:\sparse_plus_cellpose")
+DEFAULT_SHIFTED_ROOT   = Path(r"E:\data\2p_shifted")
+DEFAULT_DETECTION_ROOT = Path(r"E:\sparse_plus_cellpose")
 DEFAULT_OPS            = WORKTREE / "suite2p_2p_ops_240621.npy"
 DEFAULT_PREFIX         = "r0p7_"
 DEFAULT_FPS            = 15.07
-DEFAULT_BASELINE_SEC   = 60.0
+DEFAULT_BASELINE_SEC   = 90.0
 
 
 # ---------------------------------------------------------------------------
