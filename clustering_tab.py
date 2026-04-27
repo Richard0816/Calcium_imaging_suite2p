@@ -657,7 +657,7 @@ class ClusteringTab(ttk.Frame):
         img = _spatial_image(self._stat, self._Lx, self._Ly, roi_rgb)
         ax = self.s_ax
         ax.clear()
-        ax.imshow(img, origin="lower", aspect="equal")
+        ax.imshow(img, origin="upper", aspect="equal")
         ax.set_title(f"{n_clusters} clusters")
         ax.set_xlabel("x (px)")
         ax.set_ylabel("y (px)")

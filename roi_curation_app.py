@@ -47,59 +47,12 @@ import utils  # noqa: E402
 # ---------------------------- CONFIG ----------------------------
 
 ROOTS: List[str] = [
-    r"F:\data\2p_shifted\Hip\2024-06-03_00004",
-    r"F:\data\2p_shifted\Hip\2024-06-03_00007",
-    r"F:\data\2p_shifted\Hip\2024-06-03_00009",
-    r"F:\data\2p_shifted\Hip\2024-06-04_00001",
-    r"F:\data\2p_shifted\Hip\2024-06-04_00002",
-    r"F:\data\2p_shifted\Cx\2024-06-04_00006",
-    r"F:\data\2p_shifted\Hip\2024-06-04_00009",
-    r"F:\data\2p_shifted\Hip\2024-06-04_00010",
-    r"F:\data\2p_shifted\Cx\2024-06-05_00001",
-    r"F:\data\2p_shifted\Cx\2024-06-05_00006",
-    r"F:\data\2p_shifted\Cx\2024-06-05_00007",
-    r"F:\data\2p_shifted\Hip\2024-07-01_00001",
-    r"F:\data\2p_shifted\Hip\2024-07-01_00002",
-    r"F:\data\2p_shifted\Hip\2024-07-01_00005",
-    r"F:\data\2p_shifted\Hip\2024-07-01_00006",
-    r"F:\data\2p_shifted\Hip\2024-07-01_00012",
-    r"F:\data\2p_shifted\Cx\2024-07-01_00016",
-    r"F:\data\2p_shifted\Cx\2024-07-01_00017",
-    r"F:\data\2p_shifted\Cx\2024-07-01_00018",
-    r"F:\data\2p_shifted\Cx\2024-07-01_00019",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00001",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00002",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00005",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00006",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00007",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00008",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00012",
-    r"F:\data\2p_shifted\Cx\2024-07-02_00013",
-    r"F:\data\2p_shifted\Cx\2024-08-21_00003",
-    r"F:\data\2p_shifted\Cx\2024-08-22_00001",
-    r"F:\data\2p_shifted\Cx\2024-08-22_00003",
-    r"F:\data\2p_shifted\Cx\2024-08-22_00004",
-    r"F:\data\2p_shifted\Hip\2024-10-30_00003",
-    r"F:\data\2p_shifted\Hip\2024-10-30_00005",
-    r"F:\data\2p_shifted\Cx\2024-10-30_00010",
-    r"F:\data\2p_shifted\Hip\2024-10-30_00012",
-    r"F:\data\2p_shifted\Hip\2024-10-31_00001",
-    r"F:\data\2p_shifted\Hip\2024-10-31_00005",
-    r"F:\data\2p_shifted\Cx\2024-11-04_00003",
-    r"F:\data\2p_shifted\Cx\2024-11-04_00004",
-    r"F:\data\2p_shifted\Hip\2024-11-04_00010",
-    r"F:\data\2p_shifted\Cx\2024-11-05_00001",
-    r"F:\data\2p_shifted\Hip\2024-11-05_00004",
-    r"F:\data\2p_shifted\Cx\2024-11-05_00007",
-    r"F:\data\2p_shifted\Cx\2024-11-18_00003",
-    r"F:\data\2p_shifted\Cx\2024-11-18_00005",
-    r"F:\data\2p_shifted\Cx\2024-11-18_00008",
-    r"F:\data\2p_shifted\Cx\2024-11-20_00001",
+    r"G:\sparse_plus_cellpose\2025-11-05-0001\final"
 ]
 
 OUTPUT_CSV = Path(r"F:\roi_curation.csv")
 DFF_PREFIX = "r0p7_"
-FPS_FALLBACK = 15.0
+FPS_FALLBACK = 15.07
 
 # The trained cell filter writes these to each suite2p/plane0/ folder.
 SCORES_FILENAME = "predicted_cell_prob.npy"
@@ -120,19 +73,31 @@ def load_recording(root: Path):
     stat = np.load(plane0 / "stat.npy", allow_pickle=True)
     ops = np.load(plane0 / "ops.npy", allow_pickle=True).item()
 
-    # Prefer enhanced mean image if available
-    mean_img = ops.get("meanImgE", None)
-    if mean_img is None:
-        mean_img = ops["meanImg"]
-    mean_img = np.asarray(mean_img)
+    # Use the raw mean image (not meanImgE), since meanImgE is high-pass
+    # filtered and visually overlaps with the max projection.
+    mean_img = np.asarray(ops["meanImg"])
 
-    # Max projection (falls back to mean if not present)
+    # Max projection (falls back to mean if not present).
+    # Suite2p's ops['max_proj'] is cropped to ops['yrange'] x ops['xrange'];
+    # pad it back into a full-frame image so ROI coords (full-frame) align.
     max_img = ops.get("max_proj", None)
     if max_img is None:
         max_img = ops.get("maxImg", None)
     if max_img is None:
         max_img = mean_img
     max_img = np.asarray(max_img)
+
+    if max_img.shape != mean_img.shape:
+        full = np.zeros_like(mean_img, dtype=max_img.dtype)
+        yr = ops.get("yrange", (0, max_img.shape[0]))
+        xr = ops.get("xrange", (0, max_img.shape[1]))
+        y0, y1 = int(yr[0]), int(yr[1])
+        x0, x1 = int(xr[0]), int(xr[1])
+        # Guard against any mismatch between yrange/xrange and max_proj shape.
+        h = min(y1 - y0, max_img.shape[0])
+        w = min(x1 - x0, max_img.shape[1])
+        full[y0:y0 + h, x0:x0 + w] = max_img[:h, :w]
+        max_img = full
 
     # dF/F memmap
     dff, _, _, T, N = utils.s2p_open_memmaps(plane0, prefix=DFF_PREFIX)
@@ -515,7 +480,7 @@ class CurationApp:
         self.root.quit()
         self.root.destroy()
 
-    def un(self):
+    def run(self):
         self.root.mainloop()
 
 

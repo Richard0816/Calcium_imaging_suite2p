@@ -36,8 +36,9 @@ from .model import CellFilter
 
 
 @torch.no_grad()
-def predict_recording(rec_id: str, model: CellFilter, device: torch.device) -> Path:
-    rec = _RecordingCache(rec_id)
+def predict_recording(rec_id: str, model: CellFilter, device: torch.device,
+                      plane0: Path | None = None) -> Path:
+    rec = _RecordingCache(rec_id, plane0=plane0)
     N = rec.N
 
     probs = np.zeros(N, dtype=np.float32)
@@ -75,6 +76,9 @@ def main():
     ap.add_argument("--rec", type=str, default=None,
                     help="Single recording ID (e.g. 2024-07-01_00018). "
                          "If omitted, predicts every recording under DATA_ROOT.")
+    ap.add_argument("--plane0", type=str, default=None,
+                    help="Direct path to a suite2p/plane0 directory. Bypasses "
+                         "DATA_ROOT/{Cx,Hip}/<rec_id> resolution.")
     ap.add_argument("--ckpt", type=str, default=None,
                     help="Path to checkpoint. Defaults to CHECKPOINT_DIR/best.pt")
     args = ap.parse_args()
@@ -90,6 +94,14 @@ def main():
     model = CellFilter().to(device)
     model.load_state_dict(ckpt["model"])
     model.eval()
+
+    if args.plane0:
+        plane0 = Path(args.plane0)
+        if not (plane0 / "stat.npy").exists():
+            raise FileNotFoundError(f"No stat.npy in {plane0}")
+        rec_id = args.rec or plane0.parent.parent.name
+        predict_recording(rec_id, model, device, plane0=plane0)
+        return
 
     if args.rec:
         rec_ids = [args.rec]

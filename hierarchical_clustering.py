@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,10 +16,14 @@ def count_leaf_color_groups(Z, color_threshold: float) -> int:
     return len(set(r["leaves_color_list"]))
 
 
-def export_rois_by_leaf_color(root: Path, Z, color_threshold: float = 0.7, prefix: str = "r0p7_"):
+def export_rois_by_leaf_color(root: Path, Z, color_threshold: float = 0.7, prefix: str = "r0p7_",
+                              local_to_global: np.ndarray | None = None):
     """
     Export lists of ROI indices grouped by dendrogram leaf color.
     Each color (leaf cluster) is saved as <color>_rois.npy.
+
+    If `local_to_global` is provided, dendrogram leaf indices (positions in the
+    clustered subset) are mapped through it to global ROI indices before saving.
     """
     from scipy.cluster.hierarchy import dendrogram
     import re
@@ -27,21 +33,34 @@ def export_rois_by_leaf_color(root: Path, Z, color_threshold: float = 0.7, prefi
     leaves = r['leaves']
     leaf_colors = r['leaves_color_list']
 
-    # Group ROI indices by color
+    # Group ROI indices by color (map local -> global if provided)
     color_groups = {}
-    for roi, color in zip(leaves, leaf_colors):
+    for leaf, color in zip(leaves, leaf_colors):
+        roi = int(local_to_global[leaf]) if local_to_global is not None else int(leaf)
         color_groups.setdefault(color, []).append(roi)
 
     # Save each color group as separate .npy file
     save_dir = root / f"{prefix}cluster_results"
     save_dir.mkdir(parents=True, exist_ok=True)
 
+    import csv
+
+    csv_rows = []
     for color, roi_list in color_groups.items():
         # sanitize color name (e.g., 'C0', '#FF8800') → 'C0' or 'FF8800'
         color_name = re.sub(r'[^A-Za-z0-9]+', '_', color)
         path = save_dir / f"{color_name}_rois.npy"
         np.save(path, np.array(roi_list, dtype=int))
         print(f"Saved {path} with {len(roi_list)} ROIs.")
+        for roi in roi_list:
+            csv_rows.append((color_name, int(roi)))
+
+    csv_path = save_dir / "cluster_identities.csv"
+    with open(csv_path, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["cluster", "roi"])
+        writer.writerows(csv_rows)
+    print(f"Saved {csv_path} with {len(csv_rows)} rows.")
 
 def load_dff(root: Path, prefix: str = "r0p7_"):
     dff, _, _ = utils.s2p_open_memmaps(root, prefix=prefix)[:3]
@@ -101,8 +120,14 @@ def plot_dendrogram_heatmap(dff: np.ndarray, Z, save_dir: Path, fps: float = 30.
     return order
 
 
-def plot_spatial_from_labels(root: Path, order, link_colors, labels_file: str = None, prefix: str = "r0p7_", directory_extension: str = "combined_cluster"):
-    """Color ROIs spatially by dendrogram leaf colors corresponding to their order."""
+def plot_spatial_from_labels(root: Path, order, link_colors, labels_file: str = None,
+                             prefix: str = "r0p7_", directory_extension: str = "combined_cluster",
+                             kept_indices: np.ndarray | None = None):
+    """Color ROIs spatially by dendrogram leaf colors corresponding to their order.
+
+    If `kept_indices` is provided, `order` and `link_colors` are assumed to index
+    into the kept subset; stat is filtered to those ROIs.
+    """
     import matplotlib as mpl
     import numpy as np
 
@@ -121,16 +146,10 @@ def plot_spatial_from_labels(root: Path, order, link_colors, labels_file: str = 
         print(f"Loaded {len(cluster_labels)} ROI indices from {labels_file}")
         stat = [stat[i] for i in cluster_labels]
         used_indices = cluster_labels
-    elif "filtered" in prefix.split("_"):
-        mask_path = root / "r0p7_cell_mask_bool.npy"
-        if mask_path.exists():
-            mask = np.load(mask_path)
-            stat = [s for s, keep in zip(stat, mask) if keep]
-            used_indices = np.where(mask)[0]
-            print(f"Applied cell mask: {mask.sum()} / {len(mask)} ROIs kept.")
-        else:
-            used_indices = np.arange(len(stat))
-            print(f"Warning: {mask_path} not found; skipping mask application.")
+    elif kept_indices is not None:
+        stat = [stat[i] for i in kept_indices]
+        used_indices = kept_indices
+        print(f"Applied cellfilter mask: {len(kept_indices)} / {len(np.load(root / 'stat.npy', allow_pickle=True))} ROIs kept.")
     else:
         used_indices = np.arange(len(stat))
 
@@ -168,10 +187,35 @@ def plot_spatial_from_labels(root: Path, order, link_colors, labels_file: str = 
     print(f"Saved: {out_path}")
 
 
+def _load_cell_mask(root: Path, num_rois: int,
+                    mask_name: str = "predicted_cell_mask.npy") -> np.ndarray:
+    """Return kept_indices (np.int64) based on cellfilter mask, or all indices
+    if the mask file is missing."""
+    mask_path = Path(root) / mask_name
+    if not mask_path.exists():
+        print(f"[mask] {mask_name} not found at {root}; using all {num_rois} ROIs")
+        return np.arange(num_rois, dtype=np.int64)
+    cell_mask = np.load(mask_path).astype(bool)
+    if cell_mask.size != num_rois:
+        raise ValueError(
+            f"predicted_cell_mask size {cell_mask.size} != num_rois {num_rois} "
+            f"(stale mask? rerun analyze_output_gpu.)"
+        )
+    kept = np.flatnonzero(cell_mask).astype(np.int64)
+    print(f"[mask] using {kept.size}/{num_rois} cell-filter-positive ROIs")
+    return kept
+
+
 def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "ward", metric: str = "euclidean"):
     save_dir = root / f"{prefix}cluster_results"
     dff = load_dff(root, prefix=prefix)
-    Z = run_clustering(dff, method=method, metric=metric)
+    num_rois = dff.shape[1]
+
+    kept_indices = _load_cell_mask(root, num_rois)
+    dff_subset = np.asarray(dff[:, kept_indices], dtype=np.float32)
+    print(f"Clustering on dff_subset shape {dff_subset.shape} (T, n_kept)")
+
+    Z = run_clustering(dff_subset, method=method, metric=metric)
     # --- Automatically choose a color_threshold that yields ~4–5 groups ---
     target_counts = {4, 5}
     start = 0.90
@@ -191,19 +235,23 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", method: str = "wa
     color_threshold = chosen
     print(f"[dendrogram] auto color_threshold={color_threshold:.2f} → {chosen_n} groups")
 
-    order = plot_dendrogram_heatmap(dff, Z, save_dir, fps=fps, color_threshold=color_threshold)
+    order = plot_dendrogram_heatmap(dff_subset, Z, save_dir, fps=fps, color_threshold=color_threshold)
+    # Save BOTH: local ordering (positions in kept subset) and global ROI ids.
     np.save(save_dir / "cluster_order.npy", np.array(order, dtype=int))
-    print(f"Saved cluster order to {save_dir / 'cluster_order.npy'}")
+    np.save(save_dir / "kept_indices.npy", kept_indices)
+    np.save(save_dir / "cluster_order_global.npy", kept_indices[np.array(order, dtype=int)])
+    print(f"Saved cluster order (local + global) to {save_dir}")
 
     r = dendrogram(Z, no_plot=True, color_threshold=color_threshold * max(Z[:, 2]))
     link_colors = r['leaves_color_list']
 
-    plot_spatial_from_labels(root, order, link_colors, prefix=prefix)
+    plot_spatial_from_labels(root, order, link_colors, prefix=prefix, kept_indices=kept_indices)
     print(
         f"Saved spatial map colored by dendrogram ROI colors to {save_dir / 'spatial_dendrogram_colored_rois.png'}"
     )
 
-    export_rois_by_leaf_color(root, Z, color_threshold=color_threshold, prefix=prefix)
+    export_rois_by_leaf_color(root, Z, color_threshold=color_threshold, prefix=prefix,
+                              local_to_global=kept_indices)
     print("Saved ROI lists by dendrogram leaf color.")
 
 def main_from_existing_clustering(root: Path,

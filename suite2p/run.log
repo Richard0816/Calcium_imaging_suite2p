@@ -1,0 +1,71 @@
+
+ >>>>> started run at 22/04/2024 14:57:34{'data_path': ['X:/Cembrowski Lab/Larissa/1. Projects/Human brain tissue/2_CaImaging/downsampled_1p/2023-09-27_12'], 'subfolders': [], 'h5py_key': 'data', 'save_path0': 'X:/Cembrowski Lab/Larissa/1. Projects/Human brain tissue/2_CaImaging/downsampled_1p/2023-09-27_12', 'fast_disk': 'C:/Users/lkraus01', 'input_format': 'tif'}
+
+tif
+
+** Found 1 tifs - converting to binary **
+
+time 162.80 sec. Wrote 10000 frames per binary for 1 planes
+
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+
+NOTE: not registered / registration forced with ops['do_registration']>1
+
+      (no previous offsets to delete)
+
+NOTE: applying default C:\Users\lkraus01\.suite2p\classifiers\classifier_user.npy
+
+----------- REGISTRATION
+
+Reference frame, 36.87 sec.
+
+Registered 4000/10000 in 256.60s
+
+Registered 8000/10000 in 513.25s
+
+Registered 10000/10000 in 633.93s
+
+----------- Total 681.38 sec
+
+Registration metrics, 63.09 sec.
+
+----------- ROI DETECTION
+
+Binning movie in chunks of length 02
+
+Binned movie of size [5000,506,686] created in 13.30 sec.
+
+Binned movie denoised (for cell detection only) in 135.41 sec.
+
+NOTE: estimated spatial scale ~12 pixels, time epochs 4.17, threshold 41.67 
+
+0 ROIs, score=235.53
+
+Detected 90 ROIs, 255.12 sec
+
+After removing overlaps, 84 ROIs remain
+
+----------- Total 407.32 sec.
+
+----------- EXTRACTION
+
+Masks created, 1.67 sec.
+
+Extracted fluorescence from 84 ROIs in 10000 frames, 19.43 sec.
+
+----------- Total 22.60 sec.
+
+----------- CLASSIFICATION
+
+['skew', 'npix_norm', 'compact']
+
+----------- SPIKE DECONVOLUTION
+
+----------- Total 0.08 sec.
+
+Plane 0 processed in 1175.59 sec (can open in GUI).
+
+total = 1340.30 sec.
+
+TOTAL RUNTIME 1340.30 sec
+

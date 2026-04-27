@@ -31,7 +31,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from . import config as C
-from .dataset import ROIDataset, load_labels, split_by_recording
+from .dataset import ROIDataset, load_labels, split_by_roi
 from .model import CellFilter
 
 
@@ -115,9 +115,13 @@ def main():
     print(f"  positives: {(df['user_defined_cell']==1).sum()}   "
           f"negatives: {(df['user_defined_cell']==0).sum()}")
 
-    train_df, val_df = split_by_recording(df, C.VAL_FRAC, C.RANDOM_SEED)
-    print(f"train: {len(train_df)} ROIs  ({train_df['recording_ID'].nunique()} recs)")
-    print(f"val:   {len(val_df)} ROIs  ({val_df['recording_ID'].nunique()} recs)")
+    train_df, val_df = split_by_roi(df, C.VAL_FRAC, C.RANDOM_SEED)
+    print(f"train: {len(train_df)} ROIs  ({train_df['recording_ID'].nunique()} recs)  "
+          f"pos={(train_df['user_defined_cell']==1).sum()}  "
+          f"neg={(train_df['user_defined_cell']==0).sum()}")
+    print(f"val:   {len(val_df)} ROIs  ({val_df['recording_ID'].nunique()} recs)  "
+          f"pos={(val_df['user_defined_cell']==1).sum()}  "
+          f"neg={(val_df['user_defined_cell']==0).sum()}")
 
     shared_cache = {}
     train_ds = ROIDataset(train_df, random_crop=True, cache=shared_cache)

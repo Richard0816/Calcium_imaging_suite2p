@@ -114,51 +114,11 @@ def _resolve_pix_to_um(root: Path, ops: dict) -> Optional[float]:
         return None
 
 
-def _load_filter_mask(root: Path) -> Optional[np.ndarray]:
-    """Cell-filter keep mask: predicted_cell_mask.npy, then iscell.npy fallback."""
-    pred_path = root / "predicted_cell_mask.npy"
-    if pred_path.exists():
-        return np.load(pred_path).astype(bool)
-    iscell_path = root / "iscell.npy"
-    if iscell_path.exists():
-        ic = np.load(iscell_path)
-        return ((ic[:, 0] > 0) if ic.ndim == 2 else (ic > 0)).astype(bool)
-    return None
-
-
 def load_dff(root: Path, prefix: str = "r0p7_filtered_") -> np.ndarray:
-    """Open ``<prefix>dff.memmap.float32`` against the cell-filter mask.
-
-    For a "filtered" prefix the memmap was written at the size of the cell-
-    filter keep mask (predicted_cell_mask.npy preferred, iscell.npy fallback),
-    so we apply that exact mask here. For an unfiltered prefix we use the
-    full Suite2p ROI count.
-    """
-    root = Path(root)
-    F = np.load(root / "F.npy", mmap_mode="r")
-    N_total, T = F.shape
-    is_filtered = "filtered" in prefix.split("_")
-
-    if is_filtered:
-        mask = _load_filter_mask(root)
-        if mask is None:
-            raise FileNotFoundError(
-                f"{root}: prefix {prefix!r} requires a cell-filter mask "
-                "(predicted_cell_mask.npy or iscell.npy).")
-        if mask.size != N_total:
-            raise ValueError(
-                f"{root}: cell-filter mask length {mask.size} does not "
-                f"match F.npy ROI count {N_total}.")
-        N_kept = int(mask.sum())
-    else:
-        N_kept = N_total
-
-    dff_path = root / f"{prefix}dff.memmap.float32"
-    if not dff_path.exists():
-        raise FileNotFoundError(f"Missing dF/F memmap: {dff_path}")
-    dff = np.memmap(dff_path, dtype="float32", mode="r",
-                    shape=(T, N_kept))
-    return np.asarray(dff)
+    dff, _, _ = utils.s2p_open_memmaps(root, prefix=prefix)[:3]
+    if dff.ndim != 2:
+        raise ValueError(f"Expected (T, N) ΔF/F array, got shape {dff.shape}")
+    return dff
 
 
 def run_clustering(
@@ -263,20 +223,20 @@ def plot_heatmap(
 
 def _stat_for_prefix(root: Path, prefix: str) -> tuple[list, Optional[np.ndarray]]:
     """
-    Restrict ``stat.npy`` to the cell-filter keep mask when ``prefix`` signals
-    a filtered set (e.g. 'r0p7_filtered_') so the i-th stat entry matches the
-    i-th column of the filtered ΔF/F memmap. Mask source matches ``load_dff``:
-    predicted_cell_mask.npy first, iscell.npy as fallback.
+    Match the filtered-ROI convention used by hierarchical_clustering.py:
+    when the prefix signals a filtered set (e.g. 'r0p7_filtered_'),
+    restrict stat to ROIs kept by the cell mask so indices align with
+    the filtered ΔF/F used during clustering.
     """
     root = Path(root)
     stat = list(np.load(root / "stat.npy", allow_pickle=True))
     if "filtered" in prefix.split("_"):
-        mask = _load_filter_mask(root)
-        if mask is not None:
+        mask_path = root / "r0p7_cell_mask_bool.npy"
+        if mask_path.exists():
+            mask = np.load(mask_path)
             used = np.where(mask)[0]
             return [stat[i] for i in used], used
-        print(f"⚠️ no cell-filter mask in {root}; "
-              "painting against unfiltered stat.npy.")
+        print(f"⚠️ {mask_path} not found; painting against unfiltered stat.npy.")
     return stat, None
 
 
@@ -330,7 +290,7 @@ def plot_spatial(
         xlabel, ylabel = "X (pixels)", "Y (pixels)"
 
     fig, ax = plt.subplots(figsize=(8, 7))
-    ax.imshow(img, origin="lower", extent=extent, aspect="equal")
+    ax.imshow(img, origin="upper", extent=extent, aspect="equal")
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)

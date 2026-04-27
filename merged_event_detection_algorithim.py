@@ -493,8 +493,8 @@ if __name__ == "__main__":
     import event_detection as ed
 
     onset_cfg = ed.OnsetDensityConfig(
-        root=Path(r"F:\data\2p_shifted\Cx\2024-07-02_00006\suite2p\plane0"),
-        prefix="r0p7_filtered_",
+        root=Path(r"D:\sparse_plus_cellpose\2024-11-20_00003\final\suite2p\plane0"),
+        prefix="r0p7_",
         fps=15.0,
         z_enter=3.5,
         z_exit=1.5,

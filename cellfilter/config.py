@@ -4,6 +4,11 @@ from pathlib import Path
 # --- Paths ---
 LABELS_CSV = Path(r"F:\roi_curation.csv")
 DATA_ROOT = Path(r"F:\data\2p_shifted")  # contains Cx\ and Hip\
+# Extra roots searched recursively (any depth) for a folder named <rec_id>
+# that contains suite2p/plane0. First match wins.
+EXTRA_DATA_ROOTS = [
+    Path(r"D:\data"),
+]
 CHECKPOINT_DIR = Path(r"F:\cellfilter_checkpoints")
 
 # --- Data ---

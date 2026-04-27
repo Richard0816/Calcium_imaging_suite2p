@@ -44,9 +44,15 @@ def _normalize_and_transpose_arrays(F_cell, F_neuropil):
     return F_cell, F_neuropil, num_timepoints, num_rois
 
 
-def _setup_output_memmaps(out_dir, prefix, num_timepoints, num_rois):
+def _setup_output_memmaps(out_dir, prefix, num_timepoints, num_rois,
+                          compute_lowpass: bool = True,
+                          compute_derivative: bool = True):
     """
     Create output directory and memory-mapped arrays for results.
+
+    ``compute_lowpass`` / ``compute_derivative`` toggle whether the
+    corresponding memmap is created. Disabled outputs return ``None``
+    in their slot (both for the memmap object and the file path).
 
     Returns:
         tuple: (dff_memmap, lowpass_memmap, derivative_memmap, file_paths)
@@ -56,12 +62,19 @@ def _setup_output_memmaps(out_dir, prefix, num_timepoints, num_rois):
     os.makedirs(out_dir, exist_ok=True)
 
     dff_path = os.path.join(out_dir, f"{prefix}dff.memmap.float32")
-    lowpass_path = os.path.join(out_dir, f"{prefix}dff_lowpass.memmap.float32")
-    derivative_path = os.path.join(out_dir, f"{prefix}dff_dt.memmap.float32")
+    lowpass_path = (os.path.join(out_dir, f"{prefix}dff_lowpass.memmap.float32")
+                    if compute_lowpass else None)
+    derivative_path = (os.path.join(out_dir, f"{prefix}dff_dt.memmap.float32")
+                       if compute_derivative else None)
 
-    dff_memmap = np.memmap(dff_path, mode='w+', dtype='float32', shape=(num_timepoints, num_rois))
-    lowpass_memmap = np.memmap(lowpass_path, mode='w+', dtype='float32', shape=(num_timepoints, num_rois))
-    derivative_memmap = np.memmap(derivative_path, mode='w+', dtype='float32', shape=(num_timepoints, num_rois))
+    shape = (num_timepoints, num_rois)
+    dff_memmap = np.memmap(dff_path, mode='w+', dtype='float32', shape=shape)
+    lowpass_memmap = (np.memmap(lowpass_path, mode='w+', dtype='float32',
+                                shape=shape)
+                      if compute_lowpass else None)
+    derivative_memmap = (np.memmap(derivative_path, mode='w+', dtype='float32',
+                                   shape=shape)
+                         if compute_derivative else None)
 
     file_paths = (dff_path, lowpass_path, derivative_path)
     return dff_memmap, lowpass_memmap, derivative_memmap, file_paths
@@ -70,9 +83,13 @@ def _setup_output_memmaps(out_dir, prefix, num_timepoints, num_rois):
 def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
                         cell_start_idx, fps, win_sec, perc, cutoff_hz,
                         sg_win_ms, sg_poly, sos,
-                        dff_memmap, lowpass_memmap, derivative_memmap):
+                        dff_memmap, lowpass_memmap, derivative_memmap,
+                        baseline_mode='rolling', baseline_min=2.0):
     """
     Process a batch of cells with neuropil subtraction and write results to disk.
+
+    ``baseline_mode``: 'rolling' (rolling percentile, default) or
+    'first_n' (constant F0 from the first ``baseline_min`` minutes).
     """
     # Neuropil subtraction (vectorized)
     corrected_batch = (F_cell_batch - neuropil_coefficient * F_neuropil_batch).astype(np.float32)
@@ -86,26 +103,35 @@ def _process_cell_batch(F_cell_batch, F_neuropil_batch, neuropil_coefficient,
         trace = corrected_batch[:, cell_idx]
         global_cell_idx = cell_start_idx + cell_idx
 
-        # 1) ΔF/F (robust)
-        dff = utils.robust_df_over_f_1d(trace, win_sec=win_sec, perc=perc, fps=fps)
-
-        # 2) Low-pass (build SOS once, then reuse)
-        lowpass_filtered, _, sos_local = utils.lowpass_causal_1d(
-                    dff, fps=fps, cutoff_hz=cutoff_hz, order=2, zi=None, sos=sos_local)
-
-        # 3) SG first derivative
-        derivative = utils.sg_first_derivative_1d(lowpass_filtered, fps=fps, win_ms=sg_win_ms, poly=sg_poly)
-
-
-        # Write results to disk
+        # 1) ΔF/F (rolling percentile or first-N-minute baseline)
+        if baseline_mode == 'first_n':
+            dff = utils.first_n_min_df_over_f_1d(
+                trace, baseline_min=baseline_min, perc=perc, fps=fps)
+        else:
+            dff = utils.robust_df_over_f_1d(
+                trace, win_sec=win_sec, perc=perc, fps=fps)
         dff_memmap[:, global_cell_idx] = dff
-        lowpass_memmap[:, global_cell_idx] = lowpass_filtered
-        derivative_memmap[:, global_cell_idx] = derivative
+
+        # 2) Low-pass (build SOS once, then reuse) — only if requested
+        if lowpass_memmap is not None or derivative_memmap is not None:
+            lowpass_filtered, _, sos_local = utils.lowpass_causal_1d(
+                dff, fps=fps, cutoff_hz=cutoff_hz, order=2, zi=None,
+                sos=sos_local)
+            if lowpass_memmap is not None:
+                lowpass_memmap[:, global_cell_idx] = lowpass_filtered
+
+            # 3) SG first derivative — only if requested
+            if derivative_memmap is not None:
+                derivative = utils.sg_first_derivative_1d(
+                    lowpass_filtered, fps=fps, win_ms=sg_win_ms, poly=sg_poly)
+                derivative_memmap[:, global_cell_idx] = derivative
 
     # Flush batch to disk
     dff_memmap.flush()
-    lowpass_memmap.flush()
-    derivative_memmap.flush()
+    if lowpass_memmap is not None:
+        lowpass_memmap.flush()
+    if derivative_memmap is not None:
+        derivative_memmap.flush()
 
 def filter_rois_by_cell_score(root, fps=15.0, z_enter=3.5, z_exit=1.5, min_sep_s=0.3,
                               w_er=1.0, w_pz=1.2, w_area=0.4,
@@ -139,7 +165,9 @@ def process_suite2p_traces(
         batch_size=256,
         win_sec=45, perc=10,
         cutoff_hz=5.0, sg_win_ms=333, sg_poly=3,
-        out_dir=None, prefix=''
+        out_dir=None, prefix='',
+        baseline_mode='rolling', baseline_min=2.0,
+        compute_lowpass: bool = True, compute_derivative: bool = True,
 ):
     """
     Process Suite2p fluorescence traces through neuropil correction, ΔF/F computation,
@@ -147,6 +175,13 @@ def process_suite2p_traces(
 
     F_cell, F_neuropil: arrays from Suite2p (nROIs, T) or (T, nROIs) — auto-handled.
     Writes memmap outputs to disk to avoid RAM blowups.
+
+    ``baseline_mode``: 'rolling' uses ``win_sec`` rolling percentile;
+    'first_n' uses a constant F0 from the first ``baseline_min`` minutes.
+
+    ``compute_lowpass`` / ``compute_derivative``: skip the corresponding
+    memmap and computation when False (entries in the returned tuple are
+    ``None`` for skipped outputs).
 
     Returns:
         tuple: (dff_path, lowpass_path, derivative_path)
@@ -158,7 +193,9 @@ def process_suite2p_traces(
 
     # Step 2: Set up output memory-mapped arrays
     dff_memmap, lowpass_memmap, derivative_memmap, file_paths = _setup_output_memmaps(
-        out_dir, prefix, num_timepoints, num_rois
+        out_dir, prefix, num_timepoints, num_rois,
+        compute_lowpass=compute_lowpass,
+        compute_derivative=compute_derivative,
     )
 
     # Step 3: initialized SOS filter coefficients will be calculated when first cell run
@@ -175,7 +212,8 @@ def process_suite2p_traces(
         _process_cell_batch(
             F_cell_batch, F_neuropil_batch, r, batch_start_idx,
             fps, win_sec, perc, cutoff_hz, sg_win_ms, sg_poly, sos,
-            dff_memmap, lowpass_memmap, derivative_memmap
+            dff_memmap, lowpass_memmap, derivative_memmap,
+            baseline_mode=baseline_mode, baseline_min=baseline_min,
         )
 
         batch_duration = time.time() - batch_start_time

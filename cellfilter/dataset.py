@@ -31,13 +31,46 @@ from . import config as C
 
 # ---------------- helpers ----------------
 
+_REC_ROOT_CACHE: dict[str, Path] = {}
+
+
+def _scan_extra_root(extra_root: Path, rec_id: str) -> Optional[Path]:
+    """Recursively walk `extra_root` for a directory named `rec_id` that has
+    suite2p/plane0. Returns the first match, or None."""
+    if not extra_root.exists():
+        return None
+    for path in extra_root.rglob(rec_id):
+        if path.is_dir() and (path / "suite2p" / "plane0").is_dir():
+            return path
+    return None
+
+
 def find_recording_root(rec_id: str, data_root: Path = C.DATA_ROOT) -> Path:
-    """Return DATA_ROOT\\<region>\\<rec_id>. Raises if not found."""
+    """Resolve a recording id to its root folder.
+
+    Search order:
+      1. C.EXTRA_DATA_ROOTS (recursive walk)
+      2. data_root\\Cx\\<rec_id>, data_root\\Hip\\<rec_id>
+    """
+    if rec_id in _REC_ROOT_CACHE:
+        return _REC_ROOT_CACHE[rec_id]
+
+    for extra in getattr(C, "EXTRA_DATA_ROOTS", ()):
+        hit = _scan_extra_root(Path(extra), rec_id)
+        if hit is not None:
+            _REC_ROOT_CACHE[rec_id] = hit
+            return hit
+
     for region in ("Cx", "Hip"):
         cand = data_root / region / rec_id
         if cand.exists():
+            _REC_ROOT_CACHE[rec_id] = cand
             return cand
-    raise FileNotFoundError(f"Recording not found in Cx/ or Hip/: {rec_id}")
+
+    extras = ", ".join(str(p) for p in getattr(C, "EXTRA_DATA_ROOTS", ()))
+    raise FileNotFoundError(
+        f"Recording not found in extra roots [{extras}] or in {data_root}/Cx,Hip: {rec_id}"
+    )
 
 
 def _znorm(x: np.ndarray, eps: float = 1e-6) -> np.ndarray:
@@ -73,10 +106,14 @@ def _pad_to_patch(img: np.ndarray, cy: int, cx: int, size: int) -> tuple[np.ndar
 
 class _RecordingCache:
     """Holds lazily-loaded arrays for a single recording."""
-    def __init__(self, rec_id: str):
+    def __init__(self, rec_id: str, plane0: Optional[Path] = None):
         self.rec_id = rec_id
-        self.root = find_recording_root(rec_id)
-        self.plane0 = self.root / "suite2p" / "plane0"
+        if plane0 is not None:
+            self.plane0 = Path(plane0)
+            self.root = self.plane0.parent.parent
+        else:
+            self.root = find_recording_root(rec_id)
+            self.plane0 = self.root / "suite2p" / "plane0"
 
         stat = np.load(self.plane0 / "stat.npy", allow_pickle=True)
         ops = np.load(self.plane0 / "ops.npy", allow_pickle=True).item()
@@ -221,4 +258,32 @@ def split_by_recording(
     val_recs = set(recs[:n_val].tolist())
     train_df = df[~df["recording_ID"].isin(val_recs)].reset_index(drop=True)
     val_df = df[df["recording_ID"].isin(val_recs)].reset_index(drop=True)
+    return train_df, val_df
+
+
+def split_by_roi(
+    df: pd.DataFrame,
+    val_frac: float = C.VAL_FRAC,
+    seed: int = C.RANDOM_SEED,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Random per-ROI split, stratified by label so val keeps class balance.
+
+    Use this when there's only one (or very few) recordings, where
+    split_by_recording can't form a non-empty val set without losing all
+    positives or all negatives.
+    """
+    rng = np.random.default_rng(seed)
+    parts_train, parts_val = [], []
+    for label, sub in df.groupby("user_defined_cell"):
+        idx = np.arange(len(sub))
+        rng.shuffle(idx)
+        n_val = max(1, int(round(len(idx) * val_frac))) if len(idx) > 1 else 0
+        val_idx = idx[:n_val]
+        train_idx = idx[n_val:]
+        parts_val.append(sub.iloc[val_idx])
+        parts_train.append(sub.iloc[train_idx])
+    train_df = pd.concat(parts_train, ignore_index=True).sample(
+        frac=1.0, random_state=seed
+    ).reset_index(drop=True)
+    val_df = pd.concat(parts_val, ignore_index=True).reset_index(drop=True)
     return train_df, val_df

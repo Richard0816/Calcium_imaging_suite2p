@@ -10,7 +10,8 @@ import utils
 @dataclass
 class ImagingConfig:
     """Configuration parameters for imaging analysis."""
-    prefix: str = 'r0p7_filtered_'  # matches your processing run (prefix used by your saved memmaps)
+    prefix: str = 'r0p7_'  # matches memmaps written by analyze_output_gpu (all ROIs)
+    cell_mask_name: str = 'predicted_cell_mask.npy'  # cellfilter output; None/missing => all ROIs
     plot_seconds: float = None  # None = full recording; or e.g., 300 for first 5 minutes
     time_cols_target: int = 1200  # target width (columns) for heatmaps; code downsamples time to ~this many bins
 
@@ -80,31 +81,32 @@ def _process_roi(roi_index: int, lowpass_data: np.ndarray, derivative_data: np.n
     return heatmap_row, event_raster, event_count
 
 
-def _build_summaries(num_rois: int, lowpass: np.ndarray, derivative: np.ndarray,
+def _build_summaries(kept_indices: np.ndarray, lowpass: np.ndarray, derivative: np.ndarray,
                      time_slice: slice, config: ImagingConfig, downsample_factor: int, num_cols: int, fps: float = 15.0):
-    """Build heatmap matrix, event raster, and event counts for all ROIs.
+    """Build heatmap matrix, event raster, and event counts for ROIs in `kept_indices`.
 
     Returns:
         tuple: (heatmap, event_raster, event_counts, sorted_order)
+            arrays indexed by position in `kept_indices` (len = n_kept).
     """
-    heatmap = np.zeros((num_rois, num_cols), dtype=np.uint8)
-    event_raster = np.zeros((num_rois, num_cols), dtype=np.uint8)
-    event_counts = np.zeros(num_rois, dtype=int)
+    n_kept = kept_indices.size
+    heatmap = np.zeros((n_kept, num_cols), dtype=np.uint8)
+    event_raster = np.zeros((n_kept, num_cols), dtype=np.uint8)
+    event_counts = np.zeros(n_kept, dtype=int)
 
-    for roi_index in range(num_rois):
+    for out_idx, roi_index in enumerate(kept_indices):
         lowpass_slice = lowpass[time_slice, roi_index]
         derivative_slice = derivative[time_slice, roi_index]
 
         heatmap_row, event_row, count = _process_roi(
-            roi_index, lowpass_slice, derivative_slice,
+            int(roi_index), lowpass_slice, derivative_slice,
             config, downsample_factor, num_cols, fps=fps
         )
 
-        heatmap[roi_index, :] = heatmap_row
-        event_raster[roi_index, :] = event_row
-        event_counts[roi_index] = count
+        heatmap[out_idx, :] = heatmap_row
+        event_raster[out_idx, :] = event_row
+        event_counts[out_idx] = count
 
-    # Sort ROIs by descending event count
     sorted_order = np.argsort(-event_counts)
 
     return heatmap, event_raster, event_counts, sorted_order
@@ -145,7 +147,8 @@ def _save_event_raster(event_raster_sorted: np.ndarray, root: str, config: Imagi
     plt.close()
 
 
-def _save_small_multiples(lowpass: np.ndarray, sorted_order: np.ndarray, event_counts: np.ndarray,
+def _save_small_multiples(lowpass: np.ndarray, kept_indices: np.ndarray,
+                          sorted_order: np.ndarray, event_counts: np.ndarray,
                           root: str, config: ImagingConfig, num_rois: int, num_frames_cropped: int, fps: float):
     """Generate and save small multiples line plots for top active ROIs."""
     time_axis = np.arange(num_frames_cropped) / fps
@@ -158,20 +161,20 @@ def _save_small_multiples(lowpass: np.ndarray, sorted_order: np.ndarray, event_c
         if start_idx >= end_idx:
             break
 
-        roi_indices = sorted_order[start_idx:end_idx]
+        order_slice = sorted_order[start_idx:end_idx]
         fig, axes = plt.subplots(config.grid_rows, config.grid_cols, figsize=(16, 18), sharex=True)
         axes = np.array(axes).reshape(-1)
 
-        for panel_idx, roi_idx in enumerate(roi_indices):
+        for panel_idx, kept_pos in enumerate(order_slice):
+            real_roi = int(kept_indices[kept_pos])
             ax = axes[panel_idx]
-            trace = np.asarray(lowpass[:num_frames_cropped, roi_idx], dtype=np.float32)
+            trace = np.asarray(lowpass[:num_frames_cropped, real_roi], dtype=np.float32)
 
-            # Robust y-limits for readability
             y_low, y_high = np.percentile(trace, [1, 99])
             ax.plot(time_axis, trace, linewidth=0.8)
             ax.set_ylim(y_low, y_high if y_high > y_low else y_low + 1e-3)
             ax.set_title(
-                f'ROI {roi_idx} (#{start_idx + panel_idx + 1})  events={event_counts[roi_idx]}',
+                f'ROI {real_roi} (#{start_idx + panel_idx + 1})  events={event_counts[kept_pos]}',
                 fontsize=9
             )
             ax.grid(True, alpha=0.15)
@@ -208,6 +211,23 @@ def run_full_imaging_on_folder(folder_name: str):
     # Load data
     num_rois, num_frames, lowpass, derivative = _load_imaging_data(root, config.prefix)
 
+    # Apply predicted cell mask (cellfilter output); fallback to all ROIs if missing.
+    mask_path = os.path.join(root, config.cell_mask_name) if config.cell_mask_name else None
+    if mask_path and os.path.exists(mask_path):
+        cell_mask = np.load(mask_path).astype(bool)
+        if cell_mask.size != num_rois:
+            raise ValueError(
+                f"predicted_cell_mask size {cell_mask.size} != num_rois {num_rois} "
+                f"(stale mask? rerun analyze_output_gpu.)"
+            )
+        kept_indices = np.flatnonzero(cell_mask).astype(np.int64)
+        print(f"[mask] using {kept_indices.size}/{num_rois} cell-filter-positive ROIs")
+    else:
+        kept_indices = np.arange(num_rois, dtype=np.int64)
+        print(f"[mask] {config.cell_mask_name} not found at {root}; using all {num_rois} ROIs")
+
+    n_kept = kept_indices.size
+
     # Determine time cropping and downsampling
     if config.plot_seconds is not None:
         num_frames_cropped = min(num_frames, int(config.plot_seconds * fps))
@@ -219,19 +239,18 @@ def run_full_imaging_on_folder(folder_name: str):
     downsample_factor = max(1, num_frames_cropped // config.time_cols_target)
     num_cols = num_frames_cropped // downsample_factor
 
-    # Build summaries
+    # Build summaries (only for kept ROIs)
     heatmap, event_raster, event_counts, sorted_order = _build_summaries(
-        num_rois, lowpass, derivative, time_slice, config, downsample_factor, num_cols, fps
+        kept_indices, lowpass, derivative, time_slice, config, downsample_factor, num_cols, fps
     )
     print("Summaries built: heatmap matrix =", heatmap.shape, "event raster =", event_raster.shape)
 
-    # Generate visualizations
     heatmap_sorted = heatmap[sorted_order]
     event_raster_sorted = event_raster[sorted_order]
 
-    _save_heatmap(heatmap_sorted, root, config, num_rois, num_cols, downsample_factor, sample_name, fps=fps)
-    _save_event_raster(event_raster_sorted, root, config, num_rois, sample_name)
-    _save_small_multiples(lowpass, sorted_order, event_counts, root, config, num_rois, num_frames_cropped, fps)
+    _save_heatmap(heatmap_sorted, root, config, n_kept, num_cols, downsample_factor, sample_name, fps=fps)
+    _save_event_raster(event_raster_sorted, root, config, n_kept, sample_name)
+    _save_small_multiples(lowpass, kept_indices, sorted_order, event_counts, root, config, n_kept, num_frames_cropped, fps)
 
     print("Saved:",
           os.path.join(root, f'{config.prefix}overview_heatmap.png'),

@@ -3,8 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.fft as fft
 import math
+import time
 import utils  # must be importable (same folder or PYTHONPATH)
 import os
+
+
+def wait_for_memmaps(plane_dir: Path, prefix: str, poll_sec: int = 300) -> None:
+    """Block until all three <prefix>{kind}.memmap.float32 files exist."""
+    needed = [plane_dir / f"{prefix}{k}.memmap.float32"
+              for k in ("dff", "dff_lowpass", "dff_dt")]
+    while True:
+        missing = [p.name for p in needed if not p.exists()]
+        if not missing:
+            return
+        print(f"[wait] {plane_dir}: missing {missing} — sleeping {poll_sec}s")
+        time.sleep(poll_sec)
 
 def compute_fft(signal: np.ndarray, fps: float):
     """Compute FFT and return frequencies and power."""
@@ -92,12 +105,16 @@ def main(root: Path, fps: float = 30.0, prefix: str = "r0p7_", rois_per_fig: int
     print("All FFT grids saved.")
 
 def run_on_folder(root: str):
-    root = Path(os.path.join(root, "suite2p\\plane0\\"))
-    fps = 30.0
-    prefix = "r0p7_"
+    plane_dir = Path(root) / "final" / "suite2p" / "plane0"
+    if not plane_dir.is_dir():
+        print(f"Skipping {root}: no final/suite2p/plane0 directory")
+        return
+    fps = 15.07
+    prefix = "r0p7_filtered_"
     freq_max = 15.0
     rois_per_fig = 60
-    main(root, fps, prefix, rois_per_fig, freq_max)
+    wait_for_memmaps(plane_dir, prefix)
+    main(plane_dir, fps, prefix, rois_per_fig, freq_max)
 
 if __name__ == "__main__":
-    utils.run_on_folders("F:\\data\\2p_shifted\\Hip\\", run_on_folder, "fft_output.log")
+    utils.run_on_folders("G:\\sparse_plus_cellpose\\", run_on_folder, "fft_output_for_julia.log")
