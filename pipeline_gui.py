@@ -1856,7 +1856,7 @@ class LowpassTab(ttk.Frame):
         ttk.Label(row, textvariable=self.compute_status_var,
                   font=("", 9, "italic")).pack(side="left")
 
-        # Trace source toggle: population mean vs best-scoring ROI.
+        # Trace source toggle: population mean / best ROI / manual ROI #.
         row = ttk.Frame(header); row.pack(fill="x", pady=(4, 0))
         ttk.Label(row, text="Trace source:", width=12).pack(side="left")
         self.source_var = tk.StringVar(value="mean")
@@ -1869,7 +1869,18 @@ class LowpassTab(ttk.Frame):
             row, text="Best-scoring ROI (max predicted_cell_prob)",
             value="best", variable=self.source_var,
             command=self._on_source_change,
+        ).pack(side="left", padx=(0, 12))
+        ttk.Radiobutton(
+            row, text="Manual ROI #:",
+            value="manual", variable=self.source_var,
+            command=self._on_source_change,
         ).pack(side="left")
+        self.manual_roi_var = tk.StringVar(value="0")
+        manual_entry = ttk.Entry(row, textvariable=self.manual_roi_var,
+                                 width=7)
+        manual_entry.pack(side="left", padx=(2, 0))
+        manual_entry.bind("<Return>", self._on_manual_entry)
+        manual_entry.bind("<FocusOut>", self._on_manual_entry)
 
         self.status_var = tk.StringVar(
             value="Run detection first (or reload from a finished folder).")
@@ -1997,6 +2008,40 @@ class LowpassTab(ttk.Frame):
                       "falling back to population mean trace.")
                 source = "mean"
 
+        if source == "manual":
+            # Manual ROI # is interpreted as the *original* suite2p ROI
+            # index (0..N_total-1), regardless of whether it survived the
+            # cell-filter mask. Load that single column from the unfiltered
+            # r0p7_dff memmap so excluded ROIs are still inspectable.
+            try:
+                roi_idx = int(self.manual_roi_var.get().strip())
+            except (ValueError, AttributeError):
+                print(f"[GUI] Manual ROI: invalid number "
+                      f"{self.manual_roi_var.get()!r}; "
+                      f"falling back to mean.")
+                source = "mean"
+            else:
+                if roi_idx < 0 or roi_idx >= N_total:
+                    print(f"[GUI] Manual ROI {roi_idx} out of range "
+                          f"[0, {N_total}); falling back to mean.")
+                    source = "mean"
+                else:
+                    dff_full_path = plane0 / "r0p7_dff.memmap.float32"
+                    if not dff_full_path.exists():
+                        print(f"[GUI] {dff_full_path.name} missing; cannot "
+                              f"extract manual ROI; falling back to mean.")
+                        source = "mean"
+                    else:
+                        full = np.memmap(str(dff_full_path),
+                                         dtype="float32", mode="r",
+                                         shape=(T, N_total))
+                        trace = np.asarray(full[:, roi_idx],
+                                           dtype=np.float32)
+                        self._mean_dff = trace
+                        excluded = "" if mask[roi_idx] \
+                            else " [excluded by mask]"
+                        self._trace_label = f"ROI {roi_idx}{excluded}"
+
         if source == "best":
             probs_full = np.load(prob_path).astype(np.float32)
             # Restrict to kept ROIs (filtered memmap column space).
@@ -2008,7 +2053,7 @@ class LowpassTab(ttk.Frame):
             trace = np.asarray(dff[:, best_in_kept], dtype=np.float32)
             self._mean_dff = trace
             self._trace_label = (f"ROI {best_orig} (score {best_score:.3f})")
-        else:
+        elif source == "mean":
             # Population-mean trace in chunks (avoids materializing full memmap).
             mean_dff = np.zeros(T, dtype=np.float32)
             chunk = max(1, min(T, 8192))
@@ -2130,6 +2175,15 @@ class LowpassTab(ttk.Frame):
             f"Source: {self._trace_label}  "
             f"T={self._mean_dff.size}  fps={self._fps:.2f}  "
             f"cutoff={self.cutoff_var.get():.3f} Hz")
+
+    def _on_manual_entry(self, _event=None) -> None:
+        """User typed in the Manual ROI # entry: snap source to manual and
+        reload. Also fired on FocusOut so clicking elsewhere applies the
+        value without forcing the user to hit Enter first."""
+        if self._plane0 is None:
+            return
+        self.source_var.set("manual")
+        self._on_source_change()
 
     # -- Advanced parameters ------------------------------------------------
 
