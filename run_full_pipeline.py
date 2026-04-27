@@ -200,6 +200,53 @@ def run_detection(shifted_folder: Path, detection_root: Path,
 
 
 # ---------------------------------------------------------------------------
+# 2b. Normalize F / Fneu so neither has negative values
+# ---------------------------------------------------------------------------
+def normalize_f_fneu(plane0: Path) -> None:
+    """Shift F.npy and Fneu.npy by a single shared constant so neither has
+    negative values (mirrors the raw-movie shift in preprocessing). Backs up
+    the originals to F_orig.npy / Fneu_orig.npy the first time the shift is
+    applied; re-runs read from those backups so the shift is never compounded.
+    """
+    F_path    = plane0 / "F.npy"
+    Fneu_path = plane0 / "Fneu.npy"
+    F_orig    = plane0 / "F_orig.npy"
+    Fneu_orig = plane0 / "Fneu_orig.npy"
+    label = plane0.parent.parent.name
+
+    if not F_path.exists() or not Fneu_path.exists():
+        print(f"[normalize] skip {label}: F.npy or Fneu.npy missing")
+        return
+
+    # If backups exist, they are the source of truth so re-runs don't
+    # compound the shift.
+    src_F    = F_orig    if F_orig.exists()    else F_path
+    src_Fneu = Fneu_orig if Fneu_orig.exists() else Fneu_path
+    F    = np.load(src_F)
+    Fneu = np.load(src_Fneu)
+
+    fmin, fnmin = float(F.min()), float(Fneu.min())
+    gmin = min(fmin, fnmin)
+    if gmin >= 0:
+        print(f"[normalize] {label}: F.min={fmin:.3f} Fneu.min={fnmin:.3f}; "
+              f"already non-negative")
+        return
+
+    shift = -gmin
+    print(f"[normalize] {label}: F.min={fmin:.3f} Fneu.min={fnmin:.3f} "
+          f"-> shift+={shift:.3f}")
+
+    # First-time modification: snapshot the originals before overwriting.
+    if not F_orig.exists():
+        np.save(F_orig, F)
+    if not Fneu_orig.exists():
+        np.save(Fneu_orig, Fneu)
+
+    np.save(F_path,    F    + shift)
+    np.save(Fneu_path, Fneu + shift)
+
+
+# ---------------------------------------------------------------------------
 # 3. cellfilter predict
 # ---------------------------------------------------------------------------
 def run_cellfilter(plane0: Path, ckpt_path: Path | None = None) -> None:
@@ -362,6 +409,7 @@ def run_one(tiff_path: Path, shifted_root: Path, detection_root: Path,
     shifted_folder = shift_tiff(tiff_path, shifted_root, stem=stem)
     final_folder = run_detection(shifted_folder, detection_root, ops_path)
     plane0 = final_folder / "suite2p" / "plane0"
+    normalize_f_fneu(plane0)
 
     cellfilter_done = run_analyze(
         final_folder, use_gpu=use_gpu_analyze,
@@ -394,6 +442,7 @@ def run_one_group(tiff_paths: list[Path], stem: str,
     shifted_folder = shift_tiff_group(tiff_paths, shifted_root, stem=stem)
     final_folder = run_detection(shifted_folder, detection_root, ops_path)
     plane0 = final_folder / "suite2p" / "plane0"
+    normalize_f_fneu(plane0)
 
     cellfilter_done = run_analyze(
         final_folder, use_gpu=use_gpu_analyze,
@@ -422,6 +471,7 @@ def run_one_from_cellfilter(rec_dir: Path, ckpt: Path | None,
     if not plane0.is_dir():
         raise FileNotFoundError(f"no plane0 at {plane0}")
 
+    normalize_f_fneu(plane0)
     run_cellfilter(plane0, ckpt_path=ckpt)
     make_filtered_memmaps(plane0, prefix=prefix)
     run_image_all(final_folder)

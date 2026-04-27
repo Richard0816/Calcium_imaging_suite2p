@@ -15,7 +15,7 @@ spread in between. The heatmap uses its own `heatmap_cmap`.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable, Optional, Union
+from typing import Iterable, Optional, Sequence, Union
 
 import numpy as np
 import matplotlib as mpl
@@ -166,6 +166,7 @@ def plot_dendrogram(
     palette: PaletteLike = "tab10",
     above_threshold_color: str = "gray",
     n_palette_colors: Optional[int] = None,
+    cluster_colors: Optional[Sequence[str]] = None,
 ) -> list[str]:
     """
     Draw the dendrogram using `palette` for the below-cut branches.
@@ -173,11 +174,17 @@ def plot_dendrogram(
     If `n_palette_colors` is None, it defaults to the actual number of
     below-threshold clusters so the palette spans end-to-end (first
     cluster on one side of the cmap, last cluster on the other).
-    """
-    if n_palette_colors is None:
-        n_palette_colors = max(1, count_clusters(Z, color_threshold))
 
-    colors = resolve_palette(palette, n_colors=n_palette_colors)
+    `cluster_colors`, when provided, is passed straight to
+    `set_link_color_palette` (cluster_colors[0] -> C1, [1] -> C2, ...),
+    overriding `palette` entirely.
+    """
+    if cluster_colors is not None:
+        colors = [mpl.colors.to_hex(c) for c in cluster_colors]
+    else:
+        if n_palette_colors is None:
+            n_palette_colors = max(1, count_clusters(Z, color_threshold))
+        colors = resolve_palette(palette, n_colors=n_palette_colors)
     set_link_color_palette(colors)
 
     T = color_threshold * np.max(Z[:, 2])
@@ -312,6 +319,7 @@ def cluster_and_plot(
     target_counts: Iterable[int] = (4, 5),
     save_dir: Optional[Path] = None,
     save_format: Union[str, Iterable[str]] = "png",
+    cluster_colors: Optional[Sequence[str]] = None,
 ) -> dict:
     """
     End-to-end: load ΔF/F -> cluster -> write dendrogram, heatmap, spatial map.
@@ -319,6 +327,11 @@ def cluster_and_plot(
     `save_format` controls the output extension(s). Pass "png" (default),
     "svg", "pdf", or an iterable like ("png", "svg") to save in multiple
     formats. matplotlib's savefig picks the renderer from the extension.
+
+    `cluster_colors`, when provided, is an explicit list of colors mapping
+    onto C1, C2, C3, ... (dendrogram order, left to right). It overrides
+    `palette`. If shorter than n_clusters, scipy cycles through it;
+    extras beyond n_clusters are ignored.
 
     Returns a dict with the linkage matrix, leaf order, chosen threshold,
     leaf colors, and the output directory — everything a GUI needs to
@@ -348,7 +361,10 @@ def cluster_and_plot(
     # the plotted dendrogram and the no_plot extraction so leaves_color_list
     # reflects the user's choice for the spatial map too.
     n_clusters = max(1, count_clusters(Z, color_threshold))
-    palette_colors = resolve_palette(palette, n_colors=n_clusters)
+    if cluster_colors is not None:
+        palette_colors = [mpl.colors.to_hex(c) for c in cluster_colors]
+    else:
+        palette_colors = resolve_palette(palette, n_colors=n_clusters)
     set_link_color_palette(palette_colors)
 
     T = color_threshold * np.max(Z[:, 2])
@@ -366,6 +382,7 @@ def cluster_and_plot(
             palette=palette,
             above_threshold_color=above_threshold_color,
             n_palette_colors=n_clusters,
+            cluster_colors=cluster_colors,
         )
         plot_spatial(
             Path(root),
@@ -404,7 +421,7 @@ if __name__ == "__main__":
         default="tab10",
         help=f"Colormap/palette for dendrogram branches + spatial map. "
              f"One of: {', '.join(AVAILABLE_PALETTES)} (or any mpl cmap name).",
-    )
+    )#0
     p.add_argument("--heatmap-cmap", default="magma", help="Colormap for the ΔF/F heatmap.")
     p.add_argument(
         "--color-threshold",
@@ -421,6 +438,14 @@ if __name__ == "__main__":
              "Pass multiple to save every plot in each format (e.g. "
              "`--save-format png svg`).",
     )
+    p.add_argument(
+        "--cluster-colors",
+        nargs="+",
+        default=None,
+        help="Explicit hex codes mapping onto C1, C2, C3, ... in dendrogram "
+             "order (e.g. `--cluster-colors '#ff0000' '#00ff00' '#0000ff'`). "
+             "Overrides --palette when provided.",
+    )
     args = p.parse_args()
 
     result = cluster_and_plot(
@@ -433,5 +458,6 @@ if __name__ == "__main__":
         color_threshold=args.color_threshold,
         above_threshold_color=args.above_threshold_color,
         save_format=args.save_format,
+        cluster_colors=args.cluster_colors,
     )
     print(f"Done. Results saved to {result['save_dir']}")

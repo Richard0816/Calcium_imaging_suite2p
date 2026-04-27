@@ -163,16 +163,47 @@ class PreprocessTab(ttk.Frame):
             row=0, column=1)
         dir_frame.columnconfigure(0, weight=1)
 
-        # TIFF selection row
-        tiff_frame = ttk.LabelFrame(self, text="2. TIFF file", padding=8)
+        # TIFF selection row (multi-select; ctrl/shift to extend)
+        tiff_frame = ttk.LabelFrame(
+            self,
+            text="2. TIFF files  (select 1+; multi-selection -> one grouped "
+                 "recording)",
+            padding=8,
+        )
         tiff_frame.pack(fill="x", pady=(0, 8))
 
-        self.tiff_var = tk.StringVar()
-        self.tiff_combo = ttk.Combobox(tiff_frame, textvariable=self.tiff_var,
-                                       state="readonly")
-        self.tiff_combo.grid(row=0, column=0, sticky="ew", padx=(0, 6))
-        ttk.Button(tiff_frame, text="Refresh", command=self._refresh_tiffs).grid(
-            row=0, column=1)
+        list_holder = ttk.Frame(tiff_frame)
+        list_holder.grid(row=0, column=0, sticky="ew", padx=(0, 6))
+        list_holder.columnconfigure(0, weight=1)
+        self.tiff_listbox = tk.Listbox(
+            list_holder, selectmode="extended", height=6,
+            exportselection=False,
+        )
+        self.tiff_listbox.grid(row=0, column=0, sticky="ew")
+        list_sb = ttk.Scrollbar(list_holder, orient="vertical",
+                                command=self.tiff_listbox.yview)
+        list_sb.grid(row=0, column=1, sticky="ns")
+        self.tiff_listbox.config(yscrollcommand=list_sb.set)
+        self.tiff_listbox.bind(
+            "<<ListboxSelect>>",
+            lambda _e: self._update_existing_status(),
+        )
+
+        ttk.Button(tiff_frame, text="Refresh",
+                   command=self._refresh_tiffs).grid(row=0, column=1, sticky="n")
+
+        ttk.Label(
+            tiff_frame,
+            text="Identifier (optional, used as folder name; "
+                 "default = '+'-joined stems for groups):",
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(8, 2))
+        self.identifier_var = tk.StringVar()
+        self.identifier_var.trace_add(
+            "write", lambda *_a: self._update_existing_status()
+        )
+        ttk.Entry(tiff_frame, textvariable=self.identifier_var).grid(
+            row=2, column=0, columnspan=2, sticky="ew")
+
         tiff_frame.columnconfigure(0, weight=1)
 
         # Data root (output)
@@ -235,29 +266,50 @@ class PreprocessTab(ttk.Frame):
 
     def _refresh_tiffs(self) -> None:
         wd = self.dir_var.get().strip()
+        self.tiff_listbox.delete(0, "end")
         if not wd:
             return
         tiffs = preprocessing.list_tiffs(wd)
         names = [t.name for t in tiffs]
-        self.tiff_combo["values"] = names
+        for n in names:
+            self.tiff_listbox.insert("end", n)
         if names:
-            self.tiff_combo.current(0)
-            self.tiff_var.set(names[0])
+            self.tiff_listbox.selection_set(0)
         else:
-            self.tiff_var.set("")
             self._append_log(f"No .tif/.tiff files in {wd}")
-        self.tiff_combo.bind("<<ComboboxSelected>>",
-                             lambda _e: self._update_existing_status())
         self._update_existing_status()
 
+    @staticmethod
+    def _trailing_index(name: str) -> int:
+        """Last run of digits in a filename stem; sentinel for files without
+        any numeric suffix."""
+        import re
+        stem = Path(name).stem
+        m = re.search(r"(\d+)(?!.*\d)", stem)
+        return int(m.group(1)) if m else -1
+
+    def _selected_tiff_names(self) -> list[str]:
+        """Selected TIFF filenames, sorted by trailing index in the stem."""
+        idxs = self.tiff_listbox.curselection()
+        names = [self.tiff_listbox.get(i) for i in idxs]
+        names.sort(key=self._trailing_index)
+        return names
+
+    def _resolved_identifier(self, names: list[str]) -> str:
+        """User-supplied identifier if non-empty, else '+'-joined stems."""
+        explicit = self.identifier_var.get().strip()
+        if explicit:
+            return explicit
+        return "+".join(Path(n).stem for n in names)
+
     def _existing_out_dir(self) -> Optional[Path]:
-        """Resolve <data_root>/<tiff_stem>/ if both inputs are populated."""
+        """Resolve <data_root>/<identifier>/ if all inputs are populated."""
         wd = self.dir_var.get().strip()
-        name = self.tiff_var.get().strip()
+        names = self._selected_tiff_names()
         data_root = self.data_root_var.get().strip()
-        if not (wd and name and data_root):
+        if not (wd and names and data_root):
             return None
-        return Path(data_root) / Path(name).stem
+        return Path(data_root) / self._resolved_identifier(names)
 
     def _update_existing_status(self) -> None:
         """Inspect candidate output dir; toggle Force-rerun button + status."""
@@ -272,7 +324,10 @@ class PreprocessTab(ttk.Frame):
         else:
             self.rerun_btn.config(state="disabled")
             if out_dir is not None:
-                self.status_var.set("No existing outputs; Run will preprocess.")
+                n = len(self._selected_tiff_names())
+                suffix = f" ({n} TIFFs as one group)" if n > 1 else ""
+                self.status_var.set(
+                    f"No existing outputs; Run will preprocess{suffix}.")
             else:
                 self.status_var.set("Idle.")
 
@@ -296,19 +351,22 @@ class PreprocessTab(ttk.Frame):
             return
 
         wd = self.dir_var.get().strip()
-        name = self.tiff_var.get().strip()
+        names = self._selected_tiff_names()
         data_root = self.data_root_var.get().strip()
 
-        if not wd or not name:
-            messagebox.showerror("Missing input",
-                                 "Select a working directory and TIFF file.")
+        if not wd or not names:
+            messagebox.showerror(
+                "Missing input",
+                "Select a working directory and at least one TIFF.")
             return
         if not data_root:
-            messagebox.showerror("Missing output", "Set an output root directory.")
+            messagebox.showerror("Missing output",
+                                 "Set an output root directory.")
             return
 
-        src = Path(wd) / name
-        self.state.selected_tiff = src
+        srcs = [Path(wd) / n for n in names]
+        identifier = self._resolved_identifier(names)
+        self.state.selected_tiff = srcs[0]
         self.state.data_root = Path(data_root)
 
         # Reuse existing outputs if present (unless the user forced a rerun).
@@ -326,7 +384,15 @@ class PreprocessTab(ttk.Frame):
         self.rerun_btn.config(state="disabled")
         self.progress.start(12)
         self.status_var.set("Running...")
-        self._append_log(f"--- Preprocessing {src.name} ---")
+        if len(srcs) == 1:
+            self._append_log(f"--- Preprocessing {srcs[0].name} ---")
+        else:
+            self._append_log(
+                f"--- Preprocessing group '{identifier}' "
+                f"({len(srcs)} TIFFs, in trailing-index order):")
+            for s in srcs:
+                self._append_log(f"      {s.name}")
+            self._append_log("---")
 
         # Snapshot params on the main thread so the worker sees a stable
         # value even if the user opens Advanced again mid-run.
@@ -338,17 +404,30 @@ class PreprocessTab(ttk.Frame):
         blob_params = {k: params[k] for k in blob_keys if k in params}
         qc_params = {k: params[k] for k in qc_keys if k in params}
         soma_diameter_px = float(params.get("soma_diameter_px", 12.0))
+        explicit_identifier = self.identifier_var.get().strip() or None
 
         def worker():
             try:
-                result = preprocessing.preprocess_tiff(
-                    src_tiff=src,
-                    data_root=data_root,
-                    soma_diameter_px=soma_diameter_px,
-                    progress_cb=lambda m: self._log_queue.put(("log", m)),
-                    blob_params=blob_params,
-                    qc_params=qc_params,
-                )
+                if len(srcs) == 1:
+                    result = preprocessing.preprocess_tiff(
+                        src_tiff=srcs[0],
+                        data_root=data_root,
+                        recording_name=explicit_identifier,
+                        soma_diameter_px=soma_diameter_px,
+                        progress_cb=lambda m: self._log_queue.put(("log", m)),
+                        blob_params=blob_params,
+                        qc_params=qc_params,
+                    )
+                else:
+                    result = preprocessing.preprocess_tiff_group(
+                        src_tiffs=srcs,
+                        data_root=data_root,
+                        recording_name=identifier,
+                        soma_diameter_px=soma_diameter_px,
+                        progress_cb=lambda m: self._log_queue.put(("log", m)),
+                        blob_params=blob_params,
+                        qc_params=qc_params,
+                    )
                 self._log_queue.put(("done", result))
             except Exception as e:
                 self._log_queue.put(("error", str(e)))

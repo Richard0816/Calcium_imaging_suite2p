@@ -76,6 +76,11 @@ HARD_CAP = 60000
 # covered by the union of sparsery ROIs.
 CELLPOSE_MERGE_MAX_OVERLAP = 0.3
 
+# Tau lookup table by GCaMP variant. Forwarded into AdaptiveConfig so
+# load_base_ops can match a recording's tau via aav_info_csv. The GUI passes
+# this through `tau_vals=spc.DEFAULT_TAU_VALS`.
+DEFAULT_TAU_VALS: dict = {"6f": 0.7, "6m": 1.0, "6s": 1.3, "8m": 0.137}
+
 
 # ============================================================================
 # Helpers
@@ -231,83 +236,139 @@ def merge_and_extract(sparsery_stat, cellpose_stat,
 
 
 # ============================================================================
-# Main
+# Public API
 # ============================================================================
 
-def main():
-    save_root = Path(SAVE_FOLDER)
+def run(
+    tiff_folder: str | Path,
+    save_folder: str | Path,
+    path_to_ops: str | Path | None = None,
+    sparsery_ops: dict | None = None,
+    cellpose_cfg: dict | None = None,
+    hard_cap: int | None = HARD_CAP,
+    max_overlap: float = CELLPOSE_MERGE_MAX_OVERLAP,
+    aav_info_csv: str | None = None,
+    tau_vals: dict | None = None,
+    verbose: bool = True,
+) -> Path:
+    """Sparsery + cellpose detection. Returns the final ``suite2p/plane0`` path.
+
+    `tiff_folder` can hold one TIFF or many (multi-TIFF groups are read by
+    suite2p as one continuous recording via natsort on data_path).
+    Unspecified `sparsery_ops` / `cellpose_cfg` fall back to the module-level
+    defaults; `aav_info_csv` / `tau_vals` are forwarded to ``AdaptiveConfig``
+    so ``load_base_ops`` can look up tau by GCaMP variant."""
+    save_root = Path(save_folder)
     save_root.mkdir(parents=True, exist_ok=True)
 
-    cfg = AdaptiveConfig(
-        tiff_folder=TIFF_FOLDER,
-        save_folder=SAVE_FOLDER,
-        path_to_ops=PATH_TO_OPS,
+    sp_ops = dict(SPARSERY_OPS) if sparsery_ops is None else dict(sparsery_ops)
+    cp_cfg = dict(CELLPOSE_CFG) if cellpose_cfg is None else dict(cellpose_cfg)
+    ops_path = str(path_to_ops) if path_to_ops else PATH_TO_OPS
+
+    cfg_kwargs = dict(
+        tiff_folder=str(tiff_folder),
+        save_folder=str(save_root),
+        path_to_ops=ops_path,
         auto_estimate_spatial_scale=False,
         generate_audit_pngs=False,
         augment_with_residual_blobs=False,
         use_cache=False,
-        verbose=True,
+        verbose=verbose,
     )
+    if aav_info_csv:
+        cfg_kwargs["aav_info_csv"] = aav_info_csv
+    if tau_vals:
+        cfg_kwargs["tau_vals"] = dict(tau_vals)
+    cfg = AdaptiveConfig(**cfg_kwargs)
 
-    print(f'[s+cp] loading base ops from {PATH_TO_OPS}')
+    if verbose:
+        print(f'[s+cp] loading base ops from {ops_path}')
     base_ops = load_base_ops(cfg)
 
-    print(f'[s+cp] shared registration')
+    if verbose:
+        print(f'[s+cp] shared registration')
     t0 = time.time()
     shared_plane0 = _get_or_create_shared_registration(cfg, base_ops)
-    print(f'[s+cp] shared reg ready at {shared_plane0}  '
-          f'({time.time() - t0:.1f}s)')
+    if verbose:
+        print(f'[s+cp] shared reg ready at {shared_plane0}  '
+              f'({time.time() - t0:.1f}s)')
 
     # ---- sparsery (one shot, fixed ops) ----
-    print(f'[s+cp] sparsery pass '
-          f'(threshold_scaling={SPARSERY_OPS["threshold_scaling"]})')
+    if verbose:
+        print(f'[s+cp] sparsery pass '
+              f'(threshold_scaling={sp_ops["threshold_scaling"]})')
     sparsery_dir = save_root / 'sparsery_pass'
     ops = dict(base_ops)
-    for k, v in SPARSERY_OPS.items():
-        ops[k] = v
+    ops.update(sp_ops)
     ops['roidetect'] = True
     t_sp = time.time()
-    sp_stat, sp_ops, sp_plane0 = run_one_pass(
-        TIFF_FOLDER, sparsery_dir, ops,
-        verbose=True, use_cache=False,
+    sp_stat, _sp_ops_out, _sp_plane0 = run_one_pass(
+        str(tiff_folder), sparsery_dir, ops,
+        verbose=verbose, use_cache=False,
         shared_plane0=shared_plane0,
-        hard_cap=HARD_CAP or 0,
+        hard_cap=(hard_cap or 0),
     )
-    print(f'[s+cp] sparsery: {len(sp_stat)} ROIs '
-          f'({time.time() - t_sp:.1f}s)')
+    if verbose:
+        print(f'[s+cp] sparsery: {len(sp_stat)} ROIs '
+              f'({time.time() - t_sp:.1f}s)')
 
     # ---- cellpose ----
-    print(f'[s+cp] cellpose pass')
+    if verbose:
+        print(f'[s+cp] cellpose pass')
     cp_dir = save_root / 'cellpose_pass'
     t_cp = time.time()
-    cp_stat, cp_ops, cp_plane0 = run_cellpose_pass(
-        cp_dir, shared_plane0, CELLPOSE_CFG, verbose=True,
+    cp_stat, _cp_ops, _cp_plane0 = run_cellpose_pass(
+        cp_dir, shared_plane0, cp_cfg, verbose=verbose,
     )
-    print(f'[s+cp] cellpose: {len(cp_stat)} ROIs '
-          f'({time.time() - t_cp:.1f}s)')
+    if verbose:
+        print(f'[s+cp] cellpose: {len(cp_stat)} ROIs '
+              f'({time.time() - t_cp:.1f}s)')
 
     # ---- merge + extract ----
-    print(f'[s+cp] merging + extracting')
+    if verbose:
+        print(f'[s+cp] merging + extracting')
     final_dir = save_root / 'final'
-    stat_arr, final_ops, final_plane0 = merge_and_extract(
+    stat_arr, _final_ops, final_plane0 = merge_and_extract(
         sp_stat, cp_stat, shared_plane0, base_ops, final_dir,
-        max_overlap=CELLPOSE_MERGE_MAX_OVERLAP, verbose=True,
+        max_overlap=max_overlap, verbose=verbose,
     )
 
     # ---- audit.png ----
-    print(f'[s+cp] writing audit.png')
     try:
+        if verbose:
+            print(f'[s+cp] writing audit.png')
         visualize_audit(str(final_plane0), config=cfg,
                         outpath=str(final_plane0 / 'audit.png'),
                         title_prefix='sparse+cellpose')
     except Exception as e:
-        print(f'[s+cp] audit failed: {e}')
+        if verbose:
+            print(f'[s+cp] audit failed: {e}')
 
-    print(f'\n[s+cp] DONE. Outputs:')
-    print(f'  plane0:     {final_plane0}')
-    print(f'  stat.npy:   {len(stat_arr)} ROIs')
-    print(f'  F/Fneu/spks/iscell all saved')
-    print(f'  audit.png:  {final_plane0 / "audit.png"}')
+    if verbose:
+        print(f'\n[s+cp] DONE.')
+        print(f'  plane0:    {final_plane0}')
+        print(f'  stat.npy:  {len(stat_arr)} ROIs')
+        print(f'  F/Fneu/spks/iscell saved')
+    return final_plane0
+
+
+# ============================================================================
+# Module-globals entrypoint (used by run_full_pipeline.py and CLI execution)
+# ============================================================================
+
+def main():
+    """Run with the module-level config constants. Callers that mutate
+    TIFF_FOLDER / SAVE_FOLDER / PATH_TO_OPS before calling main() (e.g.
+    run_full_pipeline.run_detection) keep working unchanged."""
+    run(
+        TIFF_FOLDER, SAVE_FOLDER, PATH_TO_OPS,
+        sparsery_ops=SPARSERY_OPS,
+        cellpose_cfg=CELLPOSE_CFG,
+        hard_cap=HARD_CAP,
+        max_overlap=CELLPOSE_MERGE_MAX_OVERLAP,
+        tau_vals=DEFAULT_TAU_VALS,
+        verbose=True,
+    )
 
 
 if __name__ == '__main__':

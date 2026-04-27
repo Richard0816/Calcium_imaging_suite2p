@@ -3,10 +3,12 @@ preprocessing.py - raw TIFF -> shifted TIFF + QC gif + mean image.
 
 Wraps the logic in shifting.py into a callable pipeline suitable for the GUI.
 Outputs land under ``<data_root>/<recording_name>/``:
-    shifted_<original>.tif
+    shifted_<original>.tif         (single-TIFF case)
+    NNN_shifted_<original>.tif     (multi-TIFF / group case; matches naming in
+                                    run_full_pipeline.shift_tiff_group)
     qc.gif
     mean.npy
-    blobs.npy              (detected soma candidates on the mean image)
+    blobs.npy                      (detected soma candidates on the mean image)
 """
 
 from __future__ import annotations
@@ -320,6 +322,150 @@ def preprocess_tiff(
     )
 
 
+def preprocess_tiff_group(
+    src_tiffs: list[str | Path],
+    data_root: str | Path,
+    recording_name: Optional[str] = None,
+    soma_diameter_px: float = 12.0,
+    progress_cb: Optional[Callable[[str], None]] = None,
+    blob_params: Optional[dict] = None,
+    qc_params: Optional[dict] = None,
+) -> PreprocessResult:
+    """End-to-end preprocessing for a group of raw TIFFs treated as one
+    continuous recording.
+
+    A single shift constant (derived from the global min across ALL inputs) is
+    applied to every file, so the concatenated movie has consistent intensity.
+    Each shifted output is written into
+    ``<data_root>/<recording_name>/NNN_shifted_<orig>.tif`` with a zero-padded
+    order prefix (suite2p uses natsort on data_path, so the prefix preserves
+    input order). Mean image, preview blobs, and QC gif are computed across
+    the full concatenated stack.
+
+    If ``recording_name`` is omitted, defaults to the ``+``-joined stems of
+    ``src_tiffs`` (in the order given).
+    """
+    if not src_tiffs:
+        raise ValueError("preprocess_tiff_group: empty src_tiffs")
+
+    srcs = [Path(p).resolve() for p in src_tiffs]
+    for s in srcs:
+        if not s.exists():
+            raise FileNotFoundError(s)
+
+    name = recording_name or "+".join(s.stem for s in srcs)
+    out_dir = Path(data_root).resolve() / name
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    pad = max(2, len(str(len(srcs) - 1)))
+    shifted_paths = [
+        out_dir / f"{i:0{pad}d}_shifted_{src.name}"
+        for i, src in enumerate(srcs)
+    ]
+    gif_path = out_dir / "qc.gif"
+    mean_path = out_dir / "mean.npy"
+    blobs_path = out_dir / "blobs.npy"
+
+    def log(msg: str) -> None:
+        if progress_cb is not None:
+            progress_cb(msg)
+
+    # ---- Pass 1: scan all files for one shared global min/max -------------
+    log(f"[1/4] Scanning {len(srcs)} TIFFs for shared global min/max")
+    gmin = np.iinfo(np.int64).max
+    gmax = np.iinfo(np.int64).min
+    page_counts: list[int] = []
+    for src in srcs:
+        with tifffile.TiffFile(str(src)) as tf:
+            n_pages = len(tf.pages)
+            for i, page in enumerate(tf.pages):
+                frame = page.asarray()
+                pmin = int(frame.min()); pmax = int(frame.max())
+                if pmin < gmin: gmin = pmin
+                if pmax > gmax: gmax = pmax
+                if (i + 1) % 2000 == 0:
+                    log(f"[1/4]   {src.name}  scan {i + 1}/{n_pages}  "
+                        f"min={gmin} max={gmax}")
+            page_counts.append(n_pages)
+            log(f"[1/4]   {src.name}: {n_pages} pages")
+    shift = -gmin if gmin < 0 else 0
+    shifted_max = gmax + shift
+    log(f"[1/4] global min={gmin} max={gmax}  -> shift+={shift}  "
+        f"(shifted max={shifted_max})")
+    if shifted_max > 65535:
+        raise ValueError(
+            f"Shifted max {shifted_max} > 65535; uint16 overflow."
+        )
+
+    # ---- Pass 2: write each shifted file ----------------------------------
+    log(f"[2/4] Writing {len(srcs)} shifted TIFFs into {out_dir}")
+    for src, dst in zip(srcs, shifted_paths):
+        if dst.exists():
+            log(f"[2/4]   exists, skipping: {dst.name}")
+            continue
+        log(f"[2/4]   {src.name} -> {dst.name}")
+        with tifffile.TiffFile(str(src)) as tf, \
+                tifffile.TiffWriter(str(dst), bigtiff=True) as tw:
+            n_pages = len(tf.pages)
+            for i, page in enumerate(tf.pages):
+                frame = page.asarray()
+                if shift != 0:
+                    frame = (frame.astype(np.int32) + shift).astype(np.uint16)
+                elif frame.dtype != np.uint16:
+                    frame = frame.astype(np.uint16)
+                tw.write(frame, contiguous=True)
+                if (i + 1) % 2000 == 0:
+                    log(f"[2/4]     write {i + 1}/{n_pages}")
+
+    # ---- Pass 3: mean image across the concatenated stack -----------------
+    log(f"[3/4] Mean image across {len(shifted_paths)} files")
+    sum_arr: Optional[np.ndarray] = None
+    total_frames = 0
+    Y = X = 0
+    for dst in shifted_paths:
+        m = tifffile.memmap(str(dst), mode="r")
+        if sum_arr is None:
+            Y, X = int(m.shape[1]), int(m.shape[2])
+            sum_arr = np.zeros((Y, X), dtype=np.float64)
+        sum_arr += m.sum(axis=0, dtype=np.float64)
+        total_frames += int(m.shape[0])
+        del m
+    mean = (sum_arr / max(1, total_frames)).astype(np.float32)
+    np.save(str(mean_path), mean)
+    log(f"[3/4]   mean over {total_frames} frames ({Y}x{X})")
+
+    log("[3/4] Detecting preview blobs on mean image")
+    blob_kwargs = dict(blob_params or {})
+    blob_kwargs.setdefault("soma_diameter_px", soma_diameter_px)
+    blobs = detect_blobs_on_mean(mean, **blob_kwargs)
+    np.save(str(blobs_path), np.asarray(blobs, dtype=np.float32))
+
+    # ---- Pass 4: QC gif from down-sampled concatenated frames -------------
+    log("[4/4] Writing QC gif")
+    qc_kwargs = dict(qc_params or {})
+    downsample_t = max(1, int(qc_kwargs.pop("downsample_t", 4)))
+    sampled: list[np.ndarray] = []
+    for dst in shifted_paths:
+        m = tifffile.memmap(str(dst), mode="r")
+        sampled.append(np.asarray(m[::downsample_t]))
+        del m
+    movie = np.concatenate(sampled, axis=0) if len(sampled) > 1 else sampled[0]
+    make_qc_gif(movie, gif_path, downsample_t=1, **qc_kwargs)
+
+    log(f"Done. Output -> {out_dir}")
+
+    return PreprocessResult(
+        out_dir=out_dir,
+        shifted_tiff=shifted_paths[0],
+        qc_gif=gif_path,
+        mean_image_path=mean_path,
+        blobs_path=blobs_path,
+        n_frames=int(total_frames),
+        shape_yx=(int(Y), int(X)),
+        n_blobs=len(blobs),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Discovery helpers used by the GUI
 # ---------------------------------------------------------------------------
@@ -335,10 +481,19 @@ def list_tiffs(folder: str | Path) -> list[Path]:
 
 
 def load_existing_preprocess(out_dir: str | Path) -> Optional[PreprocessResult]:
-    """If a recording folder already contains preprocessing outputs, load them."""
+    """If a recording folder already contains preprocessing outputs, load them.
+
+    Recognises both single-TIFF (``shifted_<x>.tif``) and grouped
+    (``NNN_shifted_<x>.tif``) layouts."""
     out_dir = Path(out_dir)
-    shifted_candidates = list(out_dir.glob("shifted_*.tif")) + list(
-        out_dir.glob("shifted_*.tiff"))
+    if not out_dir.is_dir():
+        return None
+    shifted_candidates = sorted(
+        p for p in out_dir.iterdir()
+        if p.is_file()
+        and p.suffix.lower() in (".tif", ".tiff")
+        and "shifted_" in p.name
+    )
     gif = out_dir / "qc.gif"
     mean_path = out_dir / "mean.npy"
     blobs_path = out_dir / "blobs.npy"
