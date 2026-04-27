@@ -46,7 +46,9 @@ matplotlib.use("TkAgg")
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk,
+)
 from scipy.cluster.hierarchy import (
     dendrogram,
     fcluster,
@@ -71,6 +73,19 @@ POLL_MS = 80
 # ---------------------------------------------------------------------------
 # Backend helpers
 # ---------------------------------------------------------------------------
+
+
+def _attach_fig_toolbar(canvas: FigureCanvasTkAgg,
+                        parent_frame) -> NavigationToolbar2Tk:
+    """Attach a matplotlib navigation toolbar (pan / zoom / Save Figure)
+    above ``canvas`` inside ``parent_frame``. Caller must pack/grid the
+    canvas widget AFTER this call so the toolbar lands above it."""
+    tb_frame = ttk.Frame(parent_frame)
+    tb_frame.pack(side="top", fill="x")
+    tb = NavigationToolbar2Tk(canvas, tb_frame, pack_toolbar=False)
+    tb.update()
+    tb.pack(side="left", fill="x")
+    return tb
 
 
 def _correlation_linkage(dff: np.ndarray, method: str = "average") -> np.ndarray:
@@ -329,6 +344,7 @@ class ClusteringTab(ttk.Frame):
         self.d_ax = self.d_fig.add_subplot(111)
         self._placeholder(self.d_ax, "Run analysis to populate.")
         self.d_canvas = FigureCanvasTkAgg(self.d_fig, master=dframe)
+        _attach_fig_toolbar(self.d_canvas, dframe)
         self.d_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Vertical slider for the cut.
@@ -352,6 +368,7 @@ class ClusteringTab(ttk.Frame):
         self.s_ax = self.s_fig.add_subplot(111)
         self._placeholder(self.s_ax, "Run analysis to populate.")
         self.s_canvas = FigureCanvasTkAgg(self.s_fig, master=sp_frame)
+        _attach_fig_toolbar(self.s_canvas, sp_frame)
         self.s_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Bottom controls.

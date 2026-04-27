@@ -542,6 +542,7 @@ class QcTab(ttk.Frame):
         self.ax.text(0.5, 0.5, "No data", ha="center", va="center",
                      transform=self.ax.transAxes)
         self.canvas = FigureCanvasTkAgg(self.fig, master=blob_frame)
+        _attach_fig_toolbar(self.canvas, blob_frame)
         self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
     # -- Reload helper ------------------------------------------------------
@@ -782,6 +783,22 @@ def _open_advanced(master, title: str, specs: list[dict],
     return dlg._accepted
 
 
+def _attach_fig_toolbar(canvas: FigureCanvasTkAgg,
+                        parent_frame) -> NavigationToolbar2Tk:
+    """Attach a matplotlib navigation toolbar (pan / zoom / Save Figure)
+    above ``canvas`` inside ``parent_frame``. Caller must pack/grid the
+    canvas widget AFTER this call so the toolbar lands above it.
+
+    "Save Figure" exports to PNG/PDF/SVG/etc via the standard matplotlib
+    file dialog -- this is the export path for every plot in the GUI."""
+    tb_frame = ttk.Frame(parent_frame)
+    tb_frame.pack(side="top", fill="x")
+    tb = NavigationToolbar2Tk(canvas, tb_frame, pack_toolbar=False)
+    tb.update()
+    tb.pack(side="left", fill="x")
+    return tb
+
+
 # ---------------------------------------------------------------------------
 # Tab 3: Suite2p Detection (sparse_plus_cellpose + dF/F + cell filter)
 # ---------------------------------------------------------------------------
@@ -821,6 +838,19 @@ class Suite2pTab(ttk.Frame):
     DEFAULT_OPS_PATH = Path(__file__).parent / "suite2p_2p_ops_240621.npy"
     DEFAULT_CKPT_PATH = Path(r"F:\cellfilter_checkpoints\best.pt")
     DEFAULT_AAV_CSV = Path(__file__).parent / "human_SLE_2p_meta.csv"
+
+    # Background images the user can pick for panels 2 & 3. Only entries
+    # whose key is actually present (and 2D) in ops.npy get a radio button.
+    # Order here is the radio-button display order.
+    KNOWN_BG_IMAGES: list[tuple[str, str]] = [
+        ("meanImg",       "Mean"),
+        ("meanImgE",      "Mean (enhanced)"),
+        ("max_proj",      "Max projection"),
+        ("Vcorr",         "Correlation"),
+        ("refImg",        "Reg. ref"),
+        ("meanImg_chan2", "Mean ch2"),
+    ]
+    DEFAULT_BG_KEY = "meanImgE"
 
     PARAM_SPEC: list = [
         # Sparsery (suite2p detection)
@@ -889,6 +919,8 @@ class Suite2pTab(ttk.Frame):
         self._worker: Optional[threading.Thread] = None
         self._final_plane0: Optional[Path] = None
         self._params: dict = _spec_defaults(self.PARAM_SPEC)
+        self._bg_var = tk.StringVar(value=self.DEFAULT_BG_KEY)
+        self._panel_cache: Optional[dict] = None
 
         self._build_ui()
         self.after(self.POLL_MS, self._drain_log_queue)
@@ -958,10 +990,11 @@ class Suite2pTab(ttk.Frame):
         self.status_var = tk.StringVar(value="Run preprocessing first.")
         ttk.Label(row, textvariable=self.status_var).pack(side="left")
 
-        # Body: panel 1 (console) on top, panels 2+3 (image) below
+        # Body: panel 1 (console), background-image picker, panels 2+3 (image)
         body = ttk.Frame(self); body.pack(fill="both", expand=True)
         body.rowconfigure(0, weight=2)
-        body.rowconfigure(1, weight=3)
+        body.rowconfigure(1, weight=0)  # bg picker (fixed height)
+        body.rowconfigure(2, weight=3)
         body.columnconfigure(0, weight=1, uniform="cols")
         body.columnconfigure(1, weight=1, uniform="cols")
 
@@ -977,28 +1010,41 @@ class Suite2pTab(ttk.Frame):
         sb.pack(fill="y", side="right")
         self.log.config(yscrollcommand=sb.set)
 
+        # Background-image picker (shared by panels 2 and 3)
+        bg_row = ttk.LabelFrame(
+            body, text="Background image (panels 2 & 3)", padding=4)
+        bg_row.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(0, 4))
+        self._bg_radio_holder = ttk.Frame(bg_row)
+        self._bg_radio_holder.pack(side="left", fill="x", expand=True)
+        ttk.Label(
+            self._bg_radio_holder,
+            text="Run detection (or load existing) to choose a background.",
+        ).pack(side="left")
+
         # Panel 2: detected ROIs
         det_frame = ttk.LabelFrame(
             body, text="2. Detected ROIs (raw suite2p output)", padding=6)
-        det_frame.grid(row=1, column=0, sticky="nsew", padx=(0, 3))
+        det_frame.grid(row=2, column=0, sticky="nsew", padx=(0, 3))
         self.det_fig = plt.Figure(figsize=(5, 5), tight_layout=True)
         self.det_ax = self.det_fig.add_subplot(111)
         self.det_ax.set_axis_off()
         self.det_ax.text(0.5, 0.5, "No detection yet", ha="center",
                          va="center", transform=self.det_ax.transAxes)
         self.det_canvas = FigureCanvasTkAgg(self.det_fig, master=det_frame)
+        _attach_fig_toolbar(self.det_canvas, det_frame)
         self.det_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Panel 3: filtered ROIs
         fil_frame = ttk.LabelFrame(
             body, text="3. After cell-filter prediction mask", padding=6)
-        fil_frame.grid(row=1, column=1, sticky="nsew", padx=(3, 0))
+        fil_frame.grid(row=2, column=1, sticky="nsew", padx=(3, 0))
         self.fil_fig = plt.Figure(figsize=(5, 5), tight_layout=True)
         self.fil_ax = self.fil_fig.add_subplot(111)
         self.fil_ax.set_axis_off()
         self.fil_ax.text(0.5, 0.5, "No filter applied yet", ha="center",
                          va="center", transform=self.fil_ax.transAxes)
         self.fil_canvas = FigureCanvasTkAgg(self.fil_fig, master=fil_frame)
+        _attach_fig_toolbar(self.fil_canvas, fil_frame)
         self.fil_canvas.get_tk_widget().pack(fill="both", expand=True)
 
     # -- Handlers -----------------------------------------------------------
@@ -1486,51 +1532,113 @@ class Suite2pTab(ttk.Frame):
     # -- Panel rendering ----------------------------------------------------
 
     def _draw_panels(self, plane0: Path) -> None:
-        """Render panels 2 and 3 from suite2p outputs at ``plane0``."""
+        """Load suite2p outputs at ``plane0``, populate the background-image
+        radio buttons from whatever 2D images live in ops.npy, then render
+        panels 2 and 3 with the currently-selected background."""
         ops = np.load(plane0 / "ops.npy", allow_pickle=True).item()
         stat = np.load(plane0 / "stat.npy", allow_pickle=True)
-        mean = np.asarray(
-            ops.get("meanImgE", ops.get("meanImg")), dtype=np.float32)
-        Ly, Lx = mean.shape
         n_total = len(stat)
 
-        # Panel 2: every detected ROI (random colour per ROI).
-        label_all = self._build_label_image(stat, Ly, Lx)
-
-        # Panel 3: kept ROIs, coloured by predicted_cell_prob when available.
         keep = self._load_keep_mask(plane0, n_total)
         prob_path = plane0 / "predicted_cell_prob.npy"
         probs = (np.load(prob_path).astype(np.float32)
                  if prob_path.exists() else None)
 
-        vmax = float(np.quantile(mean, 0.995))
-        vmin = float(np.quantile(mean, 0.01))
-        self._render_panel(
-            self.det_ax, self.det_canvas, mean, label_all, vmin, vmax,
-            f"All detected ROIs (n = {n_total})")
+        self._panel_cache = dict(
+            plane0=plane0, ops=ops, stat=stat,
+            n_total=n_total, keep=keep, probs=probs,
+        )
 
-        kept_n = int(keep.sum())
-        if probs is not None and probs.shape[0] == n_total:
-            score_img = self._build_score_image(stat, keep, probs, Ly, Lx)
-            title = (f"After filter (n = {kept_n} / {n_total})  "
-                     f"[coloured by predicted_cell_prob]")
-            self._render_score_panel(
-                self.fil_ax, self.fil_canvas, mean, score_img,
-                vmin, vmax, title)
-        else:
-            kept_stat = [s for i, s in enumerate(stat) if keep[i]]
-            label_kept = self._build_label_image(kept_stat, Ly, Lx)
-            keep_src = "iscell.npy (suite2p classifier)"
-            self._render_panel(
-                self.fil_ax, self.fil_canvas, mean, label_kept,
-                vmin, vmax,
-                f"After filter (n = {kept_n} / {n_total})  [{keep_src}]")
+        self._populate_bg_radios(ops)
+        self._redraw_with_bg()
 
         self.summary_btn.config(state="normal")
         try:
             self._write_summary(plane0, stat, keep, probs)
         except Exception as e:
             self._append_log(f"[GUI] summary write failed: {e}")
+
+    def _populate_bg_radios(self, ops: dict) -> None:
+        """Rebuild the radio-button row for whatever 2D images the loaded
+        ops actually contains. Defaults to DEFAULT_BG_KEY when available."""
+        for w in self._bg_radio_holder.winfo_children():
+            w.destroy()
+
+        available: list[tuple[str, str]] = []
+        for key, label in self.KNOWN_BG_IMAGES:
+            img = ops.get(key)
+            if not isinstance(img, np.ndarray) or img.ndim != 2:
+                continue
+            available.append((key, label))
+
+        if not available:
+            ttk.Label(self._bg_radio_holder,
+                      text="(no 2D images in ops.npy)").pack(side="left")
+            return
+
+        keys = {k for k, _ in available}
+        if self._bg_var.get() not in keys:
+            self._bg_var.set(self.DEFAULT_BG_KEY
+                             if self.DEFAULT_BG_KEY in keys
+                             else available[0][0])
+
+        for key, label in available:
+            ttk.Radiobutton(
+                self._bg_radio_holder, text=label, value=key,
+                variable=self._bg_var,
+                command=self._on_bg_changed,
+            ).pack(side="left", padx=(0, 10))
+
+    def _on_bg_changed(self) -> None:
+        if self._panel_cache is not None:
+            self._redraw_with_bg()
+
+    def _redraw_with_bg(self) -> None:
+        """Re-render panels 2 and 3 with the currently-selected background.
+        Uses cached data; does NOT reload from disk or rewrite the summary."""
+        c = self._panel_cache
+        if c is None:
+            return
+        ops = c["ops"]
+        stat = c["stat"]
+        n_total = c["n_total"]
+        keep = c["keep"]
+        probs = c["probs"]
+
+        bg_key = self._bg_var.get()
+        bg = ops.get(bg_key)
+        bg_label = dict(self.KNOWN_BG_IMAGES).get(bg_key, bg_key)
+        if not isinstance(bg, np.ndarray) or bg.ndim != 2:
+            bg = ops.get("meanImgE", ops.get("meanImg"))
+            bg_label = "Mean (fallback)"
+        bg = np.asarray(bg, dtype=np.float32)
+        Ly, Lx = bg.shape
+
+        vmax = float(np.quantile(bg, 0.995))
+        vmin = float(np.quantile(bg, 0.01))
+
+        label_all = self._build_label_image(stat, Ly, Lx)
+        self._render_panel(
+            self.det_ax, self.det_canvas, bg, label_all, vmin, vmax,
+            f"All detected ROIs (n = {n_total})  [bg: {bg_label}]")
+
+        kept_n = int(keep.sum())
+        if probs is not None and probs.shape[0] == n_total:
+            score_img = self._build_score_image(stat, keep, probs, Ly, Lx)
+            title = (f"After filter (n = {kept_n} / {n_total})  "
+                     f"[bg: {bg_label}, coloured by predicted_cell_prob]")
+            self._render_score_panel(
+                self.fil_ax, self.fil_canvas, bg, score_img,
+                vmin, vmax, title)
+        else:
+            kept_stat = [s for i, s in enumerate(stat) if keep[i]]
+            label_kept = self._build_label_image(kept_stat, Ly, Lx)
+            keep_src = "iscell.npy (suite2p classifier)"
+            self._render_panel(
+                self.fil_ax, self.fil_canvas, bg, label_kept,
+                vmin, vmax,
+                f"After filter (n = {kept_n} / {n_total})  "
+                f"[bg: {bg_label}, {keep_src}]")
 
     @staticmethod
     def _build_label_image(stat, Ly: int, Lx: int) -> np.ndarray:
@@ -1783,6 +1891,7 @@ class LowpassTab(ttk.Frame):
         self.fft_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                          transform=self.fft_ax.transAxes)
         self.fft_canvas = FigureCanvasTkAgg(self.fft_fig, master=f1)
+        _attach_fig_toolbar(self.fft_canvas, f1)
         self.fft_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Panel 2: raw dF/F
@@ -1794,6 +1903,7 @@ class LowpassTab(ttk.Frame):
         self.raw_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                          transform=self.raw_ax.transAxes)
         self.raw_canvas = FigureCanvasTkAgg(self.raw_fig, master=f2)
+        _attach_fig_toolbar(self.raw_canvas, f2)
         self.raw_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Panel 3: low-pass dF/F
@@ -1805,6 +1915,7 @@ class LowpassTab(ttk.Frame):
         self.lp_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                         transform=self.lp_ax.transAxes)
         self.lp_canvas = FigureCanvasTkAgg(self.lp_fig, master=f3)
+        _attach_fig_toolbar(self.lp_canvas, f3)
         self.lp_canvas.get_tk_widget().pack(fill="both", expand=True)
 
     # -- Plane0 handling ----------------------------------------------------
@@ -2327,6 +2438,7 @@ class EventDetectionTab(ttk.Frame):
         self.hm_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                         transform=self.hm_ax.transAxes)
         self.hm_canvas = FigureCanvasTkAgg(self.hm_fig, master=f1)
+        _attach_fig_toolbar(self.hm_canvas, f1)
         self.hm_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Panel 2: event raster
@@ -2340,6 +2452,7 @@ class EventDetectionTab(ttk.Frame):
         self.er_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                         transform=self.er_ax.transAxes)
         self.er_canvas = FigureCanvasTkAgg(self.er_fig, master=f2)
+        _attach_fig_toolbar(self.er_canvas, f2)
         self.er_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # Panel 3: detect_event_windows diagnostics, with toolbar.
@@ -2353,13 +2466,7 @@ class EventDetectionTab(ttk.Frame):
         self.ed_ax.text(0.5, 0.5, "No data", ha="center", va="center",
                         transform=self.ed_ax.transAxes)
         self.ed_canvas = FigureCanvasTkAgg(self.ed_fig, master=f3)
-        # Toolbar (pan / zoom / box-zoom / save) above the canvas.
-        toolbar_frame = ttk.Frame(f3)
-        toolbar_frame.pack(side="top", fill="x")
-        self.ed_toolbar = NavigationToolbar2Tk(
-            self.ed_canvas, toolbar_frame, pack_toolbar=False)
-        self.ed_toolbar.update()
-        self.ed_toolbar.pack(side="left", fill="x")
+        self.ed_toolbar = _attach_fig_toolbar(self.ed_canvas, f3)
         self.ed_canvas.get_tk_widget().pack(side="top", fill="both",
                                             expand=True)
 
