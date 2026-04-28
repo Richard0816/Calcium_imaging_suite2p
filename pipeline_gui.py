@@ -2887,6 +2887,7 @@ class PipelineApp(tk.Tk):
         nb.pack(fill="both", expand=True)
 
         from clustering_tab import ClusteringTab
+        from crosscorrelation_tab import CrossCorrelationTab
 
         self.preprocess_tab = PreprocessTab(nb, self.state_obj)
         self.qc_tab = QcTab(nb, self.state_obj)
@@ -2894,14 +2895,15 @@ class PipelineApp(tk.Tk):
         self.lowpass_tab = LowpassTab(nb, self.state_obj)
         self.event_tab = EventDetectionTab(nb, self.state_obj)
         self.clustering_tab = ClusteringTab(nb, self.state_obj)
+        self.xcorr_tab = CrossCorrelationTab(nb, self.state_obj)
 
         nb.add(self.preprocess_tab, text="1. Input & Preprocess")
         nb.add(self.qc_tab, text="2. QC Preview")
         nb.add(self.detection_tab, text="3. Suite2p Detection")
         nb.add(self.lowpass_tab, text="4. Low-pass filter")
         nb.add(self.event_tab, text="5. Event detection")
-        nb.add(self.clustering_tab,
-               text="6. Clustering & cross-correlation")
+        nb.add(self.clustering_tab, text="6. Clustering")
+        nb.add(self.xcorr_tab, text="7. Cross-correlation")
 
 
 def main() -> None:
