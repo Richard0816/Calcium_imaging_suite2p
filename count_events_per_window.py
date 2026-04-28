@@ -1,4 +1,4 @@
-"""Count per-ROI events in user-specified time windows.
+"""Count per-ROI events in user-specified frame windows.
 
 For each recording, opens the filtered dF/F derivative memmap
 (``r0p7_filtered_dff_dt.memmap.float32``) at
@@ -8,13 +8,14 @@ event detection used elsewhere in the pipeline:
     z = mad_z(dt[:, roi])              # robust z per ROI
     onsets = hysteresis_onsets(z, z_hi=z_enter, z_lo=z_exit, ...)
 
-then counts onsets per ROI inside each user-supplied [start, end]
-time window.
+then counts onset *frames* per ROI inside each user-supplied
+[start_frame, end_frame] window (inclusive).
 
 Windows CSV format (header row optional):
     rec_id, w1_start, w1_end, w2_start, w2_end, ...
-All times in seconds. Pairs after column 0 are (start, end). Each row
-may have a different number of windows; missing windows are blank.
+All bounds are integer frame indices (0-based). Pairs after column 0
+are (start, end). Each row may have a different number of windows;
+missing windows are blank.
 
 Usage:
     python count_events_per_window.py windows.csv counts.csv
@@ -44,8 +45,8 @@ DEFAULT_Z_EXIT = 1.5
 DEFAULT_MIN_SEP_S = 0.1
 
 
-def parse_windows_csv(path: Path) -> list[tuple[str, list[tuple[float, float]]]]:
-    rows: list[tuple[str, list[tuple[float, float]]]] = []
+def parse_windows_csv(path: Path) -> list[tuple[str, list[tuple[int, int]]]]:
+    rows: list[tuple[str, list[tuple[int, int]]]] = []
     with open(path, newline="") as f:
         for i, raw in enumerate(csv.reader(f)):
             cells = [c.strip() for c in raw if c.strip() != ""]
@@ -53,7 +54,7 @@ def parse_windows_csv(path: Path) -> list[tuple[str, list[tuple[float, float]]]]
                 continue
             rec_id, vals = cells[0], cells[1:]
             try:
-                nums = [float(v) for v in vals]
+                nums = [int(float(v)) for v in vals]
             except ValueError:
                 if i == 0:
                     continue  # header row
@@ -74,9 +75,11 @@ def detect_onsets(plane0: Path, prefix: str, fps: float,
                   ) -> tuple[list[np.ndarray], np.ndarray]:
     """Returns (onsets_by_roi, original_roi_indices).
 
+    Onsets are returned as integer frame indices (0-based).
     ``original_roi_indices[j]`` is the suite2p stat.npy index of the j-th
     column in the filtered memmap (i.e. the position in the unfiltered
-    ROI list)."""
+    ROI list). ``fps`` is still required because hysteresis_onsets uses
+    it to convert ``min_sep_s`` to a frame gap."""
     _, _, dt, T, N = utils.s2p_open_memmaps(plane0, prefix=prefix)
 
     # Recover the keep-mask used to build the filtered memmap so we can
@@ -99,13 +102,13 @@ def detect_onsets(plane0: Path, prefix: str, fps: float,
         on = utils.hysteresis_onsets(
             z, z_hi=z_enter, z_lo=z_exit, fps=fps, min_sep_s=min_sep_s,
         )
-        onsets_by_roi.append(np.asarray(on, dtype=np.int64) / float(fps))
+        onsets_by_roi.append(np.asarray(on, dtype=np.int64))
     return onsets_by_roi, original_idx
 
 
 def count_for_recording(onsets_by_roi: list[np.ndarray],
                         original_idx: np.ndarray,
-                        windows: list[tuple[float, float]]) -> pd.DataFrame:
+                        windows: list[tuple[int, int]]) -> pd.DataFrame:
     n_rois = len(onsets_by_roi)
     out = pd.DataFrame({"roi": original_idx})
     for i, (s, e) in enumerate(windows, start=1):
@@ -165,7 +168,8 @@ def main():
         parts.append(df)
         for i, (s, e) in enumerate(wins, start=1):
             windows_log.append({"recording_id": rec_id,
-                                "window": i, "start_s": s, "end_s": e})
+                                "window": i,
+                                "start_frame": s, "end_frame": e})
         print(f"[counts] {rec_id}: {len(df)} ROIs x {len(wins)} windows "
               f"(total events={sum(int(t.size) for t in onsets_by_roi)})")
 
