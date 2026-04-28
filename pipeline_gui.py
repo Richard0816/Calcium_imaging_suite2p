@@ -1460,8 +1460,15 @@ class Suite2pTab(ttk.Frame):
             filt[t0:t1, :] = dff[t0:t1, :][:, mask]
         filt.flush()
         del filt, dff
+        # Also persist the keep-mask under its legacy filename for downstream
+        # tools that still hardcode it (clustering_cmap, cluster_mean_dff_gui,
+        # Fig1/Fig4, bins_visualization, older crosscorr code paths). Matches
+        # run_full_pipeline.make_filtered_memmaps's behavior so GUI runs and
+        # CLI runs produce the same on-disk layout.
+        np.save(plane0 / "r0p7_cell_mask_bool.npy", mask)
         print(f"[GUI] r0p7_filtered_dff.memmap.float32 written "
-              f"(T={T}, N_kept={N_kept}/{N_total})")
+              f"(T={T}, N_kept={N_kept}/{N_total})  "
+              f"+ r0p7_cell_mask_bool.npy")
 
     def _run_cellfilter(
         self, plane0: Path, ckpt_path: str, rec_id: str,

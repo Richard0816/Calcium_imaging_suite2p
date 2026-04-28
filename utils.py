@@ -196,10 +196,44 @@ def s2p_load_raw(root: Union[str, Path]) -> tuple[np.ndarray, np.ndarray, int, i
     return F, Fneu, num_frames, num_rois, time_major
 
 
+def _load_keep_mask(root: Path, n_total: int) -> np.ndarray:
+    """Load a boolean ROI keep-mask of length ``n_total`` from a Suite2p
+    plane0 folder. Source preference, in order:
+
+    1. ``predicted_cell_mask.npy`` -- canonical output from the cell-filter
+       prediction step (run_cellfilter / cellfilter.predict_recording).
+    2. ``r0p7_cell_mask_bool.npy`` -- legacy duplicate written by the
+       run_full_pipeline.make_filtered_memmaps step, kept for backward
+       compatibility with older recordings that don't have (1).
+    3. ``iscell.npy`` column 0 -- suite2p's built-in classifier; fallback
+       when no cell-filter prediction is present.
+
+    Raises FileNotFoundError when none of the above exist."""
+    pred_path = root / "predicted_cell_mask.npy"
+    if pred_path.exists():
+        return np.load(pred_path, allow_pickle=False).astype(bool).ravel()
+    legacy_path = root / "r0p7_cell_mask_bool.npy"
+    if legacy_path.exists():
+        return np.load(legacy_path, allow_pickle=False).astype(bool).ravel()
+    iscell_path = root / "iscell.npy"
+    if iscell_path.exists():
+        ic = np.load(iscell_path, allow_pickle=False)
+        return (ic[:, 0] > 0 if ic.ndim == 2 else ic > 0).astype(bool).ravel()
+    raise FileNotFoundError(
+        f"No filter mask found in {root}. Expected one of: "
+        f"predicted_cell_mask.npy, r0p7_cell_mask_bool.npy, iscell.npy."
+    )
+
+
 def s2p_open_memmaps(root: Union[str, Path], prefix: str = "r0p7_") -> tuple[np.memmap, np.memmap, np.memmap, int, int]:
     """
     Open ΔF/F, low-pass ΔF/F, and derivative Suite2p memmaps with a given prefix.
     Returns (dff, low, dt, T, N) with shape (T, N).
+
+    For filtered prefixes (e.g. ``r0p7_filtered_``), the column count is
+    derived from a keep-mask resolved via ``_load_keep_mask`` -- which
+    prefers ``predicted_cell_mask.npy`` and falls back to legacy /
+    suite2p-classifier sources if it's missing.
     """
     root = Path(root)
     # We infer num_frames, num_rois from one of the files by opening in read-only "r" mode with a guess.
@@ -209,9 +243,14 @@ def s2p_open_memmaps(root: Union[str, Path], prefix: str = "r0p7_") -> tuple[np.
     F, _, num_frames, num_rois, _ = s2p_load_raw(root)
 
     if prefix.split("_")[-2] == "filtered":
-        mask = np.load(root / "r0p7_cell_mask_bool.npy", allow_pickle=False)
+        mask = _load_keep_mask(root, num_rois)
+        if mask.size != num_rois:
+            raise ValueError(
+                f"keep-mask length {mask.size} != num_rois {num_rois} "
+                f"in {root}"
+            )
         F = F[mask, :]
-        num_rois = mask.sum()
+        num_rois = int(mask.sum())
 
     dff = np.memmap(root / f"{prefix}dff.memmap.float32", dtype="float32", mode="r", shape=(num_frames, num_rois))
     low = np.memmap(root / f"{prefix}dff_lowpass.memmap.float32", dtype="float32", mode="r",
