@@ -21,11 +21,10 @@ Workflow
        - Or click "Per-cluster colors..." to define one hex color per
          cluster manually; this overrides the dropdown until reset.
 5. "Export *_rois.npy" writes one ROI list per cluster into the
-   r0p7_*cluster_results/gui_recluster/ folder so the rest of the
-   pipeline (cross-correlation, summaries) can pick them up.
-6. "Run cluster x cluster cross-correlation" runs
-   crosscorrelation.run_cluster_cross_correlations_gpu against the
-   exported clusters.
+   r0p7_*cluster_results/gui_recluster/ folder so the Cross-correlation
+   tab (and other downstream tools) can pick them up.
+
+Cross-correlation lives on its own tab (see ``crosscorrelation_tab.py``).
 
 The whole thing also runs as a standalone window via `python clustering_tab.py`.
 """
@@ -402,10 +401,6 @@ class ClusteringTab(ttk.Frame):
             ctl, text="Export *_rois.npy",
             command=self._on_export, state="disabled")
         self.export_btn.pack(side="right")
-        self.xcorr_btn = ttk.Button(
-            ctl, text="Run cluster x cluster cross-correlation",
-            command=self._on_run_xcorr, state="disabled")
-        self.xcorr_btn.pack(side="right", padx=(0, 6))
         self.summary_btn = ttk.Button(
             ctl, text="Save summary",
             command=self._on_save_summary, state="disabled")
@@ -531,7 +526,6 @@ class ClusteringTab(ttk.Frame):
 
         self._custom_colors = None  # palette resets to dropdown choice
         self.export_btn.config(state="normal")
-        self.xcorr_btn.config(state="normal")
         self.summary_btn.config(state="normal")
 
         self._render_all()
@@ -786,83 +780,6 @@ class ClusteringTab(ttk.Frame):
                 self.status_var.set(f"Summary -> {path}")
         except Exception as e:
             messagebox.showerror("Summary failed", str(e))
-
-    def _on_run_xcorr(self) -> None:
-        if self._Z is None or self._plane0 is None:
-            return
-        if self._worker is not None and self._worker.is_alive():
-            messagebox.showinfo("Busy", "Worker already running.")
-            return
-        try:
-            out_dir = self._export_clusters()
-        except Exception as e:
-            messagebox.showerror("Export failed", str(e))
-            return
-
-        plane0 = self._plane0
-        prefix = self._prefix
-        cluster_folder = EXPORT_SUBDIR
-        try:
-            fps = float(utils.get_fps_from_notes(str(plane0), default_fps=30.0))
-        except Exception:
-            fps = 30.0
-
-        self.xcorr_btn.config(state="disabled")
-        self.export_btn.config(state="disabled")
-        self.run_btn.config(state="disabled")
-        self.progress.start(12)
-        self.status_var.set(
-            f"Cross-correlation running in {out_dir} (fps={fps:.2f})...")
-
-        def worker():
-            try:
-                import crosscorrelation as xc
-                xc.run_cluster_cross_correlations_gpu(
-                    plane0, prefix=prefix, fps=fps,
-                    cluster_folder=cluster_folder,
-                    max_lag_seconds=5.0,
-                    cpu_fallback=True,
-                    zero_lag=True,
-                )
-                self._q.put(("xcorr_done", str(out_dir)))
-            except Exception as e:
-                self._q.put(("xcorr_error",
-                             f"{e}\n{traceback.format_exc()}"))
-
-        self._worker = threading.Thread(target=worker, daemon=True)
-        self._worker.start()
-        # Override drain handlers locally for xcorr-specific outcomes.
-        self.after(POLL_MS, self._drain_xcorr_queue)
-
-    def _drain_xcorr_queue(self) -> None:
-        try:
-            while True:
-                kind, payload = self._q.get_nowait()
-                if kind == "xcorr_done":
-                    self.progress.stop()
-                    self.xcorr_btn.config(state="normal")
-                    self.export_btn.config(state="normal")
-                    self.run_btn.config(state="normal")
-                    self.status_var.set(
-                        f"Cross-correlation complete. Results in {payload}")
-                    return
-                if kind == "xcorr_error":
-                    self.progress.stop()
-                    self.xcorr_btn.config(state="normal")
-                    self.export_btn.config(state="normal")
-                    self.run_btn.config(state="normal")
-                    self.status_var.set("Cross-correlation failed.")
-                    messagebox.showerror(
-                        "Cross-correlation failed",
-                        payload.split("\n", 1)[0])
-                    return
-                # Anything else, push back through the regular drain.
-                self._q.put((kind, payload))
-                break
-        except queue.Empty:
-            pass
-        self.after(POLL_MS, self._drain_xcorr_queue)
-
 
 # ---------------------------------------------------------------------------
 # Standalone main
