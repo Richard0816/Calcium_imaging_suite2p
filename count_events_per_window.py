@@ -26,8 +26,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import csv
 import os
+import re
 from pathlib import Path
 
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
@@ -45,11 +45,18 @@ DEFAULT_Z_EXIT = 1.5
 DEFAULT_MIN_SEP_S = 0.1
 
 
+_SPLIT = re.compile(r"[\t,]+")
+
+
 def parse_windows_csv(path: Path) -> list[tuple[str, list[tuple[int, int]]]]:
+    """Accepts comma- or tab-delimited rows: rec_id, w1_start, w1_end, ..."""
     rows: list[tuple[str, list[tuple[int, int]]]] = []
-    with open(path, newline="") as f:
-        for i, raw in enumerate(csv.reader(f)):
-            cells = [c.strip() for c in raw if c.strip() != ""]
+    with open(path) as f:
+        for i, line in enumerate(f):
+            line = line.strip().lstrip("﻿")
+            if not line:
+                continue
+            cells = [c.strip() for c in _SPLIT.split(line) if c.strip() != ""]
             if not cells:
                 continue
             rec_id, vals = cells[0], cells[1:]
